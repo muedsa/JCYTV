@@ -1,0 +1,127 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "34c8cb053819dc69522ce96641158208",
+    "entities": [
+      {
+        "tableName": "favorite_anime",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `cover` TEXT NOT NULL, `update_at` INTEGER NOT NULL DEFAULT (CURRENT_TIMESTAMP), PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cover",
+            "columnName": "cover",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "updateAt",
+            "columnName": "update_at",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "(CURRENT_TIMESTAMP)"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_favorite_anime_update_at",
+            "unique": false,
+            "columnNames": [
+              "update_at"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_favorite_anime_update_at` ON `${TABLE_NAME}` (`update_at`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "episode_progress",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`aid` INTEGER NOT NULL, `title_hash` INTEGER NOT NULL, `title` TEXT NOT NULL, `progress` INTEGER NOT NULL DEFAULT 0, `duration` INTEGER NOT NULL DEFAULT 0, `update_at` INTEGER NOT NULL DEFAULT (CURRENT_TIMESTAMP), PRIMARY KEY(`aid`, `title_hash`))",
+        "fields": [
+          {
+            "fieldPath": "aid",
+            "columnName": "aid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "titleHash",
+            "columnName": "title_hash",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "progress",
+            "columnName": "progress",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "duration",
+            "columnName": "duration",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "updateAt",
+            "columnName": "update_at",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "(CURRENT_TIMESTAMP)"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "aid",
+            "title_hash"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_episode_progress_update_at",
+            "unique": false,
+            "columnNames": [
+              "update_at"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_episode_progress_update_at` ON `${TABLE_NAME}` (`update_at`)"
+          }
+        ],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '34c8cb053819dc69522ce96641158208')"
+    ]
+  }
+}

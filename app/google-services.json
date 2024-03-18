@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1069187460163",
+    "project_id": "jcy-tv",
+    "storage_bucket": "jcy-tv.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1069187460163:android:c71df7c5fbe1ab84e2f8f6",
+        "android_client_info": {
+          "package_name": "com.muedsa.jcytv"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0lcqj2vfxsMHE4cWP9Zo1Y8p0ZCmuw9k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1069187460163:android:106ce28852e9d0b2e2f8f6",
+        "android_client_info": {
+          "package_name": "com.muedsa.jcytv.debug"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0lcqj2vfxsMHE4cWP9Zo1Y8p0ZCmuw9k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

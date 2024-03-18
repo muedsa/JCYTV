@@ -1,0 +1,11 @@
+<resources>
+    <style name="Theme.JCYTV" parent="">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.SplashScreenTheme" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/ic_banner_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="postSplashScreenTheme">@style/Theme.JCYTV</item>
+    </style>
+</resources>
