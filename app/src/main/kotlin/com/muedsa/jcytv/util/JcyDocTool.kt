@@ -1,6 +1,7 @@
 package com.muedsa.jcytv.util
 
 import com.google.common.net.HttpHeaders
+import com.muedsa.jcytv.model.JcyRankVideoInfo
 import com.muedsa.jcytv.model.JcyRawPlaySource
 import com.muedsa.jcytv.model.JcySimpleVideoInfo
 import com.muedsa.jcytv.model.JcyVideoDetail
@@ -18,6 +19,8 @@ object JcyDocTool {
     const val MAIN_SITE_URL = "https://9ciyuan.com/"
 
     const val SEARCH_URL = "https://9ciyuan.com/index.php/vod/search.html?wd="
+
+    const val RANK_URL = "https://9ciyuan.com/index.php/label/ranking.html"
 
     const val DETAIL_URL = "https://9ciyuan.com/index.php/vod/detail/id/{id}.html"
 
@@ -93,6 +96,27 @@ object JcyDocTool {
             .get()
         val body = doc.body()
         return getRowInfo(body.selectFirst(".vod-list")!!).second
+    }
+
+    fun rankList(): List<Pair<String, List<JcyRankVideoInfo>>> {
+        val doc: Document = Jsoup.connect(RANK_URL)
+            .header(HttpHeaders.REFERER, MAIN_SITE_URL)
+            .get()
+        val body = doc.body()
+        return body.select(".index-ranking").map {
+            it.selectFirst("h2")!!.text() to
+                    it.parent()!!.select(".ranking-list").select("li").map { li ->
+                        val infoDiv = li.selectFirst(".ranking-item-info")!!
+                        JcyRankVideoInfo(
+                            title = infoDiv.selectFirst("h4")!!.text(),
+                            subTitle = infoDiv.selectFirst("p")!!.text(),
+                            detailPagePath = li.selectFirst("a")!!.attr("href"),
+                            imageUrl = li.selectFirst(".img-wrapper")!!.attr("img-wrapper"),
+                            hotNum = li.selectFirst(".ranking-item-hits")!!.text().toInt(),
+                            index = li.selectFirst(".ranking-item-num")!!.text().toInt()
+                        )
+                    }
+        }
     }
 
     fun getVideoDetailById(id: Long): JcyVideoDetail {

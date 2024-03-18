@@ -18,13 +18,15 @@ class JcyDocToolTest {
     fun decryptPlayUrl_test() {
         val url = JcyDocTool.decryptPlayUrl(
             "pUP07m71iJsJEVHJNNmUWc7KxjyjGHFxbcUUx5HUjUn+/vTBo7+VWEZQE9gyDN13akUf1lpx1EpdDb6bkl3xrYG7/ZMlKzav3cqgWd8cXy5RS5lGh3OOhlU2aKQjliqwsILEoZ8CfXHAJ8XC43/E/MKgwtiKSjSCoiURCldrDvN8w+9L1NOzJODWqpTNL66t/L2/KAKzHg1wmvMr7HC+f/nntQ8qqnd0WsTMsnOaE5ksEY7Jo36ZJkixaccsq+PXs0ECK54TNNu2a734aLm7bz0TeAHCUdtSNSR8BOeenq7TS4xiaeGuU1C3eLK+vfaY4WmUX8QcGYd41V55msAPH9XIYP6PtknZYau9I2H/c0IlyRMMx1W6WTW3r5nMi3oURarJG964uJgMzrxDpLTBJw==",
-            "VMnMnV")
+            "VMnMnV"
+        )
         println(url)
     }
 
     @Test
     fun getDecryptPlayUrlForUrl_test() {
-        val url = JcyDocTool.getDecryptPlayUrlForUrl("https://play.silisili.top/player/ec.php?code=ttnb&if=1&url=acg-oN1bTZQhisyrB20UkQ5sdtfszxbEw9UECamaNW45S1Q=")
+        val url =
+            JcyDocTool.getDecryptPlayUrlForUrl("https://play.silisili.top/player/ec.php?code=ttnb&if=1&url=acg-oN1bTZQhisyrB20UkQ5sdtfszxbEw9UECamaNW45S1Q=")
         println(url)
     }
 
@@ -40,7 +42,7 @@ class JcyDocToolTest {
         println(detail.imageUrl)
         detail.playList.forEach {
             println("# ${it.first}")
-            it.second.forEach {e ->
+            it.second.forEach { e ->
                 println("${e.first} ${e.second}")
             }
         }
@@ -58,7 +60,7 @@ class JcyDocToolTest {
         println(detail.imageUrl)
         detail.playList.forEach {
             println("# ${it.first}")
-            it.second.forEach {e ->
+            it.second.forEach { e ->
                 println("${e.first} ${e.second}")
             }
         }
@@ -88,7 +90,7 @@ class JcyDocToolTest {
         val detail = JcyDocTool.getVideoDetailByUrl(url)
         detail.playList.forEach {
             println("# ${it.first}")
-            it.second.forEach {e ->
+            it.second.forEach { e ->
                 val playPageUrl = JcyDocTool.getAbsoluteUrl(e.second)
                 val rawPlaySource = JcyDocTool.getRawPlaySource(playPageUrl)
                 val realUrl = JcyDocTool.getRealPlayUrl(rawPlaySource)
@@ -103,7 +105,7 @@ class JcyDocToolTest {
         val rows = JcyDocTool.getHomeVideoRows()
         rows.forEach {
             println("# ${it.first}")
-            it.second.forEach {e ->
+            it.second.forEach { e ->
                 println("${e.title} ${e.subTitle} ${e.detailPagePath} ${e.imageUrl}")
             }
         }
@@ -114,6 +116,17 @@ class JcyDocToolTest {
         val list = JcyDocTool.searchVideo("1")
         list.forEach {
             println("${it.title} ${it.subTitle} ${it.detailPagePath} ${it.imageUrl}")
+        }
+    }
+
+    @Test
+    fun rankList_test() {
+        val list = JcyDocTool.rankList()
+        list.forEach {
+            println("# ${it.first}")
+            it.second.forEach { anime ->
+                println("${anime.id} ${anime.hotNum} ${anime.title} ${anime.subTitle} ${anime.detailPagePath} ${anime.imageUrl} ${anime.index}")
+            }
         }
     }
 }

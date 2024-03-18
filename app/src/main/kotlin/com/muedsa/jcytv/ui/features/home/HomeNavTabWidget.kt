@@ -27,6 +27,7 @@ import com.muedsa.compose.tv.widget.NotImplementScreen
 import com.muedsa.compose.tv.widget.ScreenBackgroundType
 import com.muedsa.jcytv.ui.features.home.favorites.FavoritesScreen
 import com.muedsa.jcytv.ui.features.home.main.MainScreen
+import com.muedsa.jcytv.ui.features.home.rank.RankScreen
 import com.muedsa.jcytv.ui.features.home.search.SearchScreen
 import com.muedsa.jcytv.viewmodel.HomePageViewModel
 import kotlinx.coroutines.delay
@@ -119,7 +120,7 @@ fun HomeContent(
             )
         }
         HomeNavTab.Catalog -> NotImplementScreen()
-        HomeNavTab.Rank -> NotImplementScreen()
+        HomeNavTab.Rank -> RankScreen()
         HomeNavTab.Search -> SearchScreen()
         HomeNavTab.Favorites -> FavoritesScreen()
     }
