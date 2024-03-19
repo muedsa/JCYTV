@@ -3,7 +3,7 @@ package com.muedsa.jcytv.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.muedsa.jcytv.model.JcyRankVideoInfo
-import com.muedsa.jcytv.util.JcyDocTool
+import com.muedsa.jcytv.util.JcyHtmlTool
 import com.muedsa.model.LazyData
 import com.muedsa.uitl.LogUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,7 +31,7 @@ class RankViewModel @Inject constructor() : ViewModel() {
 
     private suspend fun rankList(): LazyData<List<Pair<String, List<JcyRankVideoInfo>>>> {
         return try {
-            LazyData.success(JcyDocTool.rankList())
+            LazyData.success(JcyHtmlTool.rankList())
         } catch (t: Throwable) {
             LogUtil.fb(t)
             LazyData.fail(t)

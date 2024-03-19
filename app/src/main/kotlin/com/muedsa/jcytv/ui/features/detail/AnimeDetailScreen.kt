@@ -60,7 +60,6 @@ import com.muedsa.compose.tv.widget.LocalRightSideDrawerState
 import com.muedsa.compose.tv.widget.NoBackground
 import com.muedsa.compose.tv.widget.ScreenBackground
 import com.muedsa.compose.tv.widget.ScreenBackgroundType
-import com.muedsa.compose.tv.widget.StandardImageCardsRow
 import com.muedsa.compose.tv.widget.TwoSideWideButton
 import com.muedsa.compose.tv.widget.rememberScreenBackgroundState
 import com.muedsa.jcytv.PlaybackActivity
@@ -71,7 +70,6 @@ import com.muedsa.jcytv.ui.RankIconColor
 import com.muedsa.jcytv.ui.nav.LocalAppNavController
 import com.muedsa.jcytv.ui.nav.NavigationItems
 import com.muedsa.jcytv.ui.nav.navigate
-import com.muedsa.jcytv.util.JcyDocTool
 import com.muedsa.jcytv.util.Upscayl
 import com.muedsa.jcytv.viewmodel.AnimeDetailViewModel
 import com.muedsa.jcytv.viewmodel.AppSettingViewModel

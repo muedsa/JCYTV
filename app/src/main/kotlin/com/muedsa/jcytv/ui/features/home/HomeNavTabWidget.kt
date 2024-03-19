@@ -23,8 +23,8 @@ import androidx.tv.material3.TabDefaults
 import androidx.tv.material3.TabRow
 import androidx.tv.material3.TabRowDefaults
 import androidx.tv.material3.Text
-import com.muedsa.compose.tv.widget.NotImplementScreen
 import com.muedsa.compose.tv.widget.ScreenBackgroundType
+import com.muedsa.jcytv.ui.features.home.catalog.CatalogScreen
 import com.muedsa.jcytv.ui.features.home.favorites.FavoritesScreen
 import com.muedsa.jcytv.ui.features.home.main.MainScreen
 import com.muedsa.jcytv.ui.features.home.rank.RankScreen
@@ -119,7 +119,7 @@ fun HomeContent(
                 viewModel = homePageViewModel
             )
         }
-        HomeNavTab.Catalog -> NotImplementScreen()
+        HomeNavTab.Catalog -> CatalogScreen()
         HomeNavTab.Rank -> RankScreen()
         HomeNavTab.Search -> SearchScreen()
         HomeNavTab.Favorites -> FavoritesScreen()

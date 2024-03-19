@@ -14,13 +14,15 @@ import java.net.URI
 import java.net.URLDecoder
 import java.nio.charset.StandardCharsets
 
-object JcyDocTool {
+object JcyHtmlTool {
 
     const val MAIN_SITE_URL = "https://9ciyuan.com/"
 
     const val SEARCH_URL = "https://9ciyuan.com/index.php/vod/search.html?wd="
 
     const val RANK_URL = "https://9ciyuan.com/index.php/label/ranking.html"
+
+    const val CATALOG_URL = "https://9ciyuan.com/index.php/vod/show{query}.html"
 
     const val DETAIL_URL = "https://9ciyuan.com/index.php/vod/detail/id/{id}.html"
 
@@ -117,6 +119,17 @@ object JcyDocTool {
                         )
                     }
         }
+    }
+
+    fun catalog(queryMap: Map<String, String>): List<JcySimpleVideoInfo> {
+        val query = queryMap.toSortedMap().map {
+            "/${it.key}/${it.value}"
+        }.joinToString("")
+        val doc: Document = Jsoup.connect(CATALOG_URL.replace("{query}", query))
+            .header(HttpHeaders.REFERER, MAIN_SITE_URL)
+            .get()
+        val body = doc.body()
+        return getRowInfo(body.selectFirst(".vod-list")!!).second
     }
 
     fun getVideoDetailById(id: Long): JcyVideoDetail {

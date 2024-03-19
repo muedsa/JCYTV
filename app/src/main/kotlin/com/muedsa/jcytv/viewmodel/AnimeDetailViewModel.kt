@@ -12,7 +12,7 @@ import com.muedsa.jcytv.room.dao.FavoriteAnimeDao
 import com.muedsa.jcytv.room.model.FavoriteAnimeModel
 import com.muedsa.jcytv.service.DanDanPlayApiService
 import com.muedsa.jcytv.ui.nav.NavigationItems
-import com.muedsa.jcytv.util.JcyDocTool
+import com.muedsa.jcytv.util.JcyHtmlTool
 import com.muedsa.model.LazyData
 import com.muedsa.model.LazyType
 import com.muedsa.uitl.LogUtil
@@ -89,7 +89,7 @@ class AnimeDetailViewModel @Inject constructor(
 
     private suspend fun fetchAnimeDetail(aid: Long): LazyData<JcyVideoDetail> {
         return try {
-            LazyData.success(JcyDocTool.getVideoDetailById(aid))
+            LazyData.success(JcyHtmlTool.getVideoDetailById(aid))
         } catch (t: Throwable) {
             LogUtil.fb(t)
             LazyData.fail(t)
@@ -158,10 +158,10 @@ class AnimeDetailViewModel @Inject constructor(
     ) {
         viewModelScope.launch(context = Dispatchers.IO) {
             try {
-                val rawPlaySource = JcyDocTool.getRawPlaySource(
-                    JcyDocTool.getAbsoluteUrl(url)
+                val rawPlaySource = JcyHtmlTool.getRawPlaySource(
+                    JcyHtmlTool.getAbsoluteUrl(url)
                 )
-                val realPlayUrl = JcyDocTool.getRealPlayUrl(rawPlaySource)
+                val realPlayUrl = JcyHtmlTool.getRealPlayUrl(rawPlaySource)
                 withContext(Dispatchers.Main) {
                     onSuccess(realPlayUrl)
                 }

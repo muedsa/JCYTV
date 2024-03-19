@@ -3,8 +3,7 @@ package com.muedsa.jcytv.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.muedsa.jcytv.model.JcySimpleVideoInfo
-import com.muedsa.jcytv.repository.AppRepository
-import com.muedsa.jcytv.util.JcyDocTool
+import com.muedsa.jcytv.util.JcyHtmlTool
 import com.muedsa.model.LazyData
 import com.muedsa.uitl.LogUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,7 +30,7 @@ class HomePageViewModel @Inject constructor() : ViewModel() {
 
     private suspend fun fetchHomeRows(): LazyData<List<Pair<String, List<JcySimpleVideoInfo>>>> {
         return try {
-            LazyData.success(JcyDocTool.getHomeVideoRows())
+            LazyData.success(JcyHtmlTool.getHomeVideoRows())
         } catch (t: Throwable) {
             LogUtil.fb(t)
             LazyData.fail(t)
