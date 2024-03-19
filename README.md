@@ -4,9 +4,9 @@
 </div>
 
 [![API](https://img.shields.io/badge/API-24%2B-yellow.svg?style=flat&logo=android)](https://developer.android.com/about/versions/nougat)
-[![GitHub commit activity](https://img.shields.io/github/commit-activity/m/muedsa/AGETV?logo=github)](https://github.com/muedsa/AGETV/commits/main)
-[![CodeFactor](https://www.codefactor.io/repository/github/muedsa/bilibililivetv/badge)](https://www.codefactor.io/repository/github/muedsa/AGETV)
-[![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/muedsa/AGETV/android.yml)](https://github.com/muedsa/AGETV/actions)
+[![GitHub commit activity](https://img.shields.io/github/commit-activity/m/muedsa/JCYTV?logo=github)](https://github.com/muedsa/JCYTV/commits/main)
+[![CodeFactor](https://www.codefactor.io/repository/github/muedsa/bilibililivetv/badge)](https://www.codefactor.io/repository/github/muedsa/JCYTV)
+[![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/muedsa/JCYTV/android.yml)](https://github.com/muedsa/JCYTV/actions)
 
 A third party **android tv** client for a pirate anime video web.  
 
