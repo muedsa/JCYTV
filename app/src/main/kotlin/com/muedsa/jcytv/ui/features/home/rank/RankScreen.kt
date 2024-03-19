@@ -23,7 +23,6 @@ import com.muedsa.compose.tv.theme.ScreenPaddingLeft
 import com.muedsa.compose.tv.widget.ErrorScreen
 import com.muedsa.compose.tv.widget.LoadingScreen
 import com.muedsa.compose.tv.widget.LocalErrorMsgBoxState
-import com.muedsa.compose.tv.widget.LocalRightSideDrawerState
 import com.muedsa.jcytv.ui.nav.LocalAppNavController
 import com.muedsa.jcytv.ui.nav.NavigationItems
 import com.muedsa.jcytv.ui.nav.navigate
@@ -37,7 +36,6 @@ fun RankScreen(
     viewModel: RankViewModel = hiltViewModel()
 ) {
     val errorMsgBoxState = LocalErrorMsgBoxState.current
-    val rightSideDrawerState = LocalRightSideDrawerState.current
     val navController = LocalAppNavController.current
 
     val rankListLD by viewModel.rankListLDSF.collectAsState()
