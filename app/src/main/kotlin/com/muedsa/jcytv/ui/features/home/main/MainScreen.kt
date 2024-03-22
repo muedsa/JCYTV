@@ -31,6 +31,7 @@ import com.muedsa.compose.tv.widget.ImageCardsRow
 import com.muedsa.compose.tv.widget.LoadingScreen
 import com.muedsa.compose.tv.widget.LocalErrorMsgBoxState
 import com.muedsa.compose.tv.widget.ScreenBackgroundType
+import com.muedsa.compose.tv.widget.StandardImageCardsRow
 import com.muedsa.jcytv.ui.VideoPosterSize
 import com.muedsa.jcytv.ui.features.home.LocalHomeScreenBackgroundState
 import com.muedsa.jcytv.ui.nav.LocalAppNavController
@@ -136,13 +137,19 @@ fun MainScreen(
 
             homeRows.subList(1, homeRows.size).forEach { row ->
                 item {
-                    ImageCardsRow(
+                    StandardImageCardsRow(
                         title = row.first,
                         modelList = row.second,
                         imageFn = { _, anime ->
                             anime.imageUrl
                         },
                         imageSize = VideoPosterSize,
+                        contentFn = { _, anime ->
+                            ContentModel(
+                                title = anime.title,
+                                subtitle = anime.subTitle
+                            )
+                        },
                         onItemFocus = { _, anime ->
                             backgroundState.type = ScreenBackgroundType.BLUR
                             backgroundState.url = anime.imageUrl

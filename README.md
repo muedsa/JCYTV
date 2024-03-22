@@ -12,3 +12,8 @@ A third party **android tv** client for a pirate anime video web.
 
 ## Requirement
 最低Android版本: [API 24(Android 7.0 Nougat)](https://developer.android.com/about/versions/nougat)
+
+## Others
+- [AGETV](https://github.com/muedsa/AGETV)
+- [BilibiliLiveTV](https://github.com/muedsa/BilibiliLiveTV)
+- [HATV](https://github.com/muedsa/HATV)
