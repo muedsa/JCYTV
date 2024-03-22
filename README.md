@@ -7,6 +7,7 @@
 [![GitHub commit activity](https://img.shields.io/github/commit-activity/m/muedsa/JCYTV?logo=github)](https://github.com/muedsa/JCYTV/commits/main)
 [![CodeFactor](https://www.codefactor.io/repository/github/muedsa/jcytv/badge)](https://www.codefactor.io/repository/github/muedsa/jcytv)
 [![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/muedsa/JCYTV/android.yml)](https://github.com/muedsa/JCYTV/actions)
+[![GitHub Releases](https://img.shields.io/github/downloads/muedsa/JCYTV/total?logo=github)](https://github.com/muedsa/JCYTV/releases)  
 
 A third party **android tv** client for a pirate anime video web.  
 
