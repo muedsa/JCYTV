@@ -44,7 +44,7 @@ android {
         minSdk = 24
         targetSdk = 34
         versionCode = 1
-        versionName = "0.0.1-alpha01"
+        versionName = "0.0.1-alpha02"
         archivesName = "JCYTV"
         vectorDrawables {
             useSupportLibrary = true
