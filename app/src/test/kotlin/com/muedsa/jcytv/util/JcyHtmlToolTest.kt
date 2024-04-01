@@ -14,21 +14,21 @@ class JcyHtmlToolTest {
         Security.addProvider(BouncyCastleProvider())
     }
 
-    @Test
-    fun decryptPlayUrl_test() {
-        val url = JcyHtmlTool.decryptPlayUrl(
-            "pUP07m71iJsJEVHJNNmUWc7KxjyjGHFxbcUUx5HUjUn+/vTBo7+VWEZQE9gyDN13akUf1lpx1EpdDb6bkl3xrYG7/ZMlKzav3cqgWd8cXy5RS5lGh3OOhlU2aKQjliqwsILEoZ8CfXHAJ8XC43/E/MKgwtiKSjSCoiURCldrDvN8w+9L1NOzJODWqpTNL66t/L2/KAKzHg1wmvMr7HC+f/nntQ8qqnd0WsTMsnOaE5ksEY7Jo36ZJkixaccsq+PXs0ECK54TNNu2a734aLm7bz0TeAHCUdtSNSR8BOeenq7TS4xiaeGuU1C3eLK+vfaY4WmUX8QcGYd41V55msAPH9XIYP6PtknZYau9I2H/c0IlyRMMx1W6WTW3r5nMi3oURarJG964uJgMzrxDpLTBJw==",
-            "VMnMnV"
-        )
-        println(url)
-    }
-
-    @Test
-    fun getDecryptPlayUrlForUrl_test() {
-        val url =
-            JcyHtmlTool.getDecryptPlayUrlForUrl("https://play.silisili.top/player/ec.php?code=ttnb&if=1&url=acg-oN1bTZQhisyrB20UkQ5sdtfszxbEw9UECamaNW45S1Q=")
-        println(url)
-    }
+//    @Test
+//    fun decryptPlayUrl_test() {
+//        val url = JcyHtmlTool.decryptPlayUrl(
+//            "pUP07m71iJsJEVHJNNmUWc7KxjyjGHFxbcUUx5HUjUn+/vTBo7+VWEZQE9gyDN13akUf1lpx1EpdDb6bkl3xrYG7/ZMlKzav3cqgWd8cXy5RS5lGh3OOhlU2aKQjliqwsILEoZ8CfXHAJ8XC43/E/MKgwtiKSjSCoiURCldrDvN8w+9L1NOzJODWqpTNL66t/L2/KAKzHg1wmvMr7HC+f/nntQ8qqnd0WsTMsnOaE5ksEY7Jo36ZJkixaccsq+PXs0ECK54TNNu2a734aLm7bz0TeAHCUdtSNSR8BOeenq7TS4xiaeGuU1C3eLK+vfaY4WmUX8QcGYd41V55msAPH9XIYP6PtknZYau9I2H/c0IlyRMMx1W6WTW3r5nMi3oURarJG964uJgMzrxDpLTBJw==",
+//            "VMnMnV"
+//        )
+//        println(url)
+//    }
+//
+//    @Test
+//    fun getDecryptPlayUrlForUrl_test() {
+//        val url =
+//            JcyHtmlTool.getDecryptPlayUrlForUrl("https://play.silisili.top/player/ec.php?code=ttnb&if=1&url=acg-oN1bTZQhisyrB20UkQ5sdtfszxbEw9UECamaNW45S1Q=")
+//        println(url)
+//    }
 
     @Test
     fun getVideoDetailById_test() {

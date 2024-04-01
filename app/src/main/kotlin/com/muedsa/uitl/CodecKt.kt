@@ -44,3 +44,7 @@ fun String.decodeBase64() = Base64.decode(this)
 
 @OptIn(ExperimentalEncodingApi::class)
 fun String.decodeBase64ToStr() = Base64.decode(this).toString(Charsets.UTF_8)
+
+fun ByteArray.encryptRC4(key: ByteArray): ByteArray {
+    return RC4(key).encrypt(this)
+}

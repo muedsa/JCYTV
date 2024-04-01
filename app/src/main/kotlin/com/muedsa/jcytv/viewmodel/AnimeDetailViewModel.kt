@@ -161,6 +161,7 @@ class AnimeDetailViewModel @Inject constructor(
                 val rawPlaySource = JcyHtmlTool.getRawPlaySource(
                     JcyHtmlTool.getAbsoluteUrl(url)
                 )
+                LogUtil.fb("play source: $rawPlaySource")
                 val realPlayUrl = JcyHtmlTool.getRealPlayUrl(rawPlaySource)
                 withContext(Dispatchers.Main) {
                     onSuccess(realPlayUrl)

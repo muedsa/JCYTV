@@ -1,5 +1,6 @@
 package com.muedsa.jcytv.util
 
+import com.badlogic.gdx.maps.MapObject
 import com.google.common.net.HttpHeaders
 import com.muedsa.jcytv.model.JcyRankVideoInfo
 import com.muedsa.jcytv.model.JcyRawPlaySource
@@ -7,6 +8,8 @@ import com.muedsa.jcytv.model.JcySimpleVideoInfo
 import com.muedsa.jcytv.model.JcyVideoDetail
 import com.muedsa.uitl.decodeBase64
 import com.muedsa.uitl.decryptAES128CBCPKCS7
+import com.muedsa.uitl.encodeBase64
+import com.muedsa.uitl.encryptRC4
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
@@ -26,7 +29,57 @@ object JcyHtmlTool {
 
     const val DETAIL_URL = "https://9ciyuan.com/index.php/vod/detail/id/{id}.html"
 
-    const val PLAYER_SITE_URL = "https://play.silisili.top/player/ec.php?code=ttnb&if=1&url="
+    val DECRYPT_DEFAULT : (String) -> String = { key: String -> key }
+
+    private val SILISILI_ENCRYPTED_URL_REGEX = Regex("\"url\":\"([A-Za-z0-9+/=\\\\]*?)\"")
+    private val SILISILI_UID_REGEX = Regex("\"uid\":\"([A-Za-z0-9+/=\\\\]*?)\"")
+
+    val DECRYPT_SILISILI: (String) -> String = { key: String ->
+        val doc: Document = Jsoup.connect("https://play.silisili.top/player/ec.php?code=ttnb&if=1&url=$key")
+            .header(HttpHeaders.REFERER, MAIN_SITE_URL)
+            .get()
+        val bodyHtml = doc.body().html()
+        val urlMatchResult = SILISILI_ENCRYPTED_URL_REGEX.find(bodyHtml)
+        val uidMatchResult = SILISILI_UID_REGEX.find(bodyHtml)
+        val encryptedUrl = urlMatchResult!!.groupValues[1].replace("\\/", "/")
+        val uid = uidMatchResult!!.groupValues[1]
+        encryptedUrl.decodeBase64().decryptAES128CBCPKCS7("2890${uid}tB959C", "2F131BE91247866E")
+            .toString(Charsets.UTF_8)
+    }
+
+    private val DILIDILI_ENCRYPTED_URL_REGEX = Regex("\"url\": \"([A-Za-z0-9+/=\\\\]*?)\"")
+
+    val DECRYPT_DILIDILI: (String) -> String = { key: String ->
+        val doc: Document = Jsoup.connect("https://v.dilidili.ink/player/analysis.php?v=$key")
+            .header(HttpHeaders.REFERER, MAIN_SITE_URL)
+            .get()
+        val bodyHtml = doc.body().html()
+        val urlMatchResult = DILIDILI_ENCRYPTED_URL_REGEX.find(bodyHtml)
+        val encryptedUrl = urlMatchResult!!.groupValues[1].replace("\\/", "/")
+        URLDecoder.decode(encryptedUrl.decodeBase64()
+            .encryptRC4("202205051426239465".toByteArray())
+            .decodeToString(),
+            StandardCharsets.UTF_8.name())
+    }
+
+    val PLAYER_SITE_MAP: Map<String, (String)-> String> = mapOf(
+        "NBY" to DECRYPT_DILIDILI, // ✅囧次元N https://v.dilidili.ink/player/?url=
+        "ttnb" to DECRYPT_DILIDILI, // https://v.dilidili.ink/player/?url=
+        "lzm3u8" to DECRYPT_DILIDILI, // ✅囧次元Z https://v.dilidili.ink/player/?url=
+        "snm3u8" to DECRYPT_DILIDILI, // ✅囧次元O https://v.dilidili.ink/player/?url=
+        "cycp" to DECRYPT_DEFAULT, // ?
+        "ffm3u8" to DECRYPT_DEFAULT, // ✅囧次元A https://play.libilibi.top/?url=
+        "SLNB" to DECRYPT_DEFAULT, // ?
+        "dplayer" to DECRYPT_DEFAULT, // dplayer
+        "videojs" to DECRYPT_DEFAULT, // videojs
+        "iva" to DECRYPT_DEFAULT,
+        "iframe" to DECRYPT_DEFAULT, // 不支持iframe
+        "link" to  DECRYPT_DEFAULT, // 不支持link
+        "swf" to DECRYPT_DEFAULT, // 不支持swf
+        "flv" to DECRYPT_DEFAULT, // 不支持flv
+        "ACG" to DECRYPT_SILISILI, // https://play.silisili.top/player/ec.php?code=ttnb&if=1&url=
+        "languang" to DECRYPT_DEFAULT, // TODO APP线路 https://player.123tv.icu/player/ec.php?code=yunq&if=1&url=
+    )
 
     fun getAbsoluteUrl(path: String): String {
         return if (path.startsWith("http://") || path.startsWith("https://")) {
@@ -182,38 +235,8 @@ object JcyHtmlTool {
     }
 
     fun getRealPlayUrl(rawPlaySource: JcyRawPlaySource): String {
-        return when (rawPlaySource.from) {
-            "languang", "NBY", "ACG" -> {
-                val decodedUrl = URLDecoder.decode(rawPlaySource.url, StandardCharsets.UTF_8.name())
-                getDecryptPlayUrlForUrl("$PLAYER_SITE_URL${decodedUrl}")
-            }
-
-            "ttnb", "lzm3u8", "ffm3u8", "videojs", "iva", "iframe", "link", "flv" -> {
-                URLDecoder.decode(rawPlaySource.url, StandardCharsets.UTF_8.name())
-            }
-
-            else -> {
-                throw NotImplementedError("Not support for ${rawPlaySource.from}")
-            }
-        }
+        val decodedUrl = URLDecoder.decode(rawPlaySource.url, StandardCharsets.UTF_8.name())
+        val decrypt = PLAYER_SITE_MAP[rawPlaySource.from]
+        return decrypt?.invoke(decodedUrl) ?: decodedUrl
     }
-
-    private val ENCRYPTED_URL_REGEX = Regex("\"url\":\"([A-Za-z0-9+/=\\\\]*?)\"")
-    private val UID_REGEX = Regex("\"uid\":\"([A-Za-z0-9+/=\\\\]*?)\"")
-
-    fun getDecryptPlayUrlForUrl(url: String): String {
-        val doc: Document = Jsoup.connect(url)
-            .header(HttpHeaders.REFERER, MAIN_SITE_URL)
-            .get()
-        val bodyHtml = doc.body().html()
-        val urlMatchResult = ENCRYPTED_URL_REGEX.find(bodyHtml)
-        val uidMatchResult = UID_REGEX.find(bodyHtml)
-        val encryptedUrl = urlMatchResult!!.groupValues[1].replace("\\/", "/")
-        val uid = uidMatchResult!!.groupValues[1]
-        return decryptPlayUrl(encryptedUrl, uid)
-    }
-
-    fun decryptPlayUrl(url: String, uid: String): String =
-        url.decodeBase64().decryptAES128CBCPKCS7("2890${uid}tB959C", "2F131BE91247866E")
-            .toString(Charsets.UTF_8)
 }
