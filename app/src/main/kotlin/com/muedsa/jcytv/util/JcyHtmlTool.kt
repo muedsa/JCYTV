@@ -62,7 +62,7 @@ object JcyHtmlTool {
                     title = a.text(),
                     subTitle = nameDiv.selectFirst("p")!!.text(),
                     detailPagePath = a.attr("href"),
-                    imageUrl = imgDiv.selectFirst(".img-wrapper")!!.attr("data-original")
+                    imageUrl = getAbsoluteUrl(imgDiv.selectFirst(".img-wrapper")!!.attr("data-original"))
                 )
             }
     }
@@ -76,7 +76,7 @@ object JcyHtmlTool {
                     title = nameDiv.selectFirst("h4")!!.text(),
                     subTitle = nameDiv.selectFirst("p")!!.text(),
                     detailPagePath = it.selectFirst("a")!!.attr("href"),
-                    imageUrl = imgDiv.selectFirst(".img-wrapper")!!.attr("data-original")
+                    imageUrl = getAbsoluteUrl(imgDiv.selectFirst(".img-wrapper")!!.attr("data-original"))
                 )
             } else {
                 val imgDiv = it.selectFirst(".pic")!!
@@ -86,7 +86,7 @@ object JcyHtmlTool {
                     title = a.text(),
                     subTitle = nameDiv.selectFirst("p")!!.text(),
                     detailPagePath = a.attr("href"),
-                    imageUrl = imgDiv.selectFirst(".img-wrapper")!!.attr("data-original")
+                    imageUrl = getAbsoluteUrl(imgDiv.selectFirst(".img-wrapper")!!.attr("data-original"))
                 )
             }
         }
@@ -113,7 +113,7 @@ object JcyHtmlTool {
                             title = infoDiv.selectFirst("h4")!!.text(),
                             subTitle = infoDiv.selectFirst("p")!!.text(),
                             detailPagePath = li.selectFirst("a")!!.attr("href"),
-                            imageUrl = li.selectFirst(".img-wrapper")!!.attr("img-wrapper"),
+                            imageUrl = getAbsoluteUrl(li.selectFirst(".img-wrapper")!!.attr("img-wrapper")),
                             hotNum = li.selectFirst(".ranking-item-hits")!!.text().toInt(),
                             index = li.selectFirst(".ranking-item-num")!!.text().toInt()
                         )
@@ -159,7 +159,7 @@ object JcyHtmlTool {
             description = body.selectFirst(".vod-info .info .text")!!.text()
                 .replace("简介：", "")
                 .trim(),
-            imageUrl = body.selectFirst(".vod-info .pic img")!!.attr("data-original"),
+            imageUrl = getAbsoluteUrl(body.selectFirst(".vod-info .pic img")!!.attr("data-original")),
             playList = playList
         )
     }
