@@ -12,7 +12,7 @@
 A third party **android tv** client for a pirate anime video web.  
 
 ## Requirement
-最低Android版本: [API 24(Android 7.0 Nougat)](https://developer.android.com/about/versions/nougat)
+Minimum Android version: [API 24(Android 7.0 Nougat)](https://developer.android.com/about/versions/nougat)
 
 ## Preview
 [Screenshot](/screenshots/SCREENSHOT.md)
