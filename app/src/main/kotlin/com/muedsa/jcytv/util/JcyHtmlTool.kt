@@ -1,6 +1,5 @@
 package com.muedsa.jcytv.util
 
-import com.badlogic.gdx.maps.MapObject
 import com.google.common.net.HttpHeaders
 import com.muedsa.jcytv.model.JcyRankVideoInfo
 import com.muedsa.jcytv.model.JcyRawPlaySource
@@ -8,7 +7,6 @@ import com.muedsa.jcytv.model.JcySimpleVideoInfo
 import com.muedsa.jcytv.model.JcyVideoDetail
 import com.muedsa.uitl.decodeBase64
 import com.muedsa.uitl.decryptAES128CBCPKCS7
-import com.muedsa.uitl.encodeBase64
 import com.muedsa.uitl.encryptRC4
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -29,15 +27,19 @@ object JcyHtmlTool {
 
     const val DETAIL_URL = "https://9ciyuan.com/index.php/vod/detail/id/{id}.html"
 
-    val DECRYPT_DEFAULT : (String) -> String = { key: String -> key }
+    val DECRYPT_DEFAULT: (String) -> String = { key: String -> key }
+
+    val DECRYPT_NOT_SUPPORT: (String) -> String =
+        { _: String -> throw IllegalStateException("不支持的播放源") }
 
     private val SILISILI_ENCRYPTED_URL_REGEX = Regex("\"url\":\"([A-Za-z0-9+/=\\\\]*?)\"")
     private val SILISILI_UID_REGEX = Regex("\"uid\":\"([A-Za-z0-9+/=\\\\]*?)\"")
 
     val DECRYPT_SILISILI: (String) -> String = { key: String ->
-        val doc: Document = Jsoup.connect("https://play.silisili.top/player/ec.php?code=ttnb&if=1&url=$key")
-            .header(HttpHeaders.REFERER, MAIN_SITE_URL)
-            .get()
+        val doc: Document =
+            Jsoup.connect("https://play.silisili.top/player/ec.php?code=ttnb&if=1&url=$key")
+                .header(HttpHeaders.REFERER, MAIN_SITE_URL)
+                .get()
         val bodyHtml = doc.body().html()
         val urlMatchResult = SILISILI_ENCRYPTED_URL_REGEX.find(bodyHtml)
         val uidMatchResult = SILISILI_UID_REGEX.find(bodyHtml)
@@ -56,27 +58,37 @@ object JcyHtmlTool {
         val bodyHtml = doc.body().html()
         val urlMatchResult = DILIDILI_ENCRYPTED_URL_REGEX.find(bodyHtml)
         val encryptedUrl = urlMatchResult!!.groupValues[1].replace("\\/", "/")
-        URLDecoder.decode(encryptedUrl.decodeBase64()
-            .encryptRC4("202205051426239465".toByteArray())
-            .decodeToString(),
-            StandardCharsets.UTF_8.name())
+        URLDecoder.decode(
+            encryptedUrl.decodeBase64()
+                .encryptRC4("202205051426239465".toByteArray())
+                .decodeToString(),
+            StandardCharsets.UTF_8.name()
+        )
     }
 
-    val PLAYER_SITE_MAP: Map<String, (String)-> String> = mapOf(
+    val DECRYPT_LIBILIBI: (String) -> String = { key: String ->
+        if (key.endsWith(".m3u8", true)
+            || key.endsWith(".mp4", true)
+            || key.endsWith(".flv", true)
+        ) key
+        else TODO("NOT_SUPPORT")
+    }
+
+    val PLAYER_SITE_MAP: Map<String, (String) -> String> = mapOf(
         "NBY" to DECRYPT_DILIDILI, // ✅囧次元N https://v.dilidili.ink/player/?url=
         "ttnb" to DECRYPT_DILIDILI, // https://v.dilidili.ink/player/?url=
         "lzm3u8" to DECRYPT_DILIDILI, // ✅囧次元Z https://v.dilidili.ink/player/?url=
         "snm3u8" to DECRYPT_DILIDILI, // ✅囧次元O https://v.dilidili.ink/player/?url=
         "cycp" to DECRYPT_DEFAULT, // ?
-        "ffm3u8" to DECRYPT_DEFAULT, // ✅囧次元A https://play.libilibi.top/?url=
+        "ffm3u8" to DECRYPT_LIBILIBI, // ✅囧次元A https://play.libilibi.top/?url=
         "SLNB" to DECRYPT_DEFAULT, // ?
-        "dplayer" to DECRYPT_DEFAULT, // dplayer
-        "videojs" to DECRYPT_DEFAULT, // videojs
+        "dplayer" to DECRYPT_NOT_SUPPORT, // 不支持dplayer
+        "videojs" to DECRYPT_NOT_SUPPORT, // 不支持videojs
         "iva" to DECRYPT_DEFAULT,
-        "iframe" to DECRYPT_DEFAULT, // 不支持iframe
-        "link" to  DECRYPT_DEFAULT, // 不支持link
-        "swf" to DECRYPT_DEFAULT, // 不支持swf
-        "flv" to DECRYPT_DEFAULT, // 不支持flv
+        "iframe" to DECRYPT_NOT_SUPPORT, // 不支持iframe
+        "link" to DECRYPT_NOT_SUPPORT, // 不支持link
+        "swf" to DECRYPT_NOT_SUPPORT, // 不支持swf
+        "flv" to DECRYPT_DEFAULT,
         "ACG" to DECRYPT_SILISILI, // https://play.silisili.top/player/ec.php?code=ttnb&if=1&url=
         "languang" to DECRYPT_DEFAULT, // TODO APP线路 https://player.123tv.icu/player/ec.php?code=yunq&if=1&url=
     )
@@ -115,7 +127,9 @@ object JcyHtmlTool {
                     title = a.text(),
                     subTitle = nameDiv.selectFirst("p")!!.text(),
                     detailPagePath = a.attr("href"),
-                    imageUrl = getAbsoluteUrl(imgDiv.selectFirst(".img-wrapper")!!.attr("data-original"))
+                    imageUrl = getAbsoluteUrl(
+                        imgDiv.selectFirst(".img-wrapper")!!.attr("data-original")
+                    )
                 )
             }
     }
@@ -129,7 +143,9 @@ object JcyHtmlTool {
                     title = nameDiv.selectFirst("h4")!!.text(),
                     subTitle = nameDiv.selectFirst("p")!!.text(),
                     detailPagePath = it.selectFirst("a")!!.attr("href"),
-                    imageUrl = getAbsoluteUrl(imgDiv.selectFirst(".img-wrapper")!!.attr("data-original"))
+                    imageUrl = getAbsoluteUrl(
+                        imgDiv.selectFirst(".img-wrapper")!!.attr("data-original")
+                    )
                 )
             } else {
                 val imgDiv = it.selectFirst(".pic")!!
@@ -139,7 +155,9 @@ object JcyHtmlTool {
                     title = a.text(),
                     subTitle = nameDiv.selectFirst("p")!!.text(),
                     detailPagePath = a.attr("href"),
-                    imageUrl = getAbsoluteUrl(imgDiv.selectFirst(".img-wrapper")!!.attr("data-original"))
+                    imageUrl = getAbsoluteUrl(
+                        imgDiv.selectFirst(".img-wrapper")!!.attr("data-original")
+                    )
                 )
             }
         }
@@ -166,7 +184,9 @@ object JcyHtmlTool {
                             title = infoDiv.selectFirst("h4")!!.text(),
                             subTitle = infoDiv.selectFirst("p")!!.text(),
                             detailPagePath = li.selectFirst("a")!!.attr("href"),
-                            imageUrl = getAbsoluteUrl(li.selectFirst(".img-wrapper")!!.attr("img-wrapper")),
+                            imageUrl = getAbsoluteUrl(
+                                li.selectFirst(".img-wrapper")!!.attr("img-wrapper")
+                            ),
                             hotNum = li.selectFirst(".ranking-item-hits")!!.text().toInt(),
                             index = li.selectFirst(".ranking-item-num")!!.text().toInt()
                         )
@@ -212,7 +232,9 @@ object JcyHtmlTool {
             description = body.selectFirst(".vod-info .info .text")!!.text()
                 .replace("简介：", "")
                 .trim(),
-            imageUrl = getAbsoluteUrl(body.selectFirst(".vod-info .pic img")!!.attr("data-original")),
+            imageUrl = getAbsoluteUrl(
+                body.selectFirst(".vod-info .pic img")!!.attr("data-original")
+            ),
             playList = playList
         )
     }
