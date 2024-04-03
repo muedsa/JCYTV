@@ -15,6 +15,7 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.media3.common.MediaItem
+import androidx.media3.common.MimeTypes
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
@@ -184,7 +185,11 @@ fun PlaybackScreen(
                 }
             })
             playWhenReady = true
-            setMediaItem(MediaItem.fromUri(mediaUrl))
+            val mediaItemBuilder = MediaItem.Builder().setUri(mediaUrl)
+            if (mediaUrl.endsWith(".m3u8", ignoreCase = true)) {
+                mediaItemBuilder.setMimeType(MimeTypes.APPLICATION_M3U8)
+            }
+            setMediaItem(mediaItemBuilder.build())
             prepare()
         }
     }
