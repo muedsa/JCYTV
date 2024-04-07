@@ -20,8 +20,10 @@ import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
+import com.kuaishou.akdanmaku.ecs.component.filter.DuplicateMergedFilter
 import com.muedsa.compose.tv.widget.LocalErrorMsgBoxState
 import com.muedsa.compose.tv.widget.player.DanmakuVideoPlayer
+import com.muedsa.compose.tv.widget.player.mergeDanmaku
 import com.muedsa.jcytv.BuildConfig
 import com.muedsa.jcytv.viewmodel.PlaybackViewModel
 import com.muedsa.model.LazyType
@@ -128,10 +130,15 @@ fun PlaybackScreen(
                 textSizeScale = danmakuSetting.danmakuSizeScale / 100f
                 alpha = danmakuSetting.danmakuAlpha / 100f
                 screenPart = danmakuSetting.danmakuScreenPart / 100f
+                dataFilter = listOf(DuplicateMergedFilter().apply { enable = true })
             },
             danmakuPlayerInit = {
                 if (!danmakuListLD.data.isNullOrEmpty()) {
-                    updateData(danmakuListLD.data!!)
+                    var list = danmakuListLD.data!!
+                    if (danmakuSetting.danmakuMergeEnable) {
+                        list = list.mergeDanmaku(5000L, 60000L, 30)
+                    }
+                    updateData(list)
                 }
             }
         ) {

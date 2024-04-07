@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.muedsa.jcytv.KEY_DANMAKU_ALPHA
 import com.muedsa.jcytv.KEY_DANMAKU_ENABLE
+import com.muedsa.jcytv.KEY_DANMAKU_MERGE_ENABLE
 import com.muedsa.jcytv.KEY_DANMAKU_SCREEN_PART
 import com.muedsa.jcytv.KEY_DANMAKU_SIZE_SCALE
 import com.muedsa.jcytv.KEY_UPSCAYL_COVER_IMAGE_ENABLE
@@ -29,13 +30,7 @@ class AppSettingViewModel @Inject constructor(
 
     val settingLDSF: StateFlow<LazyData<AppSettingModel>> = repo.dataStore.data
         .map { prefs ->
-            AppSettingModel(
-                danmakuEnable = prefs[KEY_DANMAKU_ENABLE] ?: true,
-                danmakuSizeScale = prefs[KEY_DANMAKU_SIZE_SCALE] ?: 140,
-                danmakuAlpha = prefs[KEY_DANMAKU_ALPHA] ?: 100,
-                danmakuScreenPart = prefs[KEY_DANMAKU_SCREEN_PART] ?: 100,
-                upscaylCoverImageEnable = prefs[KEY_UPSCAYL_COVER_IMAGE_ENABLE] ?: false
-            ).let { model ->
+            AppSettingModel.fromPreferences(prefs).let { model ->
                 LazyData.success(model)
             }
         }
@@ -53,6 +48,14 @@ class AppSettingViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             repo.dataStore.edit {
                 it[KEY_DANMAKU_ENABLE] = enable
+            }
+        }
+    }
+
+    fun changeDanmakuMergeEnable(enable: Boolean) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repo.dataStore.edit {
+                it[KEY_DANMAKU_MERGE_ENABLE] = enable
             }
         }
     }

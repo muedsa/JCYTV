@@ -105,6 +105,26 @@ fun AppSettingScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
+                            text = "合并弹幕",
+                            color = MaterialTheme.colorScheme.onBackground,
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                        FocusScaleSwitch(
+                            checked = settingModel.danmakuMergeEnable,
+                            onCheckedChange = {
+                                viewModel.changeDanmakuMergeEnable(it)
+                            }
+                        )
+                    }
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 20.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
                             text = "弹幕缩放",
                             color = MaterialTheme.colorScheme.onBackground,
                             style = MaterialTheme.typography.titleMedium

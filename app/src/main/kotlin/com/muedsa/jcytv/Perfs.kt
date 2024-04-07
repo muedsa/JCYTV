@@ -5,6 +5,8 @@ import androidx.datastore.preferences.core.intPreferencesKey
 
 val KEY_DANMAKU_ENABLE = booleanPreferencesKey("danmaku_enable")
 
+val KEY_DANMAKU_MERGE_ENABLE = booleanPreferencesKey("danmaku_merge_enable")
+
 val KEY_DANMAKU_SIZE_SCALE = intPreferencesKey("danmaku_size_scale")
 
 val KEY_DANMAKU_ALPHA = intPreferencesKey("danmaku_alpha")
