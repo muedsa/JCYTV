@@ -82,7 +82,7 @@ object JcyHtmlTool {
         "cycp" to DECRYPT_DEFAULT, // ?
         "ffm3u8" to DECRYPT_LIBILIBI, // ✅囧次元A https://play.libilibi.top/?url=
         "SLNB" to DECRYPT_DEFAULT, // ?
-        "dplayer" to DECRYPT_NOT_SUPPORT, // 不支持dplayer
+        "dplayer" to DECRYPT_DEFAULT, //  ✅囧次元VIP dplayer
         "videojs" to DECRYPT_NOT_SUPPORT, // 不支持videojs
         "iva" to DECRYPT_DEFAULT,
         "iframe" to DECRYPT_NOT_SUPPORT, // 不支持iframe
