@@ -123,11 +123,14 @@ fun List<DanmakuItemData>.mergeDanmaku(
     val fixedCache: MutableMap<String, SimilarDanmakuItemData> = mutableMapOf()
     val result = mutableListOf<DanmakuItemData>()
     this.sorted().forEach {
-        if (it.mode == DanmakuItemData.DANMAKU_MODE_ROLLING) {
-            mergedDanmaku(rollingCache, it, result, nearMs, maxMs, mergedSize)
-        } else if (it.mode == DanmakuItemData.DANMAKU_MODE_CENTER_TOP
-            || it.mode == DanmakuItemData.DANMAKU_MODE_CENTER_BOTTOM) {
-            mergedDanmaku(fixedCache, it, result, nearMs, maxMs, mergedSize)
+        when (it.mode) {
+            DanmakuItemData.DANMAKU_MODE_ROLLING ->
+                mergedDanmaku(rollingCache, it, result, nearMs, maxMs, mergedSize)
+
+            DanmakuItemData.DANMAKU_MODE_CENTER_TOP, DanmakuItemData.DANMAKU_MODE_CENTER_BOTTOM ->
+                mergedDanmaku(rollingCache, it, result, nearMs, maxMs, mergedSize)
+
+            else -> result.add(it)
         }
     }
     rollingCache.forEach { (_, v) -> v.complete(result, mergedSize) }
@@ -147,15 +150,15 @@ private fun mergedDanmaku(
         result.add(item)
         return
     }
-
-    val existed = cache[item.content]
+    val processedContent = processContent(item.content)
+    val existed = cache[processedContent]
     if (existed == null) {
-        cache[item.content] = SimilarDanmakuItemData(item.content, item)
-    } else if(existed.near(nearMs, maxMs, item.position)) {
+        cache[processedContent] = SimilarDanmakuItemData(processedContent, item)
+    } else if (existed.near(nearMs, maxMs, item.position)) {
         existed.inc(item, result)
     } else {
         existed.complete(result, mergedSize)
-        cache[item.content] = SimilarDanmakuItemData(item.content, item)
+        cache[processedContent] = SimilarDanmakuItemData(processedContent, item)
         result.add(item.copyWith(mergedType = DanmakuItemData.MERGED_TYPE_ORIGINAL))
     }
 }
@@ -180,7 +183,7 @@ class SimilarDanmakuItemData(
         DanmakuItemData(
             danmakuId = Random.nextLong(),
             position = first.position + 100,
-            content = "($number)$content",
+            content = "($number)${first.content}",
             mode = first.mode,
             textSize = mergedSize,
             textColor = first.textColor,
@@ -223,3 +226,124 @@ fun DanmakuItemData.copyWith(
         userId = userId ?: this.userId,
         mergedType = mergedType ?: this.mergedType
     )
+private fun processContent(content: String): String {
+    if (content.isBlank()) {
+        return ""
+    }
+    return removeEndingChars(normalizeContent(content))
+}
+
+private val ENDING_CHARS = ".。,，/?？!！…~～@^、+=-_♂♀".toCharArray()
+private fun removeEndingChars(content: String): String {
+    if (content.isEmpty()) {
+        return content
+    }
+    if (ENDING_CHARS.contains(content.last())) {
+        return removeEndingChars(content.substring(0, content.length - 1).trimEnd())
+    }
+    return content
+}
+
+private val REPLACE_CHAR_MAP = mapOf(
+    '　' to ' ',
+    '１' to '1',
+    '２' to '2',
+    '３' to '3',
+    '４' to '4',
+    '５' to '5',
+    '６' to '6',
+    '７' to '7',
+    '８' to '8',
+    '９' to '9',
+    '０' to '0',
+    '!' to '！',
+    '＠' to '@',
+    '＃' to '#',
+    '＄' to '$',
+    '％' to '%',
+    '＾' to '^',
+    '＆' to '&',
+    '＊' to '*',
+    '（' to '(',
+    '）' to ')',
+    '－' to '-',
+    '＝' to '=',
+    '＿' to '_',
+    '＋' to '+',
+    '［' to '[',
+    '］' to ']',
+    '｛' to '{',
+    '｝' to '}',
+    ';' to '；',
+    '＇' to '\'',
+    ':' to '：',
+    '＂' to '\'',
+    ',' to '，',
+    '．' to '.',
+    '／' to '/',
+    '＜' to '<',
+    '＞' to '>',
+    '?' to '？',
+    '＼' to '\\',
+    '｜' to '|',
+    '｀' to '`',
+    '～' to '~',
+    'ｑ' to 'q',
+    'ｗ' to 'w',
+    'ｅ' to 'e',
+    'ｒ' to 'r',
+    'ｔ' to 't',
+    'ｙ' to 'y',
+    'ｕ' to 'u',
+    'ｉ' to 'i',
+    'ｏ' to 'o',
+    'ｐ' to 'p',
+    'ａ' to 'a',
+    'ｓ' to 's',
+    'ｄ' to 'd',
+    'ｆ' to 'f',
+    'ｇ' to 'g',
+    'ｈ' to 'h',
+    'ｊ' to 'j',
+    'ｋ' to 'k',
+    'ｌ' to 'l',
+    'ｚ' to 'z',
+    'ｘ' to 'x',
+    'ｃ' to 'c',
+    'ｖ' to 'v',
+    'ｂ' to 'b',
+    'ｎ' to 'n',
+    'ｍ' to 'm',
+    'Ｑ' to 'Q',
+    'Ｗ' to 'W',
+    'Ｅ' to 'E',
+    'Ｒ' to 'R',
+    'Ｔ' to 'T',
+    'Ｙ' to 'Y',
+    'Ｕ' to 'U',
+    'Ｉ' to 'I',
+    'Ｏ' to 'O',
+    'Ｐ' to 'P',
+    'Ａ' to 'A',
+    'Ｓ' to 'S',
+    'Ｄ' to 'D',
+    'Ｆ' to 'F',
+    'Ｇ' to 'G',
+    'Ｈ' to 'H',
+    'Ｊ' to 'J',
+    'Ｋ' to 'K',
+    'Ｌ' to 'L',
+    'Ｚ' to 'Z',
+    'Ｘ' to 'X',
+    'Ｃ' to 'C',
+    'Ｖ' to 'V',
+    'Ｂ' to 'B',
+    'Ｎ' to 'N',
+    'Ｍ' to 'M'
+)
+
+private fun normalizeContent(content: String): String {
+    var c = content
+    REPLACE_CHAR_MAP.forEach { (k, v) -> c = c.replace(k, v) }
+    return c
+}
