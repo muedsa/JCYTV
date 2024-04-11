@@ -52,7 +52,7 @@ object JcyHtmlTool {
     private val DILIDILI_ENCRYPTED_URL_REGEX = Regex("\"url\": \"([A-Za-z0-9+/=\\\\]*?)\"")
 
     val DECRYPT_DILIDILI: (String) -> String = { key: String ->
-        val doc: Document = Jsoup.connect("https://v.dilidili.ink/player/analysis.php?v=$key")
+        val doc: Document = Jsoup.connect("https://play.dilidili.ink/player/analysis.php?v=$key")
             .header(HttpHeaders.REFERER, MAIN_SITE_URL)
             .get()
         val bodyHtml = doc.body().html()
@@ -75,14 +75,14 @@ object JcyHtmlTool {
     }
 
     val PLAYER_SITE_MAP: Map<String, (String) -> String> = mapOf(
-        "NBY" to DECRYPT_DILIDILI, // ✅囧次元N https://v.dilidili.ink/player/?url=
+        "NBY" to DECRYPT_DILIDILI, // ✅囧次元N
         "ttnb" to DECRYPT_DILIDILI, // https://v.dilidili.ink/player/?url=
-        "lzm3u8" to DECRYPT_DILIDILI, // ✅囧次元Z https://v.dilidili.ink/player/?url=
-        "snm3u8" to DECRYPT_DILIDILI, // ✅囧次元O https://v.dilidili.ink/player/?url=
+        "lzm3u8" to DECRYPT_DILIDILI, // ✅囧次元Z
+        "snm3u8" to DECRYPT_DILIDILI, // ✅囧次元O
         "cycp" to DECRYPT_DEFAULT, // ?
-        "ffm3u8" to DECRYPT_LIBILIBI, // ✅囧次元A https://play.libilibi.top/?url=
+        "ffm3u8" to DECRYPT_DILIDILI, // ✅囧次元A
         "SLNB" to DECRYPT_DEFAULT, // ?
-        "dplayer" to DECRYPT_DEFAULT, //  ✅囧次元VIP dplayer
+        "dplayer" to DECRYPT_DEFAULT, //  dplayer
         "videojs" to DECRYPT_NOT_SUPPORT, // 不支持videojs
         "iva" to DECRYPT_DEFAULT,
         "iframe" to DECRYPT_NOT_SUPPORT, // 不支持iframe
