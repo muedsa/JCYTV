@@ -29,6 +29,7 @@ import com.muedsa.jcytv.ui.nav.navigate
 import com.muedsa.jcytv.viewmodel.RankViewModel
 import com.muedsa.model.LazyType
 import com.muedsa.uitl.LogUtil
+import kotlin.math.min
 
 @OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
@@ -47,101 +48,38 @@ fun RankScreen(
     }
 
     Column(modifier = Modifier.padding(start = ScreenPaddingLeft)) {
-        if (rankListLD.type == LazyType.SUCCESS && !rankListLD.data.isNullOrEmpty() && rankListLD.data!!.size > 2) {
-            val firstList = rankListLD.data!![0]
-            val secondList = rankListLD.data!![1]
-            val thirdList = rankListLD.data!![2]
+        if (rankListLD.type == LazyType.SUCCESS && !rankListLD.data.isNullOrEmpty()) {
+            val ranks = rankListLD.data!!.subList(0, min(3, rankListLD.data!!.size))
             Row {
-                Column(
-                    modifier = Modifier
-                        .padding(top = 10.dp, bottom = 10.dp, end = 10.dp)
-                        .weight(1f)
-                ) {
-                    Text(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = firstList.first,
-                        textAlign = TextAlign.Center,
-                        color = MaterialTheme.colorScheme.onBackground,
-                        style = MaterialTheme.typography.titleLarge
-                    )
-                    TvLazyColumn {
-                        items(firstList.second) {
-                            RankAnimeWidget(
-                                model = it,
-                                onClick = {
-                                    LogUtil.d("Click $it")
-                                    navController.navigate(
-                                        NavigationItems.Detail,
-                                        listOf(it.id.toString())
-                                    )
-                                }
-                            )
-                        }
-                        item {
-                            Spacer(modifier = Modifier.height(100.dp))
-                        }
-                    }
-                }
-
-                Column(
-                    modifier = Modifier
-                        .padding(10.dp)
-                        .weight(1f)
-                ) {
-                    Text(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = secondList.first,
-                        textAlign = TextAlign.Center,
-                        color = MaterialTheme.colorScheme.onBackground,
-                        style = MaterialTheme.typography.titleLarge
-                    )
-                    TvLazyColumn {
-                        items(secondList.second) {
-                            RankAnimeWidget(
-                                model = it,
-                                onClick = {
-                                    LogUtil.d("Click $it")
-                                    navController.navigate(
-                                        NavigationItems.Detail,
-                                        listOf(it.id.toString())
-                                    )
-                                }
-                            )
-                        }
-                        item {
-                            Spacer(modifier = Modifier.height(100.dp))
-                        }
-                    }
-                }
-
-                Column(
-                    modifier = Modifier
-                        .padding(10.dp)
-                        .weight(1f)
-                ) {
-                    Text(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = thirdList.first,
-                        textAlign = TextAlign.Center,
-                        color = MaterialTheme.colorScheme.onBackground,
-                        style = MaterialTheme.typography.titleLarge
-                    )
-
-                    TvLazyColumn {
-                        items(thirdList.second) {
-                            RankAnimeWidget(
-                                model = it,
-                                onClick = {
-                                    LogUtil.d("Click $it")
-                                    navController.navigate(
-                                        NavigationItems.Detail,
-                                        listOf(it.id.toString())
-                                    )
-                                }
-                            )
-                        }
-                        item {
-                            Spacer(modifier = Modifier.height(100.dp))
+                ranks.forEach { rank ->
+                    Column(
+                        modifier = Modifier
+                            .padding(top = 10.dp, bottom = 10.dp, end = 10.dp)
+                            .weight(1f)
+                    ) {
+                        Text(
+                            modifier = Modifier.fillMaxWidth(),
+                            text = rank.first,
+                            textAlign = TextAlign.Center,
+                            color = MaterialTheme.colorScheme.onBackground,
+                            style = MaterialTheme.typography.titleLarge
+                        )
+                        TvLazyColumn {
+                            items(rank.second) {
+                                RankAnimeWidget(
+                                    model = it,
+                                    onClick = {
+                                        LogUtil.d("Click $it")
+                                        navController.navigate(
+                                            NavigationItems.Detail,
+                                            listOf(it.id.toString())
+                                        )
+                                    }
+                                )
+                            }
+                            item {
+                                Spacer(modifier = Modifier.height(100.dp))
+                            }
                         }
                     }
                 }
