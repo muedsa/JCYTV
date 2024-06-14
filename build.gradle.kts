@@ -7,4 +7,5 @@ plugins {
     alias(libs.plugins.hiltAndroid) apply false
     alias(libs.plugins.gmsGoogleService) apply false
     alias(libs.plugins.firebaseCrashlytics) apply false
+    alias(libs.plugins.compose.compiler) apply false
 }
