@@ -25,7 +25,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -126,18 +125,6 @@ fun SearchScreen(
                 ),
                 modifier = Modifier
                     .focusRequester(gridFocusRequester)
-                    .focusProperties {
-                        exit = { gridFocusRequester.saveFocusedChild(); FocusRequester.Default }
-                        enter = {
-                            if (gridFocusRequester.restoreFocusedChild()) {
-                                LogUtil.d("grid restoreFocusedChild")
-                                FocusRequester.Cancel
-                            } else {
-                                LogUtil.d("grid focused default child")
-                                FocusRequester.Default
-                            }
-                        }
-                    }
             ) {
                 itemsIndexed(
                     items = animeList,
