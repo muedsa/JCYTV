@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.dp
 import androidx.tv.foundation.lazy.list.TvLazyListState
 import androidx.tv.foundation.lazy.list.TvLazyRow
 import androidx.tv.foundation.lazy.list.rememberTvLazyListState
-import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import com.muedsa.compose.tv.model.ContentModel
@@ -34,7 +33,7 @@ import com.muedsa.compose.tv.theme.VerticalPosterSize
 import com.muedsa.uitl.anyMatchWithIndex
 
 
-@OptIn(ExperimentalTvMaterial3Api::class, ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun <T> ImageCardsRow(
     modifier: Modifier = Modifier,
@@ -99,7 +98,7 @@ fun <T> ImageCardsRow(
     }
 }
 
-@OptIn(ExperimentalTvMaterial3Api::class, ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun <T> StandardImageCardsRow(
     modifier: Modifier = Modifier,

@@ -43,7 +43,6 @@ import androidx.media3.common.Format
 import androidx.media3.common.Player
 import androidx.media3.common.Tracks
 import androidx.media3.common.util.UnstableApi
-import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.Icon
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
@@ -55,7 +54,6 @@ import kotlin.time.Duration.Companion.seconds
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
-@kotlin.OptIn(ExperimentalTvMaterial3Api::class)
 @OptIn(UnstableApi::class)
 @Composable
 fun PlayerControl(
@@ -238,7 +236,6 @@ fun PlayerControl(
     }
 }
 
-@kotlin.OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
 fun PlayerProgressIndicator(player: Player) {
     val dateTimeFormat = remember { SimpleDateFormat.getDateTimeInstance() }

@@ -1,7 +1,6 @@
 package com.muedsa.jcytv.ui.features.detail
 
 import android.content.Intent
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -39,7 +38,6 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.tv.foundation.lazy.list.TvLazyColumn
 import androidx.tv.foundation.lazy.list.items
 import androidx.tv.material3.ButtonDefaults
-import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.Icon
 import androidx.tv.material3.LocalContentColor
 import androidx.tv.material3.MaterialTheme
@@ -76,7 +74,6 @@ import com.muedsa.jcytv.viewmodel.AppSettingViewModel
 import com.muedsa.model.LazyType
 import com.muedsa.uitl.LogUtil
 
-@OptIn(ExperimentalTvMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun AnimeDetailScreen(
     viewModel: AnimeDetailViewModel = hiltViewModel(),

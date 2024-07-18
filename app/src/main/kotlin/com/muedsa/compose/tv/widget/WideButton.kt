@@ -22,7 +22,6 @@ import androidx.tv.material3.ButtonBorder
 import androidx.tv.material3.ButtonGlow
 import androidx.tv.material3.ButtonScale
 import androidx.tv.material3.ButtonShape
-import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.LocalContentColor
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.ProvideTextStyle
@@ -30,7 +29,7 @@ import androidx.tv.material3.WideButton
 import androidx.tv.material3.WideButtonContentColor
 import androidx.tv.material3.WideButtonDefaults
 
-@OptIn(ExperimentalTvMaterial3Api::class)
+
 @Composable
 fun TwoSideWideButton(
     onClick: () -> Unit,
@@ -108,7 +107,7 @@ fun TwoSideWideButton(
     }
 }
 
-@OptIn(ExperimentalTvMaterial3Api::class)
+
 @Composable
 fun WideButtonDefaults.NoBackground(interactionSource: InteractionSource) {
     val isFocused = interactionSource.collectIsFocusedAsState().value

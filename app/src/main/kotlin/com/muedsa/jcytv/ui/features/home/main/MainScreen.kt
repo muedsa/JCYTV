@@ -19,7 +19,6 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.tv.foundation.lazy.list.TvLazyColumn
-import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.ImmersiveList
 import androidx.tv.material3.MaterialTheme
 import com.muedsa.compose.tv.model.ContentModel
@@ -41,7 +40,7 @@ import com.muedsa.jcytv.viewmodel.HomePageViewModel
 import com.muedsa.model.LazyType
 import com.muedsa.uitl.LogUtil
 
-@OptIn(ExperimentalTvMaterial3Api::class)
+
 @Composable
 fun MainScreen(
     viewModel: HomePageViewModel = hiltViewModel(),

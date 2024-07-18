@@ -22,7 +22,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.tv.material3.Card
-import androidx.tv.material3.ExperimentalTvMaterial3Api
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.muedsa.compose.tv.model.ContentModel
@@ -92,7 +91,7 @@ enum class CardType {
     WIDE_STANDARD
 }
 
-@OptIn(ExperimentalTvMaterial3Api::class)
+
 @Composable
 fun ImageCard(
     modifier: Modifier = Modifier,

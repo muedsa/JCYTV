@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.tv.foundation.lazy.list.TvLazyColumn
 import androidx.tv.foundation.lazy.list.items
-import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import com.muedsa.compose.tv.theme.ScreenPaddingLeft
@@ -31,7 +30,7 @@ import com.muedsa.model.LazyType
 import com.muedsa.uitl.LogUtil
 import kotlin.math.min
 
-@OptIn(ExperimentalTvMaterial3Api::class)
+
 @Composable
 fun RankScreen(
     viewModel: RankViewModel = hiltViewModel()

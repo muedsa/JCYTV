@@ -16,7 +16,6 @@ import androidx.compose.ui.focus.focusRestorer
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Tab
 import androidx.tv.material3.TabDefaults
@@ -35,7 +34,7 @@ import kotlin.time.Duration.Companion.milliseconds
 
 val tabs: Array<HomeNavTab> = HomeNavTab.entries.toTypedArray()
 
-@OptIn(ExperimentalTvMaterial3Api::class, ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun HomeNavTabWidget(
     tabIndex: Int = 0,

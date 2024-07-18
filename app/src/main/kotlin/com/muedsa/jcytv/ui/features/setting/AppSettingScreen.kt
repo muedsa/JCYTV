@@ -22,7 +22,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.Icon
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.NonInteractiveSurfaceDefaults
@@ -35,7 +34,6 @@ import com.muedsa.compose.tv.widget.FocusScaleSwitch
 import com.muedsa.jcytv.viewmodel.AppSettingViewModel
 import com.muedsa.model.LazyType
 
-@OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
 fun AppSettingScreen(
     viewModel: AppSettingViewModel = hiltViewModel()

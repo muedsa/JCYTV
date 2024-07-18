@@ -9,12 +9,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.Switch
 import androidx.tv.material3.SwitchColors
 import androidx.tv.material3.SwitchDefaults
 
-@OptIn(ExperimentalTvMaterial3Api::class)
+
 @Composable
 fun FocusScaleSwitch(
     checked: Boolean,

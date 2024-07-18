@@ -11,21 +11,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.tv.material3.DrawerState
 import androidx.tv.material3.DrawerValue
-import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.ModalNavigationDrawer
 import androidx.tv.material3.NonInteractiveSurfaceDefaults
 import androidx.tv.material3.Surface
 import com.muedsa.compose.tv.theme.surfaceContainer
 
-@OptIn(ExperimentalTvMaterial3Api::class)
+
 @Composable
 fun RightSideDrawer(
     controller: RightSideDrawerController = RightSideDrawerController(),
@@ -79,7 +77,6 @@ fun RightSideDrawer(
 }
 
 
-@OptIn(ExperimentalTvMaterial3Api::class)
 open class RightSideDrawerController {
     private val contentState: MutableState<@Composable () -> Unit> = mutableStateOf({})
     val drawerState: DrawerState = DrawerState(DrawerValue.Closed)

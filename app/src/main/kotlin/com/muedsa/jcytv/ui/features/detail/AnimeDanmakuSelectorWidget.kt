@@ -1,6 +1,5 @@
 package com.muedsa.jcytv.ui.features.detail
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -29,7 +28,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.tv.foundation.lazy.list.TvLazyColumn
 import androidx.tv.foundation.lazy.list.items
 import androidx.tv.material3.Button
-import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.Icon
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.OutlinedIconButton
@@ -42,7 +40,7 @@ import com.muedsa.compose.tv.widget.NoBackground
 import com.muedsa.compose.tv.widget.TwoSideWideButton
 import com.muedsa.jcytv.viewmodel.AnimeDetailViewModel
 
-@OptIn(ExperimentalTvMaterial3Api::class)
+
 @Composable
 fun AnimeDanmakuSelectBtnWidget(
     enabledDanmakuState: MutableState<Boolean> = remember { mutableStateOf(false) },
@@ -62,7 +60,6 @@ fun AnimeDanmakuSelectBtnWidget(
     }
 }
 
-@OptIn(ExperimentalTvMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun DanmakuSelectorSideWidget(
     enabledDanmakuState: MutableState<Boolean> = remember { mutableStateOf(false) },

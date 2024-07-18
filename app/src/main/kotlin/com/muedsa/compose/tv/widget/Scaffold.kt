@@ -5,7 +5,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.NonInteractiveSurfaceColors
 import androidx.tv.material3.NonInteractiveSurfaceDefaults
@@ -13,7 +12,7 @@ import androidx.tv.material3.Surface
 import com.muedsa.compose.tv.LocalErrorMsgBoxControllerProvider
 import com.muedsa.compose.tv.LocalRightSideDrawerControllerProvider
 
-@OptIn(ExperimentalTvMaterial3Api::class)
+
 @Composable
 fun Scaffold(
     holdBack: Boolean = true,

@@ -13,7 +13,6 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.SecureFlagPolicy
 import androidx.navigation.NavController
 import androidx.tv.material3.DrawerValue
-import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.NonInteractiveSurfaceDefaults
 import androidx.tv.material3.Surface
@@ -32,7 +31,7 @@ fun FullWidthDialogProperties(
     decorFitsSystemWindows = decorFitsSystemWindows,
 )
 
-@OptIn(ExperimentalTvMaterial3Api::class)
+
 @Composable
 fun RightSideDrawerWithNavDrawerContent(
     controller: RightSideDrawerController
