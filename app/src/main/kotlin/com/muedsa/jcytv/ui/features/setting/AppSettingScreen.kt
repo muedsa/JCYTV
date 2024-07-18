@@ -24,9 +24,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.tv.material3.Icon
 import androidx.tv.material3.MaterialTheme
-import androidx.tv.material3.NonInteractiveSurfaceDefaults
 import androidx.tv.material3.OutlinedIconButton
 import androidx.tv.material3.Surface
+import androidx.tv.material3.SurfaceDefaults
 import androidx.tv.material3.Text
 import com.muedsa.compose.tv.theme.surfaceContainer
 import com.muedsa.compose.tv.useLocalErrorMsgBoxController
@@ -58,7 +58,7 @@ fun AppSettingScreen(
             Surface(
                 modifier = Modifier
                     .fillMaxHeight(),
-                colors = NonInteractiveSurfaceDefaults.colors(
+                colors = SurfaceDefaults.colors(
                     containerColor = MaterialTheme.colorScheme.surfaceContainer,
                     contentColor = MaterialTheme.colorScheme.onSurface
                 )

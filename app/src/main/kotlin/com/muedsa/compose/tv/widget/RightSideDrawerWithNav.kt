@@ -14,8 +14,8 @@ import androidx.compose.ui.window.SecureFlagPolicy
 import androidx.navigation.NavController
 import androidx.tv.material3.DrawerValue
 import androidx.tv.material3.MaterialTheme
-import androidx.tv.material3.NonInteractiveSurfaceDefaults
 import androidx.tv.material3.Surface
+import androidx.tv.material3.SurfaceDefaults
 import com.muedsa.compose.tv.theme.surfaceContainer
 
 fun FullWidthDialogProperties(
@@ -46,7 +46,7 @@ fun RightSideDrawerWithNavDrawerContent(
             Surface(
                 modifier = Modifier
                     .fillMaxHeight(),
-                colors = NonInteractiveSurfaceDefaults.colors(
+                colors = SurfaceDefaults.colors(
                     containerColor = MaterialTheme.colorScheme.surfaceContainer,
                     contentColor = MaterialTheme.colorScheme.onSurface
                 )

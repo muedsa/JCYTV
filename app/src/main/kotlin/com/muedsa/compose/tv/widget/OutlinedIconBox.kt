@@ -20,15 +20,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.tv.material3.Border
-import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.Icon
 import androidx.tv.material3.MaterialTheme
-import androidx.tv.material3.NonInteractiveSurfaceDefaults
 import androidx.tv.material3.OutlinedIconButtonDefaults
 import androidx.tv.material3.Surface
+import androidx.tv.material3.SurfaceDefaults
 import com.muedsa.compose.tv.theme.TvTheme
 
-@OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
 fun OutlinedIconBox(
     modifier: Modifier = Modifier,
@@ -48,7 +46,7 @@ fun OutlinedIconBox(
             ),
             shape = CircleShape
         ),
-        colors = NonInteractiveSurfaceDefaults.colors(
+        colors = SurfaceDefaults.colors(
             containerColor = if (inverse) MaterialTheme.colorScheme.onSurface else Color.Transparent,
             contentColor = if (inverse) MaterialTheme.colorScheme.inverseOnSurface else MaterialTheme.colorScheme.onSurface,
         )
@@ -61,7 +59,6 @@ fun OutlinedIconBox(
     }
 }
 
-@OptIn(ExperimentalTvMaterial3Api::class)
 @Preview
 @Composable
 fun OutlinedIconBoxPreview() {

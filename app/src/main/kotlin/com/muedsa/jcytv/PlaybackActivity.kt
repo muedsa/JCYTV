@@ -10,8 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.tv.material3.MaterialTheme
-import androidx.tv.material3.NonInteractiveSurfaceDefaults
 import androidx.tv.material3.Surface
+import androidx.tv.material3.SurfaceDefaults
 import com.muedsa.compose.tv.theme.TvTheme
 import com.muedsa.compose.tv.useLocalErrorMsgBoxController
 import com.muedsa.compose.tv.widget.AppBackHandler
@@ -34,7 +34,7 @@ class PlaybackActivity : ComponentActivity() {
             TvTheme {
                 Scaffold(
                     holdBack = false,
-                    colors = NonInteractiveSurfaceDefaults.colors(
+                    colors = SurfaceDefaults.colors(
                         containerColor = Color.Black,
                         contentColor = MaterialTheme.colorScheme.onBackground
                     )

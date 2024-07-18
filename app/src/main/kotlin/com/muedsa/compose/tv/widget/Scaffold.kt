@@ -6,9 +6,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.tv.material3.MaterialTheme
-import androidx.tv.material3.NonInteractiveSurfaceColors
-import androidx.tv.material3.NonInteractiveSurfaceDefaults
 import androidx.tv.material3.Surface
+import androidx.tv.material3.SurfaceColors
+import androidx.tv.material3.SurfaceDefaults
 import com.muedsa.compose.tv.LocalErrorMsgBoxControllerProvider
 import com.muedsa.compose.tv.LocalRightSideDrawerControllerProvider
 
@@ -16,7 +16,7 @@ import com.muedsa.compose.tv.LocalRightSideDrawerControllerProvider
 @Composable
 fun Scaffold(
     holdBack: Boolean = true,
-    colors: NonInteractiveSurfaceColors = NonInteractiveSurfaceDefaults.colors(
+    colors: SurfaceColors = SurfaceDefaults.colors(
         containerColor = MaterialTheme.colorScheme.background,
         contentColor = MaterialTheme.colorScheme.onBackground
     ),
