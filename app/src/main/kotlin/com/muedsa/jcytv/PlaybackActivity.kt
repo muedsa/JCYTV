@@ -13,12 +13,12 @@ import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.NonInteractiveSurfaceDefaults
 import androidx.tv.material3.Surface
-import com.muedsa.jcytv.ui.features.playback.PlaybackScreen
 import com.muedsa.compose.tv.theme.TvTheme
+import com.muedsa.compose.tv.useLocalErrorMsgBoxController
 import com.muedsa.compose.tv.widget.AppBackHandler
 import com.muedsa.compose.tv.widget.FillTextScreen
-import com.muedsa.compose.tv.widget.LocalErrorMsgBoxState
 import com.muedsa.compose.tv.widget.Scaffold
+import com.muedsa.jcytv.ui.features.playback.PlaybackScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -47,12 +47,12 @@ class PlaybackActivity : ComponentActivity() {
                         val backListeners = remember {
                             mutableStateListOf<() -> Unit>()
                         }
-                        val errorMsgBoxState = LocalErrorMsgBoxState.current
+                        val errorMsgBoxController = useLocalErrorMsgBoxController()
                         AppBackHandler {
                             backListeners.forEach {
                                 it()
                             }
-                            errorMsgBoxState.error("再次点击返回键退出")
+                            errorMsgBoxController.error("再次点击返回键退出")
                         }
                         Surface(
                             modifier = Modifier.fillMaxSize(),

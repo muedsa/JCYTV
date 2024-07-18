@@ -32,8 +32,8 @@ import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import androidx.tv.material3.WideButton
-import com.muedsa.jcytv.model.dandanplay.DanEpisode
 import com.muedsa.compose.tv.theme.ImageCardRowCardPadding
+import com.muedsa.jcytv.model.dandanplay.DanEpisode
 import com.muedsa.jcytv.room.model.EpisodeProgressModel
 import kotlin.math.max
 

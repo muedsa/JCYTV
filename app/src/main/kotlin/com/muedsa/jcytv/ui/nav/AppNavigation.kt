@@ -1,74 +1,69 @@
 package com.muedsa.jcytv.ui.nav
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.compositionLocalOf
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
+import androidx.navigation.compose.rememberNavController
+import com.muedsa.compose.tv.LocalNavHostControllerProvider
+import com.muedsa.compose.tv.LocalRightSideDrawerControllerProvider
 import com.muedsa.compose.tv.widget.FullWidthDialogProperties
-import com.muedsa.compose.tv.widget.LocalRightSideDrawerState
+import com.muedsa.compose.tv.widget.RightSideDrawerWithNavController
 import com.muedsa.compose.tv.widget.RightSideDrawerWithNavDrawerContent
-import com.muedsa.compose.tv.widget.RightSideDrawerWithNavState
 import com.muedsa.jcytv.ui.features.detail.AnimeDetailScreen
 import com.muedsa.jcytv.ui.features.home.HomeNavScreen
 import com.muedsa.jcytv.ui.features.setting.AppSettingScreen
 
-val LocalAppNavController = compositionLocalOf<NavHostController> {
-    error("LocalAppNavController not init")
-}
-
 @Composable
-fun AppNavigation(navController: NavHostController) {
+fun AppNavigation() {
     val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
         "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
     }
+    val navController = rememberNavController()
+    val drawerController = RightSideDrawerWithNavController(navController, NavigationItems.RightSideDrawer.route)
 
-    val rightSideDrawerState = RightSideDrawerWithNavState(navController, NavigationItems.RightSideDrawer.route)
-
-    CompositionLocalProvider(
-        LocalAppNavController provides navController,
-        LocalRightSideDrawerState provides rightSideDrawerState
-    ) {
-        NavHost(
-            navController = navController,
-            startDestination = buildJumpRoute(NavigationItems.Home, listOf("0"))
-        ) {
-
-            composable(
-                route = NavigationItems.Home.route,
-                arguments = NavigationItems.Home.args
+    LocalNavHostControllerProvider(navController) {
+        LocalRightSideDrawerControllerProvider(drawerController) {
+            NavHost(
+                navController = navController,
+                startDestination = buildJumpRoute(NavigationItems.Home, listOf("0"))
             ) {
-                HomeNavScreen(
-                    tabIndex = checkNotNull(it.arguments?.getInt("tabIndex")),
-                    homePageViewModel = hiltViewModel(viewModelStoreOwner),
-                )
-            }
 
-            composable(
-                route = NavigationItems.Detail.route,
-                arguments = NavigationItems.Detail.args
-            ) {
-                AnimeDetailScreen()
-            }
+                composable(
+                    route = NavigationItems.Home.route,
+                    arguments = NavigationItems.Home.args
+                ) {
+                    HomeNavScreen(
+                        tabIndex = checkNotNull(it.arguments?.getInt("tabIndex")),
+                        homePageViewModel = hiltViewModel(viewModelStoreOwner),
+                    )
+                }
 
-            dialog(
-                route = NavigationItems.Setting.route,
-                dialogProperties = FullWidthDialogProperties()
-            ) {
-                AppSettingScreen()
-            }
+                composable(
+                    route = NavigationItems.Detail.route,
+                    arguments = NavigationItems.Detail.args
+                ) {
+                    AnimeDetailScreen()
+                }
 
-            dialog(
-                route = NavigationItems.RightSideDrawer.route,
-                dialogProperties = FullWidthDialogProperties()
-            ) {
-                RightSideDrawerWithNavDrawerContent(
-                    state = rightSideDrawerState
-                )
+                dialog(
+                    route = NavigationItems.Setting.route,
+                    dialogProperties = FullWidthDialogProperties()
+                ) {
+                    AppSettingScreen()
+                }
+
+                dialog(
+                    route = NavigationItems.RightSideDrawer.route,
+                    dialogProperties = FullWidthDialogProperties()
+                ) {
+                    RightSideDrawerWithNavDrawerContent(
+                        controller = drawerController
+                    )
+                }
             }
         }
     }

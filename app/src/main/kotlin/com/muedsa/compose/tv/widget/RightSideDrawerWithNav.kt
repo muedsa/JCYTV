@@ -35,9 +35,9 @@ fun FullWidthDialogProperties(
 @OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
 fun RightSideDrawerWithNavDrawerContent(
-    state: RightSideDrawerState
+    controller: RightSideDrawerController
 ) {
-    if (state.drawerState.currentValue == DrawerValue.Open) {
+    if (controller.drawerState.currentValue == DrawerValue.Open) {
         Row(
             modifier = Modifier
                 .fillMaxSize()
@@ -57,17 +57,17 @@ fun RightSideDrawerWithNavDrawerContent(
                         .fillMaxHeight()
                         .padding(all = 20.dp)
                 ) {
-                    state.ContentCompose()
+                    controller.ContentCompose()
                 }
             }
         }
     }
 }
 
-class RightSideDrawerWithNavState(
+class RightSideDrawerWithNavController(
     val navController: NavController,
     val drawerRoute: String,
-) : RightSideDrawerState() {
+) : RightSideDrawerController() {
 
     override fun pop(content: @Composable () -> Unit) {
         super.pop(content)

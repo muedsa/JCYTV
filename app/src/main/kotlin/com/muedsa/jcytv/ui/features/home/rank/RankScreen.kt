@@ -20,10 +20,10 @@ import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import com.muedsa.compose.tv.theme.ScreenPaddingLeft
+import com.muedsa.compose.tv.useLocalErrorMsgBoxController
+import com.muedsa.compose.tv.useLocalNavHostController
 import com.muedsa.compose.tv.widget.ErrorScreen
 import com.muedsa.compose.tv.widget.LoadingScreen
-import com.muedsa.compose.tv.widget.LocalErrorMsgBoxState
-import com.muedsa.jcytv.ui.nav.LocalAppNavController
 import com.muedsa.jcytv.ui.nav.NavigationItems
 import com.muedsa.jcytv.ui.nav.navigate
 import com.muedsa.jcytv.viewmodel.RankViewModel
@@ -36,8 +36,8 @@ import kotlin.math.min
 fun RankScreen(
     viewModel: RankViewModel = hiltViewModel()
 ) {
-    val errorMsgBoxState = LocalErrorMsgBoxState.current
-    val navController = LocalAppNavController.current
+    val errorMsgBoxState = useLocalErrorMsgBoxController()
+    val navController = useLocalNavHostController()
 
     val rankListLD by viewModel.rankListLDSF.collectAsState()
 

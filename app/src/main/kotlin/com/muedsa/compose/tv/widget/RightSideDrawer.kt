@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
@@ -27,14 +28,14 @@ import com.muedsa.compose.tv.theme.surfaceContainer
 @OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
 fun RightSideDrawer(
-    state: RightSideDrawerState = RightSideDrawerState(),
+    controller: RightSideDrawerController = RightSideDrawerController(),
     content: @Composable () -> Unit
 ) {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         ModalNavigationDrawer(
             drawerContent = {
                 BackHandler(enabled = it == DrawerValue.Open) {
-                    state.close()
+                    controller.close()
                 }
                 if (it == DrawerValue.Open) {
                     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
@@ -56,14 +57,14 @@ fun RightSideDrawer(
                                     Modifier
                                         .fillMaxHeight()
                                         .padding(all = 20.dp)) {
-                                    state.ContentCompose()
+                                    controller.ContentCompose()
                                 }
                             }
                         }
                     }
                 }
             },
-            drawerState = state.drawerState,
+            drawerState = controller.drawerState,
             content = {
                 CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
                     Surface(
@@ -79,7 +80,7 @@ fun RightSideDrawer(
 
 
 @OptIn(ExperimentalTvMaterial3Api::class)
-open class RightSideDrawerState {
+open class RightSideDrawerController {
     private val contentState: MutableState<@Composable () -> Unit> = mutableStateOf({})
     val drawerState: DrawerState = DrawerState(DrawerValue.Closed)
 

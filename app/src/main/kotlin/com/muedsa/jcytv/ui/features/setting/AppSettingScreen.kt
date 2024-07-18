@@ -30,8 +30,8 @@ import androidx.tv.material3.OutlinedIconButton
 import androidx.tv.material3.Surface
 import androidx.tv.material3.Text
 import com.muedsa.compose.tv.theme.surfaceContainer
+import com.muedsa.compose.tv.useLocalErrorMsgBoxController
 import com.muedsa.compose.tv.widget.FocusScaleSwitch
-import com.muedsa.compose.tv.widget.LocalErrorMsgBoxState
 import com.muedsa.jcytv.viewmodel.AppSettingViewModel
 import com.muedsa.model.LazyType
 
@@ -40,12 +40,12 @@ import com.muedsa.model.LazyType
 fun AppSettingScreen(
     viewModel: AppSettingViewModel = hiltViewModel()
 ) {
-    val errorMsgBoxState = LocalErrorMsgBoxState.current
+    val errorMsgBoxController = useLocalErrorMsgBoxController()
     val settingLD by viewModel.settingLDSF.collectAsState()
 
     LaunchedEffect(key1 = settingLD) {
         if (settingLD.type == LazyType.FAILURE) {
-            errorMsgBoxState.error(settingLD.error)
+            errorMsgBoxController.error(settingLD.error)
         }
     }
 

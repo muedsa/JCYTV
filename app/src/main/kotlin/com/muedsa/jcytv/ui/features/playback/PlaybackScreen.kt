@@ -21,7 +21,7 @@ import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import com.kuaishou.akdanmaku.ecs.component.filter.DuplicateMergedFilter
-import com.muedsa.compose.tv.widget.LocalErrorMsgBoxState
+import com.muedsa.compose.tv.useLocalErrorMsgBoxController
 import com.muedsa.compose.tv.widget.player.DanmakuVideoPlayer
 import com.muedsa.compose.tv.widget.player.mergeDanmaku
 import com.muedsa.jcytv.BuildConfig
@@ -44,7 +44,7 @@ fun PlaybackScreen(
     backListeners: SnapshotStateList<() -> Unit>
 ) {
     val activity = LocalContext.current as? Activity
-    val errorMsgBoxState = LocalErrorMsgBoxState.current
+    val errorMsgBoxState = useLocalErrorMsgBoxController()
 
     val danmakuSettingLD by playbackViewModel.danmakuSettingLDSF.collectAsState()
     val danmakuListLD by playbackViewModel.danmakuListLDSF.collectAsState()

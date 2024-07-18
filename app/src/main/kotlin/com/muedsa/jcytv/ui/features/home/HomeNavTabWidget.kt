@@ -41,7 +41,7 @@ fun HomeNavTabWidget(
     tabIndex: Int = 0,
     homePageViewModel: HomePageViewModel
 ) {
-    val backgroundState = LocalHomeScreenBackgroundState.current
+    val backgroundState = useLocalHomeScreenBackgroundState()
     var focusedTabIndex by rememberSaveable { mutableIntStateOf(tabIndex) }
     var selectedTabIndex by rememberSaveable { mutableIntStateOf(focusedTabIndex) }
 

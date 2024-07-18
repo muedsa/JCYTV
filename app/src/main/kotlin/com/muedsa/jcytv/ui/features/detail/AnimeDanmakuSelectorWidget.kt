@@ -37,7 +37,7 @@ import androidx.tv.material3.RadioButton
 import androidx.tv.material3.Text
 import androidx.tv.material3.WideButtonDefaults
 import com.muedsa.compose.tv.theme.outline
-import com.muedsa.compose.tv.widget.LocalRightSideDrawerState
+import com.muedsa.compose.tv.useLocalRightSideDrawerController
 import com.muedsa.compose.tv.widget.NoBackground
 import com.muedsa.compose.tv.widget.TwoSideWideButton
 import com.muedsa.jcytv.viewmodel.AnimeDetailViewModel
@@ -48,10 +48,10 @@ fun AnimeDanmakuSelectBtnWidget(
     enabledDanmakuState: MutableState<Boolean> = remember { mutableStateOf(false) },
     viewModel: AnimeDetailViewModel = hiltViewModel(),
 ) {
-    val rightSideDrawerState = LocalRightSideDrawerState.current
+    val drawerController = useLocalRightSideDrawerController()
 
     OutlinedIconButton(onClick = {
-        rightSideDrawerState.pop {
+        drawerController.pop {
             DanmakuSelectorSideWidget(enabledDanmakuState, viewModel)
         }
     }) {
@@ -68,7 +68,7 @@ fun DanmakuSelectorSideWidget(
     enabledDanmakuState: MutableState<Boolean> = remember { mutableStateOf(false) },
     viewModel: AnimeDetailViewModel = hiltViewModel(),
 ) {
-    val rightSideDrawerState = LocalRightSideDrawerState.current
+    val drawerController = useLocalRightSideDrawerController()
 
     var isSelectorTab by remember { mutableStateOf(true) }
 
@@ -94,7 +94,7 @@ fun DanmakuSelectorSideWidget(
                     TwoSideWideButton(
                         title = { Text("关闭弹幕") },
                         onClick = {
-                            rightSideDrawerState.close()
+                            drawerController.close()
                             enabledDanmakuState.value = false
                         },
                         interactionSource = interactionSource,
@@ -121,7 +121,7 @@ fun DanmakuSelectorSideWidget(
                             )
                         },
                         onClick = {
-                            rightSideDrawerState.close()
+                            drawerController.close()
                             enabledDanmakuState.value = true
                             viewModel.danBangumi(it.animeId)
                         },

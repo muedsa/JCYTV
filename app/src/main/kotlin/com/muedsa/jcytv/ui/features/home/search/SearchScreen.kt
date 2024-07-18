@@ -22,7 +22,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -40,28 +39,28 @@ import com.muedsa.compose.tv.model.ContentModel
 import com.muedsa.compose.tv.theme.ImageCardRowCardPadding
 import com.muedsa.compose.tv.theme.ScreenPaddingLeft
 import com.muedsa.compose.tv.theme.outline
+import com.muedsa.compose.tv.useLocalErrorMsgBoxController
+import com.muedsa.compose.tv.useLocalNavHostController
 import com.muedsa.compose.tv.widget.CardType
 import com.muedsa.compose.tv.widget.ImageContentCard
-import com.muedsa.compose.tv.widget.LocalErrorMsgBoxState
 import com.muedsa.compose.tv.widget.ScreenBackgroundType
 import com.muedsa.jcytv.ui.GirdLastItemHeight
 import com.muedsa.jcytv.ui.VideoPosterSize
-import com.muedsa.jcytv.ui.features.home.LocalHomeScreenBackgroundState
-import com.muedsa.jcytv.ui.nav.LocalAppNavController
+import com.muedsa.jcytv.ui.features.home.useLocalHomeScreenBackgroundState
 import com.muedsa.jcytv.ui.nav.NavigationItems
 import com.muedsa.jcytv.ui.nav.navigate
 import com.muedsa.jcytv.viewmodel.SearchViewModel
 import com.muedsa.model.LazyType
 import com.muedsa.uitl.LogUtil
 
-@OptIn(ExperimentalTvMaterial3Api::class, ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
 fun SearchScreen(
     viewModel: SearchViewModel = hiltViewModel()
 ) {
-    val backgroundState = LocalHomeScreenBackgroundState.current
-    val errorMsgBoxState = LocalErrorMsgBoxState.current
-    val navController = LocalAppNavController.current
+    val backgroundState = useLocalHomeScreenBackgroundState()
+    val errorMsgBoxState = useLocalErrorMsgBoxController()
+    val navController = useLocalNavHostController()
 
     val searchText by viewModel.searchTextSF.collectAsState()
     val searchAnimeLD by viewModel.searchAnimeLDSF.collectAsState()

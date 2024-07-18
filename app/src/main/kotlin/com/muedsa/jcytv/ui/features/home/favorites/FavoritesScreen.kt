@@ -34,12 +34,12 @@ import androidx.tv.material3.Text
 import com.muedsa.compose.tv.model.ContentModel
 import com.muedsa.compose.tv.theme.ImageCardRowCardPadding
 import com.muedsa.compose.tv.theme.ScreenPaddingLeft
+import com.muedsa.compose.tv.useLocalNavHostController
 import com.muedsa.compose.tv.widget.CardType
 import com.muedsa.compose.tv.widget.ImageContentCard
 import com.muedsa.compose.tv.widget.ScreenBackgroundType
 import com.muedsa.jcytv.ui.VideoPosterSize
-import com.muedsa.jcytv.ui.features.home.LocalHomeScreenBackgroundState
-import com.muedsa.jcytv.ui.nav.LocalAppNavController
+import com.muedsa.jcytv.ui.features.home.useLocalHomeScreenBackgroundState
 import com.muedsa.jcytv.ui.nav.NavigationItems
 import com.muedsa.jcytv.ui.nav.navigate
 import com.muedsa.jcytv.viewmodel.FavoriteViewModel
@@ -50,8 +50,8 @@ import com.muedsa.uitl.LogUtil
 fun FavoritesScreen(
     viewModel: FavoriteViewModel = hiltViewModel()
 ) {
-    val navController = LocalAppNavController.current
-    val backgroundState = LocalHomeScreenBackgroundState.current
+    val navController = useLocalNavHostController()
+    val backgroundState = useLocalHomeScreenBackgroundState()
 
     val favoriteAnimeList by viewModel.favoriteAnimeSF.collectAsState()
     var deleteMode by remember {

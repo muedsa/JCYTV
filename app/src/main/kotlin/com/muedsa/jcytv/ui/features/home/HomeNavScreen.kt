@@ -9,8 +9,19 @@ import com.muedsa.compose.tv.widget.ScreenBackgroundState
 import com.muedsa.compose.tv.widget.rememberScreenBackgroundState
 import com.muedsa.jcytv.viewmodel.HomePageViewModel
 
-val LocalHomeScreenBackgroundState = compositionLocalOf<ScreenBackgroundState> {
-    error("LocalHomeScreenBackgroundState not init")
+private val LocalHomeScreenBackgroundState = compositionLocalOf<ScreenBackgroundState?> { null }
+
+@Composable
+fun LocalHomeScreenBackgroundStateProvider(
+    backgroundState: ScreenBackgroundState = rememberScreenBackgroundState(),
+    content: @Composable () -> Unit
+) {
+    CompositionLocalProvider(value = LocalHomeScreenBackgroundState provides backgroundState, content = content)
+}
+
+@Composable
+fun useLocalHomeScreenBackgroundState(): ScreenBackgroundState {
+    return LocalHomeScreenBackgroundState.current ?: throw RuntimeException("Please wrap your app with LocalHomeScreenBackgroundState")
 }
 
 @Composable
@@ -21,7 +32,7 @@ fun HomeNavScreen(
     val backgroundState = rememberScreenBackgroundState()
 
     ScreenBackground(state = backgroundState)
-    CompositionLocalProvider(value = LocalHomeScreenBackgroundState provides backgroundState) {
+    LocalHomeScreenBackgroundStateProvider(backgroundState) {
         HomeNavTabWidget(
             tabIndex = tabIndex,
             homePageViewModel = homePageViewModel

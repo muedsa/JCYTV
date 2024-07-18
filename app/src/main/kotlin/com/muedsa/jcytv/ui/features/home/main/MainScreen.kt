@@ -25,16 +25,16 @@ import androidx.tv.material3.MaterialTheme
 import com.muedsa.compose.tv.model.ContentModel
 import com.muedsa.compose.tv.theme.ImageCardRowCardPadding
 import com.muedsa.compose.tv.theme.ScreenPaddingLeft
+import com.muedsa.compose.tv.useLocalErrorMsgBoxController
+import com.muedsa.compose.tv.useLocalNavHostController
 import com.muedsa.compose.tv.widget.ContentBlock
 import com.muedsa.compose.tv.widget.ErrorScreen
 import com.muedsa.compose.tv.widget.ImageCardsRow
 import com.muedsa.compose.tv.widget.LoadingScreen
-import com.muedsa.compose.tv.widget.LocalErrorMsgBoxState
 import com.muedsa.compose.tv.widget.ScreenBackgroundType
 import com.muedsa.compose.tv.widget.StandardImageCardsRow
 import com.muedsa.jcytv.ui.VideoPosterSize
-import com.muedsa.jcytv.ui.features.home.LocalHomeScreenBackgroundState
-import com.muedsa.jcytv.ui.nav.LocalAppNavController
+import com.muedsa.jcytv.ui.features.home.useLocalHomeScreenBackgroundState
 import com.muedsa.jcytv.ui.nav.NavigationItems
 import com.muedsa.jcytv.ui.nav.navigate
 import com.muedsa.jcytv.viewmodel.HomePageViewModel
@@ -48,9 +48,9 @@ fun MainScreen(
 ) {
     val configuration = LocalConfiguration.current
 
-    val backgroundState = LocalHomeScreenBackgroundState.current
-    val errorMsgBoxState = LocalErrorMsgBoxState.current
-    val navController = LocalAppNavController.current
+    val backgroundState = useLocalHomeScreenBackgroundState()
+    val errorMsgBoxState = useLocalErrorMsgBoxController()
+    val navController = useLocalNavHostController()
 
     val firstRowHeight =
         (MaterialTheme.typography.titleLarge.fontSize.value * configuration.fontScale + 0.5f).dp +

@@ -35,7 +35,7 @@ import kotlin.time.Duration.Companion.seconds
 @OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
 fun ErrorMessageBox(
-    state: ErrorMessageBoxState = remember { ErrorMessageBoxState() },
+    state: ErrorMessageBoxController = remember { ErrorMessageBoxController() },
     content: @Composable () -> Unit = {}
 ) {
     LaunchedEffect(key1 = state.duration) {
@@ -79,7 +79,7 @@ fun ErrorMessageBox(
 
 
 @Stable
-class ErrorMessageBoxState(
+class ErrorMessageBoxController(
     initVisible: Boolean = false,
     initMessage: String? = null,
     initDuration: Int = 0

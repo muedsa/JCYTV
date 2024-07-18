@@ -50,13 +50,14 @@ import androidx.tv.material3.Text
 import androidx.tv.material3.WideButtonDefaults
 import com.muedsa.compose.tv.model.ContentModel
 import com.muedsa.compose.tv.theme.ScreenPaddingLeft
+import com.muedsa.compose.tv.useLocalErrorMsgBoxController
+import com.muedsa.compose.tv.useLocalNavHostController
+import com.muedsa.compose.tv.useLocalRightSideDrawerController
 import com.muedsa.compose.tv.widget.ContentBlock
 import com.muedsa.compose.tv.widget.ContentBlockType
 import com.muedsa.compose.tv.widget.EmptyDataScreen
 import com.muedsa.compose.tv.widget.ErrorScreen
 import com.muedsa.compose.tv.widget.LoadingScreen
-import com.muedsa.compose.tv.widget.LocalErrorMsgBoxState
-import com.muedsa.compose.tv.widget.LocalRightSideDrawerState
 import com.muedsa.compose.tv.widget.NoBackground
 import com.muedsa.compose.tv.widget.ScreenBackground
 import com.muedsa.compose.tv.widget.ScreenBackgroundType
@@ -67,7 +68,6 @@ import com.muedsa.jcytv.room.model.FavoriteAnimeModel
 import com.muedsa.jcytv.ui.FavoriteIconColor
 import com.muedsa.jcytv.ui.RankFontColor
 import com.muedsa.jcytv.ui.RankIconColor
-import com.muedsa.jcytv.ui.nav.LocalAppNavController
 import com.muedsa.jcytv.ui.nav.NavigationItems
 import com.muedsa.jcytv.ui.nav.navigate
 import com.muedsa.jcytv.util.Upscayl
@@ -87,9 +87,9 @@ fun AnimeDetailScreen(
     val screenHeight = configuration.screenHeightDp.dp
     val screenWidth = configuration.screenWidthDp.dp
     val lifecycleOwner = LocalLifecycleOwner.current
-    val errorMsgBoxState = LocalErrorMsgBoxState.current
-    val rightSideDrawerState = LocalRightSideDrawerState.current
-    val navController = LocalAppNavController.current
+    val errorMsgBoxController = useLocalErrorMsgBoxController()
+    val drawerController = useLocalRightSideDrawerController()
+    val navController = useLocalNavHostController()
 
     val animeDetailLD by viewModel.animeDetailLDSF.collectAsState()
     val favoriteModel by viewModel.favoriteModelSF.collectAsState()
@@ -107,7 +107,7 @@ fun AnimeDetailScreen(
 
     LaunchedEffect(key1 = animeDetailLD) {
         if (animeDetailLD.type == LazyType.FAILURE) {
-            errorMsgBoxState.error(animeDetailLD.error)
+            errorMsgBoxController.error(animeDetailLD.error)
         } else if (animeDetailLD.type == LazyType.SUCCESS) {
             if (animeDetailLD.data != null) {
                 if (settingLD.data?.upscaylCoverImageEnable == true) {
@@ -121,13 +121,13 @@ fun AnimeDetailScreen(
 
     LaunchedEffect(key1 = danSearchAnimeListLD) {
         if (danSearchAnimeListLD.type == LazyType.FAILURE) {
-            errorMsgBoxState.error(danSearchAnimeListLD.error)
+            errorMsgBoxController.error(danSearchAnimeListLD.error)
         }
     }
 
     LaunchedEffect(key1 = danAnimeInfoLD) {
         if (danAnimeInfoLD.type == LazyType.FAILURE) {
-            errorMsgBoxState.error(danAnimeInfoLD.error)
+            errorMsgBoxController.error(danAnimeInfoLD.error)
         }
     }
 
@@ -217,7 +217,7 @@ fun AnimeDetailScreen(
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         OutlinedIconButton(onClick = {
-                            rightSideDrawerState.pop {
+                            drawerController.pop {
                                 Column {
                                     Text(
                                         modifier = Modifier
@@ -235,7 +235,7 @@ fun AnimeDetailScreen(
                                                 title = { Text(text = it.first) },
                                                 onClick = {
                                                     selectedPlaySource = it
-                                                    rightSideDrawerState.close()
+                                                    drawerController.close()
                                                 },
                                                 interactionSource = interactionSource,
                                                 background = {
@@ -356,7 +356,7 @@ fun AnimeDetailScreen(
                                         context.startActivity(intent)
                                     },
                                     onError = {
-                                        errorMsgBoxState.error(it)
+                                        errorMsgBoxController.error(it)
                                     }
                                 )
                             },

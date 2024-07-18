@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.navigation.compose.rememberNavController
 import androidx.tv.material3.ExperimentalTvMaterial3Api
 import com.muedsa.compose.tv.theme.TvTheme
 import com.muedsa.compose.tv.widget.Scaffold
@@ -29,7 +28,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             TvTheme {
                 Scaffold {
-                    AppNavigation(navController = rememberNavController())
+                    AppNavigation()
                 }
             }
         }

@@ -3,10 +3,10 @@ package com.muedsa.jcytv.viewmodel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.muedsa.jcytv.model.dandanplay.DanAnimeInfo
-import com.muedsa.jcytv.model.dandanplay.DanSearchAnime
 import com.muedsa.jcytv.exception.DataRequestException
 import com.muedsa.jcytv.model.JcyVideoDetail
+import com.muedsa.jcytv.model.dandanplay.DanAnimeInfo
+import com.muedsa.jcytv.model.dandanplay.DanSearchAnime
 import com.muedsa.jcytv.room.dao.EpisodeProgressDao
 import com.muedsa.jcytv.room.dao.FavoriteAnimeDao
 import com.muedsa.jcytv.room.model.FavoriteAnimeModel
