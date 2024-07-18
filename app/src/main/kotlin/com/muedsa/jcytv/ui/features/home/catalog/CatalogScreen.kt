@@ -13,6 +13,10 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowDropDown
 import androidx.compose.material.icons.outlined.KeyboardArrowUp
@@ -30,10 +34,6 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.tv.foundation.lazy.grid.TvGridCells
-import androidx.tv.foundation.lazy.grid.TvLazyVerticalGrid
-import androidx.tv.foundation.lazy.grid.itemsIndexed
-import androidx.tv.foundation.lazy.list.TvLazyColumn
 import androidx.tv.material3.ButtonDefaults
 import androidx.tv.material3.Card
 import androidx.tv.material3.Icon
@@ -123,7 +123,7 @@ fun CatalogScreen(
 
         if (optionsExpand) {
             // 筛选项
-            TvLazyColumn(contentPadding = PaddingValues(top = ImageCardRowCardPadding)) {
+            LazyColumn(contentPadding = PaddingValues(top = ImageCardRowCardPadding)) {
                 item {
                     CatalogOptionsWidget(
                         title = "频道",
@@ -205,8 +205,8 @@ fun CatalogScreen(
         } else {
             val gridFocusRequester = remember { FocusRequester() }
 
-            TvLazyVerticalGrid(
-                columns = TvGridCells.Adaptive(VideoPosterSize.width + ImageCardRowCardPadding),
+            LazyVerticalGrid(
+                columns = GridCells.Adaptive(VideoPosterSize.width + ImageCardRowCardPadding),
                 contentPadding = PaddingValues(
                     top = ImageCardRowCardPadding,
                     bottom = ImageCardRowCardPadding

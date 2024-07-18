@@ -6,6 +6,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -18,9 +21,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
-import androidx.tv.foundation.lazy.list.TvLazyListState
-import androidx.tv.foundation.lazy.list.TvLazyRow
-import androidx.tv.foundation.lazy.list.rememberTvLazyListState
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import com.muedsa.compose.tv.model.ContentModel
@@ -37,7 +37,7 @@ import com.muedsa.uitl.anyMatchWithIndex
 @Composable
 fun <T> ImageCardsRow(
     modifier: Modifier = Modifier,
-    state: TvLazyListState = rememberTvLazyListState(),
+    state: LazyListState = rememberLazyListState(),
     title: String,
     modelList: List<T> = listOf(),
     imageFn: (index: Int, item: T) -> String,
@@ -59,7 +59,7 @@ fun <T> ImageCardsRow(
             maxLines = 1
         )
         Spacer(modifier = Modifier.height(ImageCardRowCardPadding))
-        TvLazyRow(
+        LazyRow(
             modifier = Modifier
                 .focusRequester(rowFR)
                 .focusRestorer {
@@ -102,7 +102,7 @@ fun <T> ImageCardsRow(
 @Composable
 fun <T> StandardImageCardsRow(
     modifier: Modifier = Modifier,
-    state: TvLazyListState = rememberTvLazyListState(),
+    state: LazyListState = rememberLazyListState(),
     title: String,
     modelList: List<T> = listOf(),
     imageFn: (index: Int, item: T) -> String,
@@ -129,7 +129,7 @@ fun <T> StandardImageCardsRow(
             maxLines = 1
         )
         Spacer(modifier = Modifier.height(10.dp))
-        TvLazyRow(
+        LazyRow(
             modifier = Modifier
                 .focusRequester(rowFR)
                 .focusRestorer {

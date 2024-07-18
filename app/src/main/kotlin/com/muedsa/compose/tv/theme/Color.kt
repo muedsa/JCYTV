@@ -2,12 +2,12 @@ package com.muedsa.compose.tv.theme
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.tv.foundation.lazy.list.TvLazyColumn
 import androidx.tv.material3.ColorScheme
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
@@ -46,7 +46,7 @@ val ColorScheme.outlineVariant: Color
 
 @Composable
 fun TvColorPreview(modifier: Modifier = Modifier) {
-    TvLazyColumn(modifier) {
+    LazyColumn(modifier) {
         item {
             Text(
                 modifier = Modifier

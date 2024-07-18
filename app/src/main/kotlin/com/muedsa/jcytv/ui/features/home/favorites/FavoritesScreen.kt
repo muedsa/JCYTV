@@ -7,6 +7,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Check
 import androidx.compose.material.icons.outlined.Delete
@@ -22,9 +25,6 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.tv.foundation.lazy.grid.TvGridCells
-import androidx.tv.foundation.lazy.grid.TvLazyVerticalGrid
-import androidx.tv.foundation.lazy.grid.itemsIndexed
 import androidx.tv.material3.ButtonDefaults
 import androidx.tv.material3.Icon
 import androidx.tv.material3.MaterialTheme
@@ -83,10 +83,10 @@ fun FavoritesScreen(
             }
         }
 
-        TvLazyVerticalGrid(
+        LazyVerticalGrid(
             modifier = Modifier
                 .padding(start = 0.dp, top = 20.dp, end = 20.dp, bottom = 20.dp),
-            columns = TvGridCells.Adaptive(VideoPosterSize.width + ImageCardRowCardPadding),
+            columns = GridCells.Adaptive(VideoPosterSize.width + ImageCardRowCardPadding),
             contentPadding = PaddingValues(
                 top = ImageCardRowCardPadding,
                 bottom = ImageCardRowCardPadding

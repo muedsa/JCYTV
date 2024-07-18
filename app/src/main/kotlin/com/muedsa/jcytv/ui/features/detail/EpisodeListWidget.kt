@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -25,8 +27,6 @@ import androidx.compose.ui.graphics.drawscope.clipRect
 import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.tv.foundation.lazy.list.TvLazyRow
-import androidx.tv.foundation.lazy.list.itemsIndexed
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import androidx.tv.material3.WideButton
@@ -93,7 +93,7 @@ fun EpisodeListWidget(
                     }
 
                     // 剧集列表
-                    TvLazyRow {
+                    LazyRow {
                         itemsIndexed(
                             items = currentPartEpisodeList,
                             key = { _, item -> item.first }
@@ -235,7 +235,7 @@ fun EpisodeListWidget(
                         }
                     }
 
-                    TvLazyRow {
+                    LazyRow {
                         itemsIndexed(
                             items = danEpisodeList,
                             key = { _, item -> item.episodeId }

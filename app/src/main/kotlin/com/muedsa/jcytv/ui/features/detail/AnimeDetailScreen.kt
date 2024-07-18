@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Edit
@@ -35,8 +37,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
-import androidx.tv.foundation.lazy.list.TvLazyColumn
-import androidx.tv.foundation.lazy.list.items
 import androidx.tv.material3.ButtonDefaults
 import androidx.tv.material3.Icon
 import androidx.tv.material3.LocalContentColor
@@ -156,7 +156,7 @@ fun AnimeDetailScreen(
 
             val enabledDanmakuState = remember { mutableStateOf(true) }
 
-            TvLazyColumn(
+            LazyColumn(
                 modifier = Modifier
                     .padding(start = ScreenPaddingLeft),
                 contentPadding = PaddingValues(bottom = 100.dp)
@@ -222,7 +222,7 @@ fun AnimeDetailScreen(
                                         text = "弹幕剧集",
                                         style = MaterialTheme.typography.titleLarge
                                     )
-                                    TvLazyColumn(
+                                    LazyColumn(
                                         contentPadding = PaddingValues(vertical = 20.dp)
                                     ) {
                                         items(items = animeDetail.playList) {
