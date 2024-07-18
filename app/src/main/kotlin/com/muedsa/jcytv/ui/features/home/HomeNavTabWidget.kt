@@ -1,6 +1,7 @@
 package com.muedsa.jcytv.ui.features.home
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -51,7 +52,7 @@ fun HomeNavTabWidget(
         tabPanelIndex = selectedTabIndex
     }
 
-    Column {
+    Column(modifier = Modifier.fillMaxWidth()) {
         TabRow(
             modifier = Modifier
                 .align(alignment = Alignment.CenterHorizontally)
