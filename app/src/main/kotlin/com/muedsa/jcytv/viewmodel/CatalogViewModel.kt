@@ -2,6 +2,9 @@ package com.muedsa.jcytv.viewmodel
 
 import android.icu.util.Calendar
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.util.fastAny
+import androidx.compose.ui.util.fastFirst
+import androidx.compose.ui.util.fastFirstOrNull
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.muedsa.jcytv.model.JcySimpleVideoInfo
@@ -13,6 +16,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 import kotlin.math.max
 
@@ -47,15 +51,30 @@ class CatalogViewModel @Inject constructor() : ViewModel() {
         catalog(LazyPagedList.new(buildQueryParams()))
     }
 
-    private suspend fun fetchCatalog(
+    private fun fetchCatalog(
         lp: LazyPagedList<Map<String, String>, JcySimpleVideoInfo>
     ): LazyPagedList<Map<String, String>, JcySimpleVideoInfo> {
         return try {
             val pageNum = lp.nextPage
             JcyHtmlTool.catalog(lp.query.toMutableMap().apply {
                 this["page"] = pageNum.toString()
-            }).let {
-                lp.successNext(it, if (it.isEmpty()) pageNum else pageNum + 1)
+            }).let { videoList ->
+                if (lp.list.isNotEmpty()) {
+                    val mList = videoList.toMutableList()
+                    val iterator = mList.iterator()
+                    while (iterator.hasNext()) {
+                        val videoInfo = iterator.next()
+                        val fastFirst = lp.list.fastFirstOrNull { it.id == videoInfo.id }
+                        if (fastFirst != null) {
+                            LogUtil.d("fetchCatalog error, Duplicate video. \n$fastFirst \n$videoInfo")
+                            iterator.remove()
+                        }
+                    }
+                    lp.successNext(mList, if (mList.isEmpty()) pageNum else pageNum + 1)
+                } else {
+                    lp.successNext(videoList, if (videoList.isEmpty()) pageNum else pageNum + 1)
+                }
+
             }
         } catch (t: Throwable) {
             LogUtil.fb(t)
@@ -91,10 +110,10 @@ class CatalogViewModel @Inject constructor() : ViewModel() {
     }
 
     companion object {
-        val ID_OPTIONS: Map<String, String> = mapOf(
+        val ID_OPTIONS: Map<String, String> = linkedMapOf(
             "20" to "新番放送",
-            "3" to "追番计划",
-            "4" to "动漫剧场"
+            "4" to "追番计划",
+            "3" to "动漫剧场",
         )
 
         val AREA_OPTIONS: Map<String, String> =
