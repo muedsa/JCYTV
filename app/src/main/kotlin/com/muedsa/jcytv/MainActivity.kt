@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.tv.material3.ExperimentalTvMaterial3Api
 import com.muedsa.compose.tv.theme.TvTheme
 import com.muedsa.compose.tv.widget.Scaffold
 import com.muedsa.jcytv.ui.nav.AppNavigation
@@ -18,7 +17,6 @@ class MainActivity : ComponentActivity() {
 
     private val homePageViewModel: HomePageViewModel by viewModels()
 
-    @OptIn(ExperimentalTvMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)

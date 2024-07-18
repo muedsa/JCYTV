@@ -24,7 +24,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.MaterialTheme
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
@@ -34,7 +33,7 @@ import jp.wasabeef.transformers.coil.BlurTransformation
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.milliseconds
 
-@OptIn(ExperimentalTvMaterial3Api::class)
+
 @Composable
 fun ScreenBackground(
     state: ScreenBackgroundState = rememberScreenBackgroundState()

@@ -12,6 +12,9 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.OutlinedTextField
@@ -27,11 +30,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.tv.foundation.lazy.grid.TvGridCells
-import androidx.tv.foundation.lazy.grid.TvLazyVerticalGrid
-import androidx.tv.foundation.lazy.grid.itemsIndexed
 import androidx.tv.material3.ButtonDefaults
-import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.Icon
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.OutlinedIconButton
@@ -53,7 +52,7 @@ import com.muedsa.jcytv.viewmodel.SearchViewModel
 import com.muedsa.model.LazyType
 import com.muedsa.uitl.LogUtil
 
-@OptIn(ExperimentalTvMaterial3Api::class)
+
 @Composable
 fun SearchScreen(
     viewModel: SearchViewModel = hiltViewModel()
@@ -116,8 +115,8 @@ fun SearchScreen(
             val animeList = searchAnimeLD.data!!
             val gridFocusRequester = remember { FocusRequester() }
 
-            TvLazyVerticalGrid(
-                columns = TvGridCells.Adaptive(VideoPosterSize.width + ImageCardRowCardPadding),
+            LazyVerticalGrid(
+                columns = GridCells.Adaptive(VideoPosterSize.width + ImageCardRowCardPadding),
                 contentPadding = PaddingValues(
                     top = ImageCardRowCardPadding,
                     bottom = ImageCardRowCardPadding

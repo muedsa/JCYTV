@@ -10,13 +10,13 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusRestorer
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Tab
 import androidx.tv.material3.TabDefaults
@@ -35,7 +35,7 @@ import kotlin.time.Duration.Companion.milliseconds
 
 val tabs: Array<HomeNavTab> = HomeNavTab.entries.toTypedArray()
 
-@OptIn(ExperimentalTvMaterial3Api::class, ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun HomeNavTabWidget(
     tabIndex: Int = 0,
@@ -52,10 +52,10 @@ fun HomeNavTabWidget(
         tabPanelIndex = selectedTabIndex
     }
 
-    Column {
+    Column(modifier = Modifier.fillMaxWidth()) {
         TabRow(
             modifier = Modifier
-                .fillMaxWidth()
+                .align(alignment = Alignment.CenterHorizontally)
                 .padding(top = 24.dp, bottom = 24.dp)
                 .focusRestorer(),
             selectedTabIndex = selectedTabIndex,

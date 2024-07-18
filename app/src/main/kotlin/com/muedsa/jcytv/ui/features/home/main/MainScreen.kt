@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -18,9 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.tv.foundation.lazy.list.TvLazyColumn
-import androidx.tv.material3.ExperimentalTvMaterial3Api
-import androidx.tv.material3.ImmersiveList
 import androidx.tv.material3.MaterialTheme
 import com.muedsa.compose.tv.model.ContentModel
 import com.muedsa.compose.tv.theme.ImageCardRowCardPadding
@@ -30,6 +28,7 @@ import com.muedsa.compose.tv.useLocalNavHostController
 import com.muedsa.compose.tv.widget.ContentBlock
 import com.muedsa.compose.tv.widget.ErrorScreen
 import com.muedsa.compose.tv.widget.ImageCardsRow
+import com.muedsa.compose.tv.widget.ImmersiveList
 import com.muedsa.compose.tv.widget.LoadingScreen
 import com.muedsa.compose.tv.widget.ScreenBackgroundType
 import com.muedsa.compose.tv.widget.StandardImageCardsRow
@@ -41,7 +40,7 @@ import com.muedsa.jcytv.viewmodel.HomePageViewModel
 import com.muedsa.model.LazyType
 import com.muedsa.uitl.LogUtil
 
-@OptIn(ExperimentalTvMaterial3Api::class)
+
 @Composable
 fun MainScreen(
     viewModel: HomePageViewModel = hiltViewModel(),
@@ -74,7 +73,7 @@ fun MainScreen(
 
     if (homeRowsLD.type == LazyType.SUCCESS && !homeRowsLD.data.isNullOrEmpty()) {
         val homeRows = homeRowsLD.data!!
-        TvLazyColumn(
+        LazyColumn(
             modifier = Modifier
                 .offset(x = ScreenPaddingLeft - ImageCardRowCardPadding),
             contentPadding = PaddingValues(bottom = 100.dp)
@@ -94,7 +93,7 @@ fun MainScreen(
                     }
                 }
                 ImmersiveList(
-                    background = { _, _ ->
+                    background = {
                         ContentBlock(
                             modifier = Modifier
                                 .width(screenWidth / 2)

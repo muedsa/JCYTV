@@ -134,7 +134,7 @@ dependencies {
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
 
-    implementation(libs.tv.foundation)
+    // implementation(libs.tv.foundation)
     implementation(libs.tv.material)
 
     implementation(libs.navigation.compose)

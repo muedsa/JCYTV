@@ -2,20 +2,18 @@ package com.muedsa.compose.tv.theme
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.tv.foundation.lazy.list.TvLazyColumn
 import androidx.tv.material3.ColorScheme
-import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import androidx.tv.material3.darkColorScheme
 
 
-@OptIn(ExperimentalTvMaterial3Api::class)
 val TvDarkColorScheme = darkColorScheme(
 //    background = background,
 //    onBackground = onBackground,
@@ -25,38 +23,30 @@ val TvDarkColorScheme = darkColorScheme(
 //    onSurfaceVariant = onSurfaceVariant
 )
 
-@OptIn(ExperimentalTvMaterial3Api::class)
 val ColorScheme.surfaceContainerLowest: Color
     get() = Color(red = 14, green = 14, blue = 14) // N-4 0E0E0E
 
-@OptIn(ExperimentalTvMaterial3Api::class)
 val ColorScheme.surfaceContainerLowe: Color
     get() = Color(red = 27, green = 27, blue = 27) // N-10 1B1B1B
 
-@OptIn(ExperimentalTvMaterial3Api::class)
 val ColorScheme.surfaceContainer: Color
     get() = Color(red = 30, green = 31, blue = 32) // N-12 1E1F20
 
-@OptIn(ExperimentalTvMaterial3Api::class)
 val ColorScheme.surfaceContainerHigh: Color
     get() = Color(red = 40, green = 42, blue = 44) // N-17 282A2C
 
-@OptIn(ExperimentalTvMaterial3Api::class)
 val ColorScheme.surfaceContainerHighest: Color
     get() = Color(red = 51, green = 53, blue = 55) // N-22 333537
 
-@OptIn(ExperimentalTvMaterial3Api::class)
 val ColorScheme.outline: Color
     get() = Color(red = 147, green = 143, blue = 153) // PaletteTokens.NeutralVariant60
 
-@OptIn(ExperimentalTvMaterial3Api::class)
 val ColorScheme.outlineVariant: Color
     get() = Color(red = 73, green = 69, blue = 79) // PaletteTokens.NeutralVariant30
 
-@OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
 fun TvColorPreview(modifier: Modifier = Modifier) {
-    TvLazyColumn(modifier) {
+    LazyColumn(modifier) {
         item {
             Text(
                 modifier = Modifier

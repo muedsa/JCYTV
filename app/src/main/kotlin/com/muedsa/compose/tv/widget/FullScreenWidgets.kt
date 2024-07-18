@@ -14,7 +14,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.Icon
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.OutlinedIconButton
@@ -40,7 +39,7 @@ fun EmptyDataScreen(model: Boolean = false) {
     FillTextScreen(context = "Empty(っ °Д °;)っ", model = model)
 }
 
-@OptIn(ExperimentalTvMaterial3Api::class)
+
 @Composable
 fun ErrorScreen(onRefresh: (() -> Unit)? = null) {
     Column(
@@ -60,7 +59,7 @@ fun ErrorScreen(onRefresh: (() -> Unit)? = null) {
     }
 }
 
-@OptIn(ExperimentalTvMaterial3Api::class)
+
 @Composable
 fun FillTextScreen(context: String, model: Boolean = false) {
     var modifier = Modifier.fillMaxSize()
