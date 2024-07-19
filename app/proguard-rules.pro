@@ -82,4 +82,8 @@
 # With R8 full mode generic signatures are stripped for classes that are not kept.
 -keep,allowobfuscation,allowshrinking class retrofit2.Response
 
--keep public class * extends java.lang.Exception  # Optional: Keep custom exceptions.
+# Optional: Keep custom exceptions.
+-keep public class * extends java.lang.Exception
+
+# Firebase
+-keep class com.google.firebase.** { *; }
