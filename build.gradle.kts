@@ -9,4 +9,6 @@ plugins {
     alias(libs.plugins.firebaseCrashlytics) apply false
     alias(libs.plugins.compose.compiler) apply false
     alias(libs.plugins.android.room) apply false
+    alias(libs.plugins.android.test) apply false
+    alias(libs.plugins.baselineprofile) apply false
 }

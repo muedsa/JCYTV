@@ -11,6 +11,7 @@ plugins {
     alias(libs.plugins.firebaseCrashlytics)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.android.room)
+    alias(libs.plugins.baselineprofile)
 }
 
 val keystorePropertiesFile: File = rootProject.file("keystore.properties")
@@ -107,6 +108,8 @@ dependencies {
     implementation(libs.lifecycle.runtime.compose)
     implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.hilt.android)
+    implementation(libs.profileinstaller)
+    baselineProfile(project(":benchmark"))
     ksp(libs.hilt.compiler)
     implementation(libs.activity.compose)
     implementation(platform(libs.compose.bom))

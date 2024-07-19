@@ -23,4 +23,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "JCYTV"
 include(":app")
- 
+include(":benchmark")
