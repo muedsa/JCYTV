@@ -250,6 +250,7 @@ fun PlayerProgressIndicator(player: Player) {
             LinearProgressIndicator(
                 progress = { player.currentPosition.toFloat() / player.duration },
                 modifier = Modifier.fillMaxWidth(),
+                gapSize = 0.dp
             ) { }
         } else {
             LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
