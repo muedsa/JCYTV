@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Remove
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -31,6 +32,7 @@ import androidx.tv.material3.Text
 import com.muedsa.compose.tv.theme.surfaceContainer
 import com.muedsa.compose.tv.useLocalErrorMsgBoxController
 import com.muedsa.compose.tv.widget.FocusScaleSwitch
+import com.muedsa.jcytv.BuildConfig
 import com.muedsa.jcytv.viewmodel.AppSettingViewModel
 import com.muedsa.model.LazyType
 
@@ -244,6 +246,28 @@ fun AppSettingScreen(
                             }
                         )
                     }
+
+                    HorizontalDivider()
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 20.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "APP版本",
+                            color = MaterialTheme.colorScheme.onBackground,
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                        Text(
+                            text = "${BuildConfig.VERSION_NAME}(${BuildConfig.VERSION_CODE})",
+                            color = MaterialTheme.colorScheme.onBackground,
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                    }
+
                 }
             }
         }
