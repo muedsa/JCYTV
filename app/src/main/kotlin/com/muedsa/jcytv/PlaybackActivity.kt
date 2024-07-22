@@ -3,14 +3,10 @@ package com.muedsa.jcytv
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.tv.material3.MaterialTheme
-import androidx.tv.material3.Surface
 import androidx.tv.material3.SurfaceDefaults
 import com.muedsa.compose.tv.theme.TvTheme
 import com.muedsa.compose.tv.useLocalErrorMsgBoxController
@@ -52,19 +48,13 @@ class PlaybackActivity : ComponentActivity() {
                             }
                             errorMsgBoxController.error("再次点击返回键退出")
                         }
-                        Surface(
-                            modifier = Modifier.fillMaxSize(),
-                            shape = RectangleShape,
-
-                            ) {
-                            PlaybackScreen(
-                                aid = aid,
-                                episodeTitle = episodeTitle,
-                                mediaUrl = mediaUrl,
-                                danEpisodeId = episodeId,
-                                backListeners = backListeners
-                            )
-                        }
+                        PlaybackScreen(
+                            aid = aid,
+                            episodeTitle = episodeTitle,
+                            mediaUrl = mediaUrl,
+                            danEpisodeId = episodeId,
+                            backListeners = backListeners
+                        )
                     }
                 }
             }

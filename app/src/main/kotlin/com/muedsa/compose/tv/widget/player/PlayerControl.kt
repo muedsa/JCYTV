@@ -50,6 +50,7 @@ import com.muedsa.compose.tv.widget.OutlinedIconBox
 import kotlinx.coroutines.delay
 import java.util.Date
 import java.util.Locale
+import kotlin.time.Duration.Companion.microseconds
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
@@ -239,10 +240,9 @@ fun PlayerControl(
 @Composable
 fun PlayerProgressIndicator(player: Player) {
     val dateTimeFormat = remember { SimpleDateFormat.getDateTimeInstance() }
-    val systemStr = dateTimeFormat.format(Date())
-    val currentStr =
-        if (player.duration > 0L) durationToString(player.currentPosition) else "--:--:--"
-    val totalStr = if (player.duration > 0L) durationToString(player.duration) else "--:--:--"
+    var systemStr by remember { mutableStateOf("--/--/-- --:--:--") }
+    var currentStr by remember { mutableStateOf("--:--:--") }
+    var totalStr by  remember { mutableStateOf("--:--:--") }
     Column(
         modifier = Modifier.fillMaxWidth(),
     ) {
@@ -250,7 +250,7 @@ fun PlayerProgressIndicator(player: Player) {
             LinearProgressIndicator(
                 progress = { player.currentPosition.toFloat() / player.duration },
                 modifier = Modifier.fillMaxWidth(),
-            )
+            ) { }
         } else {
             LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
         }
@@ -264,6 +264,14 @@ fun PlayerProgressIndicator(player: Player) {
         )
     }
 
+    LaunchedEffect(key1 = Unit) {
+        while (true) {
+            systemStr = dateTimeFormat.format(Date())
+            currentStr = if (player.duration > 0L) durationToString(player.currentPosition) else "--:--:--"
+            totalStr = if (player.duration > 0L) durationToString(player.duration) else "--:--:--"
+            delay(100.microseconds)
+        }
+    }
 }
 
 fun groupTypeToString(group: Tracks.Group): String {
