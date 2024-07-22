@@ -111,7 +111,7 @@ class BaselineProfileGenerator {
                 pressDPadCenter(); waitForIdle(WAIT_TIMEOUT)
                 // 等待目录加载完成
                 wait(
-                    Until.findObject(By.res("catalogScreen_card_")),
+                    Until.findObject(By.res("catalogScreen_card_1")),
                     INITIAL_WAIT_TIMEOUT
                 )
                 // 浏览目录
