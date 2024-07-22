@@ -22,7 +22,8 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.SplashScreenTheme">
+            android:theme="@style/Theme.SplashScreenTheme"
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,7 +32,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".PlaybackActivity" />
+        <activity android:name=".PlaybackActivity" android:launchMode="singleInstance"/>
     </application>
 
 </manifest>
