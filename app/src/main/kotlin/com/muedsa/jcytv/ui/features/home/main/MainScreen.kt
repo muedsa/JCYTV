@@ -17,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.tv.material3.MaterialTheme
@@ -110,6 +111,7 @@ fun MainScreen(
                                 .height(screenHeight - firstRowHeight - tabHeight)
                         )
                         ImageCardsRow(
+                            modifier = Modifier.testTag("mainScreen_row_1"),
                             title = firstRow.first,
                             modelList = firstRow.second,
                             imageFn = { _, anime ->
@@ -134,9 +136,10 @@ fun MainScreen(
                 }
             }
 
-            homeRows.subList(1, homeRows.size).forEach { row ->
+            homeRows.subList(1, homeRows.size).forEachIndexed { index, row ->
                 item {
                     StandardImageCardsRow(
+                        modifier = Modifier.testTag("mainScreen_row_${index + 1}"),
                         title = row.first,
                         modelList = row.second,
                         imageFn = { _, anime ->

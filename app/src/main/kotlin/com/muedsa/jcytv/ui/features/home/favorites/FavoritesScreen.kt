@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.tv.material3.ButtonDefaults
@@ -71,9 +72,10 @@ fun FavoritesScreen(
                 style = MaterialTheme.typography.headlineMedium
             )
             Spacer(modifier = Modifier.width(30.dp))
-            OutlinedButton(onClick = {
-                deleteMode = !deleteMode
-            }) {
+            OutlinedButton(
+                modifier = Modifier.testTag("favoritesScreen_deleteModeButton"),
+                onClick = { deleteMode = !deleteMode }
+            ) {
                 Text(if (deleteMode) "退出" else "删除模式")
                 Spacer(modifier = Modifier.width(ButtonDefaults.IconSpacing))
                 Icon(
@@ -98,7 +100,8 @@ fun FavoritesScreen(
             ) { index, item ->
                 ImageContentCard(
                     modifier = Modifier
-                        .padding(end = ImageCardRowCardPadding),
+                        .padding(end = ImageCardRowCardPadding)
+                        .testTag("favoritesScreen_card_$index"),
                     url = item.cover,
                     imageSize = VideoPosterSize,
                     type = CardType.STANDARD,

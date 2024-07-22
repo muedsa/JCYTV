@@ -32,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.tv.material3.ButtonDefaults
@@ -224,7 +225,8 @@ fun CatalogScreen(
                     ImageContentCard(
                         modifier = Modifier
                             .padding(end = ImageCardRowCardPadding)
-                            .focusRequester(itemFocusRequester),
+                            .focusRequester(itemFocusRequester)
+                            .testTag("catalogScreen_card_$index"),
                         url = item.imageUrl,
                         imageSize = VideoPosterSize,
                         type = CardType.STANDARD,

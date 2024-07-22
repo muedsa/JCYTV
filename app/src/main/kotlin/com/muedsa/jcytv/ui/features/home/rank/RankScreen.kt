@@ -13,6 +13,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -50,11 +51,12 @@ fun RankScreen(
         if (rankListLD.type == LazyType.SUCCESS && !rankListLD.data.isNullOrEmpty()) {
             val ranks = rankListLD.data!!.subList(0, min(3, rankListLD.data!!.size))
             Row {
-                ranks.forEach { rank ->
+                ranks.forEachIndexed { index, rank ->
                     Column(
                         modifier = Modifier
                             .padding(top = 10.dp, bottom = 10.dp, end = 10.dp)
                             .weight(1f)
+                            .testTag("rankScreen_column_$index")
                     ) {
                         Text(
                             modifier = Modifier.fillMaxWidth(),

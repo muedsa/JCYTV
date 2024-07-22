@@ -61,7 +61,7 @@ class BaselineProfileGenerator {
             device.run {
                 // 等到首屏加载
                 wait(
-                    Until.findObject(By.text("首页").clickable(true)),
+                    Until.findObject(By.res("mainScreen_row_1")),
                     INITIAL_WAIT_TIMEOUT
                 )
                 // 浏览首页 3个Row
@@ -77,7 +77,7 @@ class BaselineProfileGenerator {
                 pressDPadCenter(); waitForIdle(WAIT_TIMEOUT)
                 // 等待排行页面加载完成
                 wait(
-                    Until.findObject(By.textContains(". ")),
+                    Until.findObject(By.res("rankScreen_column_1")),
                     INITIAL_WAIT_TIMEOUT
                 )
                 // 浏览排行
@@ -90,7 +90,7 @@ class BaselineProfileGenerator {
                 pressDPadCenter(); waitForIdle(WAIT_TIMEOUT)
                 // 等待收藏页面加载完成
                 wait(
-                    Until.findObject(By.textContains("删除模式")),
+                    Until.findObject(By.res("favoritesScreen_deleteModeButton")),
                     INITIAL_WAIT_TIMEOUT
                 )
                 // 浏览收藏
@@ -102,7 +102,7 @@ class BaselineProfileGenerator {
                 pressDPadCenter(); waitForIdle(WAIT_TIMEOUT)
                 // 等待搜索页面加载完成
                 wait(
-                    Until.findObject(By.desc("搜索")),
+                    Until.findObject(By.res("searchScreen_searchButton")),
                     INITIAL_WAIT_TIMEOUT
                 )
 
@@ -111,7 +111,7 @@ class BaselineProfileGenerator {
                 pressDPadCenter(); waitForIdle(WAIT_TIMEOUT)
                 // 等待目录加载完成
                 wait(
-                    Until.findObject(By.textContains("更新")),
+                    Until.findObject(By.res("catalogScreen_card_")),
                     INITIAL_WAIT_TIMEOUT
                 )
                 // 浏览目录
@@ -122,7 +122,7 @@ class BaselineProfileGenerator {
                 pressDPadCenter(); waitForIdle(WAIT_TIMEOUT)
                 // 等待视频详情页面加载完成
                 wait(
-                    Until.findObject(By.textStartsWith("剧集 1-")),
+                    Until.findObject(By.res("animeDetailScreen_episodeListWidget")),
                     INITIAL_WAIT_TIMEOUT
                 )
                 repeat(2) { pressDPadDown(); waitForIdle(WAIT_TIMEOUT) }

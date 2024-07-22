@@ -28,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.tv.material3.ButtonDefaults
@@ -100,9 +101,10 @@ fun SearchScreen(
                 singleLine = true
             )
             Spacer(modifier = Modifier.width(16.dp))
-            OutlinedIconButton(onClick = {
-                viewModel.searchAnime(searchText)
-            }) {
+            OutlinedIconButton(
+                modifier = Modifier.testTag("searchScreen_searchButton"),
+                onClick = { viewModel.searchAnime(searchText) }
+            ) {
                 Icon(
                     modifier = Modifier.size(ButtonDefaults.IconSize),
                     imageVector = Icons.Outlined.Search,

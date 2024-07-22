@@ -3,8 +3,11 @@ package com.muedsa.compose.tv.widget
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Surface
 import androidx.tv.material3.SurfaceColors
@@ -13,6 +16,7 @@ import com.muedsa.compose.tv.LocalErrorMsgBoxControllerProvider
 import com.muedsa.compose.tv.LocalRightSideDrawerControllerProvider
 
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun Scaffold(
     holdBack: Boolean = true,
@@ -33,7 +37,11 @@ fun Scaffold(
                 }
             }
             Surface(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .semantics {
+                        testTagsAsResourceId = true
+                    },
                 shape = RectangleShape,
                 colors = colors
             ) {
