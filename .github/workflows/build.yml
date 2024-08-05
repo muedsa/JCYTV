@@ -23,7 +23,7 @@ jobs:
         run: ./gradlew :app:assembleDebug :app:assembleRelease
       - name: Upload a Build Artifact
         if: success()
-        uses: actions/upload-artifact@v4.3.4
+        uses: actions/upload-artifact@v4.3.5
         with:
           name: build-artifact
           path: |
