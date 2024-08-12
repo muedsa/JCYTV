@@ -8,7 +8,6 @@ import com.muedsa.jcytv.KEY_DANMAKU_ENABLE
 import com.muedsa.jcytv.KEY_DANMAKU_MERGE_ENABLE
 import com.muedsa.jcytv.KEY_DANMAKU_SCREEN_PART
 import com.muedsa.jcytv.KEY_DANMAKU_SIZE_SCALE
-import com.muedsa.jcytv.KEY_UPSCAYL_COVER_IMAGE_ENABLE
 import com.muedsa.jcytv.model.AppSettingModel
 import com.muedsa.jcytv.repository.DataStoreRepo
 import com.muedsa.model.LazyData
@@ -86,14 +85,6 @@ class AppSettingViewModel @Inject constructor(
                 repo.dataStore.edit {
                     it[KEY_DANMAKU_SCREEN_PART] = value
                 }
-            }
-        }
-    }
-
-    fun changeUpscaylCoverImageEnable(enable: Boolean) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repo.dataStore.edit {
-                it[KEY_UPSCAYL_COVER_IMAGE_ENABLE] = enable
             }
         }
     }

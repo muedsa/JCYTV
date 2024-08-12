@@ -69,16 +69,13 @@ import com.muedsa.jcytv.ui.RankFontColor
 import com.muedsa.jcytv.ui.RankIconColor
 import com.muedsa.jcytv.ui.nav.NavigationItems
 import com.muedsa.jcytv.ui.nav.navigate
-import com.muedsa.jcytv.util.Upscayl
 import com.muedsa.jcytv.viewmodel.AnimeDetailViewModel
-import com.muedsa.jcytv.viewmodel.AppSettingViewModel
 import com.muedsa.model.LazyType
 import com.muedsa.uitl.LogUtil
 
 @Composable
 fun AnimeDetailScreen(
-    viewModel: AnimeDetailViewModel = hiltViewModel(),
-    appSettingViewModel: AppSettingViewModel = hiltViewModel()
+    viewModel: AnimeDetailViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
@@ -95,8 +92,6 @@ fun AnimeDetailScreen(
     val danSearchAnimeListLD by viewModel.danSearchAnimeListLDSF.collectAsState()
     val danAnimeInfoLD by viewModel.danAnimeInfoLDSF.collectAsState()
 
-    val settingLD by appSettingViewModel.settingLDSF.collectAsState()
-
     val episodeRelationMap = remember { mutableStateMapOf<String, Long>() }
 
     val backgroundState = rememberScreenBackgroundState(
@@ -108,11 +103,7 @@ fun AnimeDetailScreen(
             errorMsgBoxController.error(animeDetailLD.error)
         } else if (animeDetailLD.type == LazyType.SUCCESS) {
             if (animeDetailLD.data != null) {
-                if (settingLD.data?.upscaylCoverImageEnable == true) {
-                    backgroundState.url = Upscayl.url(animeDetailLD.data!!.imageUrl)
-                } else {
-                    backgroundState.url = animeDetailLD.data!!.imageUrl
-                }
+                backgroundState.url = animeDetailLD.data!!.imageUrl
             }
         }
     }

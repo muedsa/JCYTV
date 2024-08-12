@@ -227,26 +227,6 @@ fun AppSettingScreen(
                         }
                     }
 
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 20.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = "UPSCAYL",
-                            color = MaterialTheme.colorScheme.onBackground,
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                        FocusScaleSwitch(
-                            checked = settingModel.upscaylCoverImageEnable,
-                            onCheckedChange = {
-                                viewModel.changeUpscaylCoverImageEnable(it)
-                            }
-                        )
-                    }
-
                     HorizontalDivider()
 
                     Row(
