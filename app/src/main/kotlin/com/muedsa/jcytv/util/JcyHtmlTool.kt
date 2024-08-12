@@ -17,15 +17,17 @@ import java.nio.charset.StandardCharsets
 
 object JcyHtmlTool {
 
-    const val MAIN_SITE_URL = "https://9ciyuan.com/"
+    const val CHROME_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
 
-    const val SEARCH_URL = "https://9ciyuan.com/index.php/vod/search.html?wd="
+    const val MAIN_SITE_URL = "https://www.9ciyuan.com/"
 
-    const val RANK_URL = "https://9ciyuan.com/index.php/label/ranking.html"
+    const val SEARCH_URL = "https://www.9ciyuan.com/index.php/vod/search.html?wd="
 
-    const val CATALOG_URL = "https://9ciyuan.com/index.php/vod/show{query}.html"
+    const val RANK_URL = "https://www.9ciyuan.com/index.php/label/ranking.html"
 
-    const val DETAIL_URL = "https://9ciyuan.com/index.php/vod/detail/id/{id}.html"
+    const val CATALOG_URL = "https://www.9ciyuan.com/index.php/vod/show{query}.html"
+
+    const val DETAIL_URL = "https://www.9ciyuan.com/index.php/vod/detail/id/{id}.html"
 
     val DECRYPT_DEFAULT: (String) -> String = { key: String -> key }
 
@@ -39,6 +41,7 @@ object JcyHtmlTool {
         val doc: Document =
             Jsoup.connect("https://play.silisili.top/player/ec.php?code=ttnb&if=1&url=$key")
                 .header(HttpHeaders.REFERER, MAIN_SITE_URL)
+                .header(HttpHeaders.USER_AGENT, CHROME_USER_AGENT)
                 .get()
         val bodyHtml = doc.body().html()
         val urlMatchResult = SILISILI_ENCRYPTED_URL_REGEX.find(bodyHtml)
@@ -54,6 +57,7 @@ object JcyHtmlTool {
     val DECRYPT_DILIDILI: (String) -> String = { key: String ->
         val doc: Document = Jsoup.connect("https://play.dilidili.ink/player/analysis.php?v=$key")
             .header(HttpHeaders.REFERER, MAIN_SITE_URL)
+            .header(HttpHeaders.USER_AGENT, CHROME_USER_AGENT)
             .get()
         val bodyHtml = doc.body().html()
         val urlMatchResult = DILIDILI_ENCRYPTED_URL_REGEX.find(bodyHtml)
@@ -104,6 +108,7 @@ object JcyHtmlTool {
     fun getHomeVideoRows(): List<Pair<String, List<JcySimpleVideoInfo>>> {
         val doc: Document = Jsoup.connect(MAIN_SITE_URL)
             .header(HttpHeaders.REFERER, MAIN_SITE_URL)
+            .header(HttpHeaders.USER_AGENT, CHROME_USER_AGENT)
             .get()
         val body = doc.body()
         val rows = mutableListOf<Pair<String, List<JcySimpleVideoInfo>>>()
@@ -166,6 +171,7 @@ object JcyHtmlTool {
     fun searchVideo(query: String): List<JcySimpleVideoInfo> {
         val doc: Document = Jsoup.connect("$SEARCH_URL${query}")
             .header(HttpHeaders.REFERER, MAIN_SITE_URL)
+            .header(HttpHeaders.USER_AGENT, CHROME_USER_AGENT)
             .get()
         val body = doc.body()
         return getRowInfo(body.selectFirst(".vod-list")!!).second
@@ -174,6 +180,7 @@ object JcyHtmlTool {
     fun rankList(): List<Pair<String, List<JcyRankVideoInfo>>> {
         val doc: Document = Jsoup.connect(RANK_URL)
             .header(HttpHeaders.REFERER, MAIN_SITE_URL)
+            .header(HttpHeaders.USER_AGENT, CHROME_USER_AGENT)
             .get()
         val body = doc.body()
         return body.select(".index-ranking").map {
@@ -200,6 +207,7 @@ object JcyHtmlTool {
         }.joinToString("")
         val doc: Document = Jsoup.connect(CATALOG_URL.replace("{query}", query))
             .header(HttpHeaders.REFERER, MAIN_SITE_URL)
+            .header(HttpHeaders.USER_AGENT, CHROME_USER_AGENT)
             .get()
         val body = doc.body()
         return getRowInfo(body.selectFirst(".vod-list")!!).second
@@ -212,6 +220,7 @@ object JcyHtmlTool {
     fun getVideoDetailByUrl(url: String): JcyVideoDetail {
         val doc: Document = Jsoup.connect(url)
             .header(HttpHeaders.REFERER, MAIN_SITE_URL)
+            .header(HttpHeaders.USER_AGENT, CHROME_USER_AGENT)
             .get()
         val body = doc.body()
         val aEl = body.selectFirst(".vod-info .info h3 a")!!
@@ -246,6 +255,7 @@ object JcyHtmlTool {
     fun getRawPlaySource(url: String): JcyRawPlaySource {
         val doc: Document = Jsoup.connect(url)
             .header(HttpHeaders.REFERER, MAIN_SITE_URL)
+            .header(HttpHeaders.USER_AGENT, CHROME_USER_AGENT)
             .get()
         val bodyHtml = doc.body().html()
 
