@@ -10,6 +10,6 @@ private const val PREFS_NAME = "setting"
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = PREFS_NAME)
 
-class DataStoreRepo @Inject constructor(private val context: Context) {
+class DataStoreRepo @Inject constructor(context: Context) {
     val dataStore: DataStore<Preferences> = context.dataStore
 }

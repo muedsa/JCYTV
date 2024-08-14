@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Refresh
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -41,7 +42,10 @@ fun EmptyDataScreen(model: Boolean = false) {
 
 
 @Composable
-fun ErrorScreen(onRefresh: (() -> Unit)? = null) {
+fun ErrorScreen(
+    onError: (() -> Unit)? = null,
+    onRefresh: (() -> Unit)? = null
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -55,6 +59,12 @@ fun ErrorScreen(onRefresh: (() -> Unit)? = null) {
             OutlinedIconButton(onClick = { onRefresh() }) {
                 Icon(imageVector = Icons.Outlined.Refresh, contentDescription = "Refresh")
             }
+        }
+    }
+    
+    if (onError != null) {
+        LaunchedEffect(key1 = Unit) {
+            onError.invoke()
         }
     }
 }

@@ -7,21 +7,21 @@ import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.muedsa.compose.tv.theme.TvTheme
 import com.muedsa.compose.tv.widget.Scaffold
-import com.muedsa.jcytv.ui.nav.AppNavigation
-import com.muedsa.jcytv.viewmodel.HomePageViewModel
-import com.muedsa.model.LazyType
+import com.muedsa.jcytv.screens.AppNavigation
+import com.muedsa.jcytv.screens.home.main.MainScreenUiState
+import com.muedsa.jcytv.screens.home.main.MainScreenViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val homePageViewModel: HomePageViewModel by viewModels()
+    private val mainScreenViewModel: MainScreenViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
+        val splashScreen = installSplashScreen()
         splashScreen.setKeepOnScreenCondition {
-            homePageViewModel.homeRowsSF.value.type == LazyType.LOADING
+            mainScreenViewModel.uiState.value is MainScreenUiState.Loading
         }
         setContent {
             TvTheme {

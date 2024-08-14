@@ -13,7 +13,7 @@ import com.muedsa.compose.tv.useLocalErrorMsgBoxController
 import com.muedsa.compose.tv.widget.AppBackHandler
 import com.muedsa.compose.tv.widget.FillTextScreen
 import com.muedsa.compose.tv.widget.Scaffold
-import com.muedsa.jcytv.ui.features.playback.PlaybackScreen
+import com.muedsa.jcytv.screens.playback.PlaybackScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
