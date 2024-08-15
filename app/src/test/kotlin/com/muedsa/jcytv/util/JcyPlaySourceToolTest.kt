@@ -1,6 +1,10 @@
 package com.muedsa.jcytv.util
 
+import com.google.common.net.HttpHeaders
+import com.muedsa.jcytv.util.JcyPlaySourceTool.CHROME_USER_AGENT
 import org.bouncycastle.jce.provider.BouncyCastleProvider
+import org.jsoup.Jsoup
+import org.jsoup.nodes.Document
 import org.junit.Test
 import java.security.Security
 
@@ -30,19 +34,23 @@ class JcyPlaySourceToolTest {
         println(realUrl)
     }
 
-//    @Test
-//    fun getRealPlayUrl_detail_all_test() {
-//        val url = "https://www.9ciyuan.com/index.php/vod/play/id/22/sid/1/nid/1.html"
-//        val detail = JcyHtmlTool.getVideoDetailByUrl(url)
-//        detail.playList.forEach {
-//            println("# ${it.first}")
-//            it.second.forEach { e ->
-//                val playPageUrl = JcyHtmlTool.getAbsoluteUrl(e.second)
-//                val rawPlaySource = JcyHtmlTool.getRawPlaySource(playPageUrl)
-//                val realUrl = JcyHtmlTool.getRealPlayUrl(rawPlaySource)
-//                check(realUrl.startsWith("http")) { "## ${it.first} ${rawPlaySource.from} -> $realUrl" }
-//                println("## ${e.first} -> $realUrl")
-//            }
-//        }
-//    }
+    @Test
+    fun getRealPlayUrl_detail_all_test() {
+        val url = "https://www.9ciyuan.com/index.php/vod/play/id/22/sid/1/nid/1.html"
+        val doc: Document = Jsoup.connect(url)
+            .header(HttpHeaders.REFERER, url)
+            .header(HttpHeaders.USER_AGENT, CHROME_USER_AGENT)
+            .get()
+        val detail = JcyHtmlParserTool.parseVideoDetail(doc.body())
+        detail.playList.forEach {
+            println("# ${it.first}")
+            it.second.forEach { e ->
+                val playPageUrl = JcyPlaySourceTool.getAbsoluteUrl(e.second)
+                val rawPlaySource = JcyPlaySourceTool.getRawPlaySource(playPageUrl)
+                val realUrl = JcyPlaySourceTool.getRealPlayUrl(rawPlaySource)
+                check(realUrl.startsWith("http")) { "## ${it.first} ${rawPlaySource.from} -> $realUrl" }
+                println("## ${e.first} -> $realUrl")
+            }
+        }
+    }
 }
