@@ -18,11 +18,11 @@ class MainActivity : ComponentActivity() {
     private val mainScreenViewModel: MainScreenViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         val splashScreen = installSplashScreen()
         splashScreen.setKeepOnScreenCondition {
             mainScreenViewModel.uiState.value is MainScreenUiState.Loading
         }
+        super.onCreate(savedInstanceState)
         setContent {
             TvTheme {
                 Scaffold {
