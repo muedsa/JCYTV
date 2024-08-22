@@ -39,7 +39,7 @@ fun SearchResult(
     ) {
         itemsIndexed(
             items = animeList,
-            key = { _, item -> item.id }
+            key = { _, item -> item.detailPagePath }
         ) { _, item ->
             ImageContentCard(
                 modifier = Modifier.padding(end = ImageCardRowCardPadding),

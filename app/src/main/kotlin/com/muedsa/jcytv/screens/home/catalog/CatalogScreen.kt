@@ -49,11 +49,11 @@ import com.muedsa.compose.tv.useLocalNavHostController
 import com.muedsa.compose.tv.widget.CardType
 import com.muedsa.compose.tv.widget.ImageContentCard
 import com.muedsa.compose.tv.widget.ScreenBackgroundType
+import com.muedsa.jcytv.screens.NavigationItems
+import com.muedsa.jcytv.screens.home.useLocalHomeScreenBackgroundState
+import com.muedsa.jcytv.screens.navigate
 import com.muedsa.jcytv.theme.GirdLastItemHeight
 import com.muedsa.jcytv.theme.VideoPosterSize
-import com.muedsa.jcytv.screens.home.useLocalHomeScreenBackgroundState
-import com.muedsa.jcytv.screens.NavigationItems
-import com.muedsa.jcytv.screens.navigate
 import com.muedsa.model.LazyType
 import com.muedsa.uitl.LogUtil
 
@@ -216,7 +216,7 @@ fun CatalogScreen(
             ) {
                 itemsIndexed(
                     items = searchAnimeLP.list,
-                    key = { _, item -> item.id }
+                    key = { _, item -> item.detailPagePath }
                 ) { index, item ->
                     val itemFocusRequester = remember {
                         FocusRequester()

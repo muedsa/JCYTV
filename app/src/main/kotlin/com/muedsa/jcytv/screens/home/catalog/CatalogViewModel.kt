@@ -63,7 +63,7 @@ class CatalogViewModel @Inject constructor(
                     val iterator = mList.iterator()
                     while (iterator.hasNext()) {
                         val videoInfo = iterator.next()
-                        val fastFirst = lp.list.fastFirstOrNull { it.id == videoInfo.id }
+                        val fastFirst = lp.list.fastFirstOrNull { it.detailPagePath == videoInfo.detailPagePath }
                         if (fastFirst != null) {
                             LogUtil.d("fetchCatalog error, Duplicate video. \n$fastFirst \n$videoInfo")
                             iterator.remove()
