@@ -149,7 +149,7 @@ enum class ToastMessageType(
         containerColor = Color(0xFF_6D_D5_8C)
     ),
     WARNING(
-        contentColor = Color(0xFFF79F52),
+        contentColor = Color(0xFF_FF_FF_FF),
         containerColor = Color(0xFF_FF_88_00)
     ),
     ERROR(
