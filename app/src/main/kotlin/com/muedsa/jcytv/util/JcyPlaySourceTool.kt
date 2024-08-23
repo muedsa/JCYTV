@@ -3,7 +3,6 @@ package com.muedsa.jcytv.util
 import com.google.common.net.HttpHeaders
 import com.muedsa.jcytv.model.JcyRawPlaySource
 import com.muedsa.uitl.decodeBase64
-import com.muedsa.uitl.decryptAES128CBCPKCS7
 import com.muedsa.uitl.encryptRC4
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -15,7 +14,7 @@ object JcyPlaySourceTool {
 
     const val CHROME_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
 
-    val DECRYPT_DEFAULT: (String) -> String = { key: String -> key }
+    val DECRYPT_DIRECT: (String) -> String = { key: String -> key }
 
     val DECRYPT_NOT_SUPPORT: (String) -> String =
         { _: String -> throw IllegalStateException("不支持的播放源") }
@@ -29,6 +28,8 @@ object JcyPlaySourceTool {
         // https://play.dilidili.ink/player/?url=$it iframe to
         DECRYPT_DILIDILI("https://play.dilidili.ink/player/analysis.php?v=$it")
     }
+
+    private val DILIDILI_ENCRYPTED_URL_REGEX = Regex("\"url\": \"([A-Za-z0-9+/=\\\\]*?)\"")
 
     val DECRYPT_DILIDILI: (String) -> String = { url: String ->
         val doc: Document = Jsoup.connect(url)
@@ -50,34 +51,6 @@ object JcyPlaySourceTool {
         DECRYPT_DILIDILI("https://jx.1313.top/player/analysis.php?v=$it")
     }
 
-    private val SILISILI_ENCRYPTED_URL_REGEX = Regex("\"url\":\"([A-Za-z0-9+/=\\\\]*?)\"")
-    private val SILISILI_UID_REGEX = Regex("\"uid\":\"([A-Za-z0-9+/=\\\\]*?)\"")
-
-    val DECRYPT_SILISILI: (String) -> String = { key: String ->
-        val doc: Document =
-            Jsoup.connect("https://play.silisili.top/player/ec.php?code=ttnb&if=1&url=$key")
-                .header(HttpHeaders.REFERER, JcyConst.HOME_URL)
-                .header(HttpHeaders.USER_AGENT, CHROME_USER_AGENT)
-                .get()
-        val bodyHtml = doc.body().html()
-        val urlMatchResult = SILISILI_ENCRYPTED_URL_REGEX.find(bodyHtml)
-        val uidMatchResult = SILISILI_UID_REGEX.find(bodyHtml)
-        val encryptedUrl = urlMatchResult!!.groupValues[1].replace("\\/", "/")
-        val uid = uidMatchResult!!.groupValues[1]
-        encryptedUrl.decodeBase64().decryptAES128CBCPKCS7("2890${uid}tB959C", "2F131BE91247866E")
-            .toString(Charsets.UTF_8)
-    }
-
-    private val DILIDILI_ENCRYPTED_URL_REGEX = Regex("\"url\": \"([A-Za-z0-9+/=\\\\]*?)\"")
-
-    val DECRYPT_LIBILIBI: (String) -> String = { key: String ->
-        if (key.endsWith(".m3u8", true)
-            || key.endsWith(".mp4", true)
-            || key.endsWith(".flv", true)
-        ) key
-        else TODO("NOT_SUPPORT")
-    }
-
     val PLAYER_SITE_MAP: Map<String, (String) -> String> = mapOf(
         "SLNB" to DECRYPT_PLAY_DILIDILI, // 囧简体 ✅
         "dm295" to DECRYPT_JX_DILIDILI, // 囧囧囧 ✅
@@ -89,15 +62,15 @@ object JcyPlaySourceTool {
         "snm3u8" to DECRYPT_JX_DILIDILI, // 囧次元O ⭕
         "1080zyk" to DECRYPT_PLAY_DILIDILI, // 囧次元Y ✅
         "ACG" to DECRYPT_JX_1313, // 囧次元D ✅
-        "cycp" to DECRYPT_DEFAULT, // 次元城 ❌
+        "cycp" to DECRYPT_NOT_SUPPORT, // 次元城 ❌
         "dplayer" to DECRYPT_NOT_SUPPORT, // 手机app蓝光专线 ❌
-        "languang" to DECRYPT_DEFAULT, // APP线路 ❌
+        "languang" to DECRYPT_NOT_SUPPORT, // APP线路 ❌
         "videojs" to DECRYPT_NOT_SUPPORT, // 不支持 videojs ❌
         "iframe" to DECRYPT_NOT_SUPPORT, // 不支持 iframe ❌
         "iva" to DECRYPT_NOT_SUPPORT, // 不支持 iva H5 ❌
         "link" to DECRYPT_NOT_SUPPORT, // 不支持外部链接 ❌
         "swf" to DECRYPT_NOT_SUPPORT, // 不支持swf ❌
-        "flv" to DECRYPT_DEFAULT // flv直链 ✅
+        "flv" to DECRYPT_DIRECT // flv直链 ✅
     )
 
     fun getAbsoluteUrl(path: String): String {
@@ -128,7 +101,7 @@ object JcyPlaySourceTool {
 
     fun getRealPlayUrl(rawPlaySource: JcyRawPlaySource): String {
         val decodedUrl = URLDecoder.decode(rawPlaySource.url, StandardCharsets.UTF_8.name())
-        val decrypt = PLAYER_SITE_MAP[rawPlaySource.from]
-        return decrypt?.invoke(decodedUrl) ?: decodedUrl
+        val decrypt = PLAYER_SITE_MAP[rawPlaySource.from] ?: DECRYPT_NOT_SUPPORT
+        return decrypt.invoke(decodedUrl)
     }
 }
