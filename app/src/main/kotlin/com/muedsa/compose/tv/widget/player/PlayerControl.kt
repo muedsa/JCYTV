@@ -46,6 +46,7 @@ import androidx.media3.common.util.UnstableApi
 import androidx.tv.material3.Icon
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
+import com.muedsa.compose.tv.focusOnInitial
 import com.muedsa.compose.tv.widget.OutlinedIconBox
 import kotlinx.coroutines.delay
 import java.util.Date
@@ -80,6 +81,7 @@ fun PlayerControl(
         modifier = Modifier
             .fillMaxSize()
             .focusable()
+            .focusOnInitial()
             .onPreviewKeyEvent {
                 if (it.nativeKeyEvent.action == KeyEvent.ACTION_UP) {
                     if (it.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_DPAD_UP

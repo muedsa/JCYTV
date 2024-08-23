@@ -14,6 +14,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.onPlaced
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.debugInspectorInfo
@@ -99,3 +100,12 @@ internal fun Modifier.bringIntoViewIfChildrenAreFocused(
             .bringIntoViewResponder(responder)
     }
 )
+
+@Composable
+fun Modifier.focusOnInitial(): Modifier {
+    val focusRequester = remember { FocusRequester() }
+    return focusRequester(focusRequester)
+        .onPlaced {
+            focusRequester.requestFocus()
+        }
+}
