@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.muedsa.compose.tv.useLocalErrorMsgBoxController
 import com.muedsa.compose.tv.useLocalNavHostController
+import com.muedsa.compose.tv.useLocalToastMsgBoxController
 import com.muedsa.compose.tv.widget.ErrorScreen
 import com.muedsa.compose.tv.widget.LoadingScreen
 import com.muedsa.jcytv.exception.NeedValidateCaptchaException
@@ -17,7 +17,7 @@ import com.muedsa.jcytv.screens.navigate
 fun RankScreen(
     viewModel: RankViewModel = hiltViewModel()
 ) {
-    val errorMsgBoxController = useLocalErrorMsgBoxController()
+    val toastMsgBoxController = useLocalToastMsgBoxController()
     val navController = useLocalNavHostController()
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -30,7 +30,7 @@ fun RankScreen(
                 if (s.exception is NeedValidateCaptchaException) {
                     navController.navigate(NavigationItems.Captcha)
                 } else {
-                    errorMsgBoxController.error(s.error)
+                    toastMsgBoxController.error(s.error)
                 }
             },
             onRefresh = {

@@ -49,9 +49,9 @@ import androidx.tv.material3.Text
 import androidx.tv.material3.WideButtonDefaults
 import com.muedsa.compose.tv.model.ContentModel
 import com.muedsa.compose.tv.theme.ScreenPaddingLeft
-import com.muedsa.compose.tv.useLocalErrorMsgBoxController
 import com.muedsa.compose.tv.useLocalNavHostController
 import com.muedsa.compose.tv.useLocalRightSideDrawerController
+import com.muedsa.compose.tv.useLocalToastMsgBoxController
 import com.muedsa.compose.tv.widget.ContentBlock
 import com.muedsa.compose.tv.widget.ContentBlockType
 import com.muedsa.compose.tv.widget.EmptyDataScreen
@@ -64,11 +64,11 @@ import com.muedsa.compose.tv.widget.TwoSideWideButton
 import com.muedsa.compose.tv.widget.rememberScreenBackgroundState
 import com.muedsa.jcytv.PlaybackActivity
 import com.muedsa.jcytv.room.model.FavoriteAnimeModel
+import com.muedsa.jcytv.screens.NavigationItems
+import com.muedsa.jcytv.screens.navigate
 import com.muedsa.jcytv.theme.FavoriteIconColor
 import com.muedsa.jcytv.theme.RankFontColor
 import com.muedsa.jcytv.theme.RankIconColor
-import com.muedsa.jcytv.screens.NavigationItems
-import com.muedsa.jcytv.screens.navigate
 import com.muedsa.model.LazyType
 import com.muedsa.uitl.LogUtil
 
@@ -81,7 +81,7 @@ fun AnimeDetailScreen(
     val screenHeight = configuration.screenHeightDp.dp
     val screenWidth = configuration.screenWidthDp.dp
     val lifecycleOwner = LocalLifecycleOwner.current
-    val errorMsgBoxController = useLocalErrorMsgBoxController()
+    val toastMsgBoxController = useLocalToastMsgBoxController()
     val drawerController = useLocalRightSideDrawerController()
     val navController = useLocalNavHostController()
 
@@ -99,7 +99,7 @@ fun AnimeDetailScreen(
 
     LaunchedEffect(key1 = animeDetailLD) {
         if (animeDetailLD.type == LazyType.FAILURE) {
-            errorMsgBoxController.error(animeDetailLD.error)
+            toastMsgBoxController.error(animeDetailLD.error)
         } else if (animeDetailLD.type == LazyType.SUCCESS) {
             if (animeDetailLD.data != null) {
                 backgroundState.url = animeDetailLD.data!!.imageUrl
@@ -109,13 +109,13 @@ fun AnimeDetailScreen(
 
     LaunchedEffect(key1 = danSearchAnimeListLD) {
         if (danSearchAnimeListLD.type == LazyType.FAILURE) {
-            errorMsgBoxController.error(danSearchAnimeListLD.error)
+            toastMsgBoxController.error(danSearchAnimeListLD.error)
         }
     }
 
     LaunchedEffect(key1 = danAnimeInfoLD) {
         if (danAnimeInfoLD.type == LazyType.FAILURE) {
-            errorMsgBoxController.error(danAnimeInfoLD.error)
+            toastMsgBoxController.error(danAnimeInfoLD.error)
         }
     }
 
@@ -346,7 +346,7 @@ fun AnimeDetailScreen(
                                     },
                                     onError = {
                                         LogUtil.fb(it)
-                                        errorMsgBoxController.error(it)
+                                        toastMsgBoxController.error(it)
                                     }
                                 )
                             },

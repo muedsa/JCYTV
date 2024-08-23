@@ -39,8 +39,8 @@ import androidx.tv.material3.Text
 import coil.ImageLoader
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
-import com.muedsa.compose.tv.useLocalErrorMsgBoxController
 import com.muedsa.compose.tv.useLocalNavHostController
+import com.muedsa.compose.tv.useLocalToastMsgBoxController
 import com.muedsa.compose.tv.widget.onDpadKeyEvents
 import com.muedsa.jcytv.screens.NavigationItems
 import com.muedsa.jcytv.screens.navigate
@@ -62,7 +62,7 @@ fun CaptchaScreen(
 ) {
 
     val navHostController = useLocalNavHostController()
-    val errorMsgBoxController = useLocalErrorMsgBoxController()
+    val toastMsgBoxController = useLocalToastMsgBoxController()
 
     val uiState by captchaViewModel.uiState.collectAsStateWithLifecycle()
 
@@ -158,7 +158,7 @@ fun CaptchaScreen(
                         .listener(
                             onError = { _, result ->
                                 LogUtil.fb(result.throwable, "loading captcha image error")
-                                errorMsgBoxController.error("加载图片失败")
+                                toastMsgBoxController.error("加载图片失败")
                                 captchaViewModel.error()
                             }
                         )

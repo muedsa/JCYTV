@@ -8,8 +8,8 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.muedsa.compose.tv.theme.ScreenPaddingLeft
-import com.muedsa.compose.tv.useLocalErrorMsgBoxController
 import com.muedsa.compose.tv.useLocalNavHostController
+import com.muedsa.compose.tv.useLocalToastMsgBoxController
 import com.muedsa.compose.tv.widget.ErrorScreen
 import com.muedsa.compose.tv.widget.LoadingScreen
 import com.muedsa.jcytv.exception.NeedValidateCaptchaException
@@ -22,7 +22,7 @@ fun SearchScreen(
     viewModel: SearchViewModel = hiltViewModel()
 ) {
 
-    val errorMsgBoxController = useLocalErrorMsgBoxController()
+    val toastMsgBoxController = useLocalToastMsgBoxController()
     val navController = useLocalNavHostController()
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -38,7 +38,7 @@ fun SearchScreen(
                     if (s.exception is NeedValidateCaptchaException) {
                         navController.navigate(NavigationItems.Captcha)
                     } else {
-                        errorMsgBoxController.error(s.error)
+                        toastMsgBoxController.error(s.error)
                     }
                 }
             )

@@ -21,7 +21,7 @@ import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import com.kuaishou.akdanmaku.ecs.component.filter.DuplicateMergedFilter
-import com.muedsa.compose.tv.useLocalErrorMsgBoxController
+import com.muedsa.compose.tv.useLocalToastMsgBoxController
 import com.muedsa.compose.tv.widget.player.DanmakuVideoPlayer
 import com.muedsa.compose.tv.widget.player.mergeDanmaku
 import com.muedsa.jcytv.BuildConfig
@@ -43,7 +43,7 @@ fun PlaybackScreen(
     backListeners: SnapshotStateList<() -> Unit>
 ) {
     val activity = LocalContext.current as? Activity
-    val errorMsgBoxState = useLocalErrorMsgBoxController()
+    val errorMsgBoxState = useLocalToastMsgBoxController()
 
     val danmakuSettingLD by playbackViewModel.danmakuSettingLDSF.collectAsState()
     val danmakuListLD by playbackViewModel.danmakuListLDSF.collectAsState()
@@ -74,7 +74,7 @@ fun PlaybackScreen(
                 episodeProgress.updateAt = System.currentTimeMillis()
                 playbackViewModel.saveEpisodeProgress(episodeProgress)
             }
-            errorMsgBoxState.error("播放结束,即将返回")
+            errorMsgBoxState.info("播放结束,即将返回")
             delay(3_000)
             activity?.finish()
         }
@@ -177,7 +177,7 @@ fun PlaybackScreen(
                                             seconds,
                                         )
                                     }
-                                errorMsgBoxState.error("跳转到上次播放位置: $positionStr")
+                                errorMsgBoxState.info("跳转到上次播放位置: $positionStr")
                             }
                         }
                     }

@@ -12,8 +12,8 @@ import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Surface
 import androidx.tv.material3.SurfaceColors
 import androidx.tv.material3.SurfaceDefaults
-import com.muedsa.compose.tv.LocalErrorMsgBoxControllerProvider
 import com.muedsa.compose.tv.LocalRightSideDrawerControllerProvider
+import com.muedsa.compose.tv.LocalToastMsgBoxControllerProvider
 
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -26,14 +26,14 @@ fun Scaffold(
     ),
     content: @Composable () -> Unit
 ) {
-    val errorMessageBoxController = remember { ErrorMessageBoxController() }
+    val toastMessageBoxController = remember { ToastMessageBoxController() }
     val drawerController = remember { RightSideDrawerController() }
 
-    LocalErrorMsgBoxControllerProvider(errorMessageBoxController) {
+    LocalToastMsgBoxControllerProvider(toastMessageBoxController) {
         LocalRightSideDrawerControllerProvider(drawerController) {
             if (holdBack) {
                 AppBackHandler {
-                    errorMessageBoxController.error("再次点击返回键退出")
+                    toastMessageBoxController.warning("再次点击返回键退出")
                 }
             }
             Surface(
@@ -45,7 +45,7 @@ fun Scaffold(
                 shape = RectangleShape,
                 colors = colors
             ) {
-                ErrorMessageBox(state = errorMessageBoxController) {
+                ToastMessageBox(controller = toastMessageBoxController) {
                     RightSideDrawer(
                         controller = drawerController,
                     ) {

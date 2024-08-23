@@ -7,13 +7,13 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
-import com.muedsa.compose.tv.widget.ErrorMessageBoxController
 import com.muedsa.compose.tv.widget.RightSideDrawerController
+import com.muedsa.compose.tv.widget.ToastMessageBoxController
 
 private val LocalLastFocusedItemPerDestination = compositionLocalOf<MutableMap<String, String>?> { null }
 private val LocalFocusTransferredOnLaunch = compositionLocalOf<MutableState<Boolean>?> { null }
 private val LocalNavHostController = compositionLocalOf<NavHostController?> { null }
-private val LocalErrorMsgBoxController = compositionLocalOf<ErrorMessageBoxController?> { null }
+private val LocalToastMsgBoxController = compositionLocalOf<ToastMessageBoxController?> { null }
 private val LocalRightSideDrawerController = compositionLocalOf<RightSideDrawerController?> { null }
 
 @Composable
@@ -32,8 +32,8 @@ fun LocalNavHostControllerProvider(navHostController: NavHostController, content
 }
 
 @Composable
-fun LocalErrorMsgBoxControllerProvider(errorMessageBoxController: ErrorMessageBoxController, content: @Composable () -> Unit) {
-    CompositionLocalProvider(LocalErrorMsgBoxController provides errorMessageBoxController, content = content)
+fun LocalToastMsgBoxControllerProvider(toastMessageBoxController: ToastMessageBoxController, content: @Composable () -> Unit) {
+    CompositionLocalProvider(LocalToastMsgBoxController provides toastMessageBoxController, content = content)
 }
 
 @Composable
@@ -57,8 +57,8 @@ fun useLocalNavHostController(): NavHostController {
 }
 
 @Composable
-fun useLocalErrorMsgBoxController(): ErrorMessageBoxController {
-    return LocalErrorMsgBoxController.current ?: throw RuntimeException("Please wrap your app with LocalErrorMsgBoxController")
+fun useLocalToastMsgBoxController(): ToastMessageBoxController {
+    return LocalToastMsgBoxController.current ?: throw RuntimeException("Please wrap your app with LocalToastMsgBoxController")
 }
 
 @Composable

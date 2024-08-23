@@ -28,8 +28,8 @@ import androidx.tv.material3.Text
 import com.muedsa.compose.tv.model.ContentModel
 import com.muedsa.compose.tv.theme.ImageCardRowCardPadding
 import com.muedsa.compose.tv.theme.ScreenPaddingLeft
-import com.muedsa.compose.tv.useLocalErrorMsgBoxController
 import com.muedsa.compose.tv.useLocalNavHostController
+import com.muedsa.compose.tv.useLocalToastMsgBoxController
 import com.muedsa.compose.tv.widget.ContentBlock
 import com.muedsa.compose.tv.widget.ErrorScreen
 import com.muedsa.compose.tv.widget.ImageCardsRow
@@ -40,10 +40,10 @@ import com.muedsa.compose.tv.widget.StandardImageCardsRow
 import com.muedsa.jcytv.BuildConfig
 import com.muedsa.jcytv.exception.NeedValidateCaptchaException
 import com.muedsa.jcytv.model.JcyVideoRow
-import com.muedsa.jcytv.theme.VideoPosterSize
-import com.muedsa.jcytv.screens.home.useLocalHomeScreenBackgroundState
 import com.muedsa.jcytv.screens.NavigationItems
+import com.muedsa.jcytv.screens.home.useLocalHomeScreenBackgroundState
 import com.muedsa.jcytv.screens.navigate
+import com.muedsa.jcytv.theme.VideoPosterSize
 import com.muedsa.uitl.LogUtil
 
 
@@ -51,7 +51,7 @@ import com.muedsa.uitl.LogUtil
 fun MainScreen(
     viewModel: MainScreenViewModel = hiltViewModel(),
 ) {
-    val errorMsgBoxController = useLocalErrorMsgBoxController()
+    val toastMsgBoxController = useLocalToastMsgBoxController()
     val navController = useLocalNavHostController()
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -64,7 +64,7 @@ fun MainScreen(
                 if (s.exception is NeedValidateCaptchaException) {
                     navController.navigate(NavigationItems.Captcha)
                 } else {
-                    errorMsgBoxController.error(s.error)
+                    toastMsgBoxController.error(s.error)
                 }
             },
             onRefresh = { viewModel.refreshData() }

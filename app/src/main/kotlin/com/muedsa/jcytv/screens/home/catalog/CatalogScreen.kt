@@ -44,8 +44,8 @@ import androidx.tv.material3.Text
 import com.muedsa.compose.tv.model.ContentModel
 import com.muedsa.compose.tv.theme.ImageCardRowCardPadding
 import com.muedsa.compose.tv.theme.ScreenPaddingLeft
-import com.muedsa.compose.tv.useLocalErrorMsgBoxController
 import com.muedsa.compose.tv.useLocalNavHostController
+import com.muedsa.compose.tv.useLocalToastMsgBoxController
 import com.muedsa.compose.tv.widget.CardType
 import com.muedsa.compose.tv.widget.ImageContentCard
 import com.muedsa.compose.tv.widget.ScreenBackgroundType
@@ -63,7 +63,7 @@ fun CatalogScreen(
 ) {
     val navController = useLocalNavHostController()
     val backgroundState = useLocalHomeScreenBackgroundState()
-    val errorMsgBoxController = useLocalErrorMsgBoxController()
+    val toastMsgBoxController = useLocalToastMsgBoxController()
 
     var optionId by viewModel.optionIdState
     var optionArea by viewModel.optionAreaState
@@ -81,7 +81,7 @@ fun CatalogScreen(
 
     LaunchedEffect(key1 = searchAnimeLP) {
         if (searchAnimeLP.type == LazyType.FAILURE) {
-            errorMsgBoxController.error(searchAnimeLP.error)
+            toastMsgBoxController.error(searchAnimeLP.error)
         }
     }
 

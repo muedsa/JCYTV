@@ -9,7 +9,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.SurfaceDefaults
 import com.muedsa.compose.tv.theme.TvTheme
-import com.muedsa.compose.tv.useLocalErrorMsgBoxController
+import com.muedsa.compose.tv.useLocalToastMsgBoxController
 import com.muedsa.compose.tv.widget.AppBackHandler
 import com.muedsa.compose.tv.widget.FillTextScreen
 import com.muedsa.compose.tv.widget.Scaffold
@@ -43,12 +43,12 @@ class PlaybackActivity : ComponentActivity() {
                         val backListeners = remember {
                             mutableStateListOf<() -> Unit>()
                         }
-                        val errorMsgBoxController = useLocalErrorMsgBoxController()
+                        val toastMsgBoxController = useLocalToastMsgBoxController()
                         AppBackHandler {
                             backListeners.forEach {
                                 it()
                             }
-                            errorMsgBoxController.error("再次点击返回键退出")
+                            toastMsgBoxController.warning("再次点击返回键退出")
                         }
                         PlaybackScreen(
                             aid = aid,
