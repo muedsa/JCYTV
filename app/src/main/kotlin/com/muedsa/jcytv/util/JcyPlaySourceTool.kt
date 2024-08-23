@@ -20,6 +20,36 @@ object JcyPlaySourceTool {
     val DECRYPT_NOT_SUPPORT: (String) -> String =
         { _: String -> throw IllegalStateException("不支持的播放源") }
 
+    val DECRYPT_JX_DILIDILI: (String) -> String = {
+        // https://jx.dilidili.ink/player/?url=$it iframe to
+        DECRYPT_DILIDILI("https://jx.dilidili.ink/player/analysis.php?v=$it")
+    }
+
+    val DECRYPT_PLAY_DILIDILI: (String) -> String = {
+        // https://play.dilidili.ink/player/?url=$it iframe to
+        DECRYPT_DILIDILI("https://play.dilidili.ink/player/analysis.php?v=$it")
+    }
+
+    val DECRYPT_DILIDILI: (String) -> String = { url: String ->
+        val doc: Document = Jsoup.connect(url)
+            .header(HttpHeaders.REFERER, JcyConst.HOME_URL)
+            .header(HttpHeaders.USER_AGENT, CHROME_USER_AGENT)
+            .get()
+        val bodyHtml = doc.body().html()
+        val urlMatchResult = DILIDILI_ENCRYPTED_URL_REGEX.find(bodyHtml)
+        val encryptedUrl = urlMatchResult!!.groupValues[1].replace("\\/", "/")
+        URLDecoder.decode(
+            encryptedUrl.decodeBase64()
+                .encryptRC4("202205051426239465".toByteArray())
+                .decodeToString(),
+            StandardCharsets.UTF_8.name()
+        )
+    }
+
+    val DECRYPT_JX_1313: (String) -> String = {
+        DECRYPT_DILIDILI("https://jx.1313.top/player/analysis.php?v=$it")
+    }
+
     private val SILISILI_ENCRYPTED_URL_REGEX = Regex("\"url\":\"([A-Za-z0-9+/=\\\\]*?)\"")
     private val SILISILI_UID_REGEX = Regex("\"uid\":\"([A-Za-z0-9+/=\\\\]*?)\"")
 
@@ -40,22 +70,6 @@ object JcyPlaySourceTool {
 
     private val DILIDILI_ENCRYPTED_URL_REGEX = Regex("\"url\": \"([A-Za-z0-9+/=\\\\]*?)\"")
 
-    val DECRYPT_DILIDILI: (String) -> String = { key: String ->
-        val doc: Document = Jsoup.connect("https://play.dilidili.ink/player/analysis.php?v=$key")
-            .header(HttpHeaders.REFERER, JcyConst.HOME_URL)
-            .header(HttpHeaders.USER_AGENT, CHROME_USER_AGENT)
-            .get()
-        val bodyHtml = doc.body().html()
-        val urlMatchResult = DILIDILI_ENCRYPTED_URL_REGEX.find(bodyHtml)
-        val encryptedUrl = urlMatchResult!!.groupValues[1].replace("\\/", "/")
-        URLDecoder.decode(
-            encryptedUrl.decodeBase64()
-                .encryptRC4("202205051426239465".toByteArray())
-                .decodeToString(),
-            StandardCharsets.UTF_8.name()
-        )
-    }
-
     val DECRYPT_LIBILIBI: (String) -> String = { key: String ->
         if (key.endsWith(".m3u8", true)
             || key.endsWith(".mp4", true)
@@ -65,22 +79,25 @@ object JcyPlaySourceTool {
     }
 
     val PLAYER_SITE_MAP: Map<String, (String) -> String> = mapOf(
-        "NBY" to DECRYPT_DILIDILI, // ✅囧次元N
-        "ttnb" to DECRYPT_DILIDILI, // https://v.dilidili.ink/player/?url=
-        "lzm3u8" to DECRYPT_DILIDILI, // ✅囧次元Z
-        "snm3u8" to DECRYPT_DILIDILI, // ✅囧次元O
-        "cycp" to DECRYPT_DEFAULT, // ?
-        "ffm3u8" to DECRYPT_DILIDILI, // ✅囧次元A
-        "SLNB" to DECRYPT_DEFAULT, // ?
-        "dplayer" to DECRYPT_DEFAULT, //  dplayer
-        "videojs" to DECRYPT_NOT_SUPPORT, // 不支持videojs
-        "iva" to DECRYPT_DEFAULT,
-        "iframe" to DECRYPT_NOT_SUPPORT, // 不支持iframe
-        "link" to DECRYPT_NOT_SUPPORT, // 不支持link
-        "swf" to DECRYPT_NOT_SUPPORT, // 不支持swf
-        "flv" to DECRYPT_DEFAULT,
-        "ACG" to DECRYPT_SILISILI, // https://play.silisili.top/player/ec.php?code=ttnb&if=1&url=
-        "languang" to DECRYPT_DEFAULT, // TODO APP线路 https://player.123tv.icu/player/ec.php?code=yunq&if=1&url=
+        "SLNB" to DECRYPT_PLAY_DILIDILI, // 囧简体 ✅
+        "dm295" to DECRYPT_JX_DILIDILI, // 囧囧囧 ✅
+        "ffm3u8" to DECRYPT_PLAY_DILIDILI, // 囧次元A ✅
+        "bfzym3u8" to DECRYPT_JX_DILIDILI, // 囧次元B ⭕
+        "lzm3u8" to DECRYPT_PLAY_DILIDILI, // 囧次元Z ✅
+        "NBY" to DECRYPT_PLAY_DILIDILI, // 囧次元N ✅
+        "ttnb" to DECRYPT_PLAY_DILIDILI, // 囧次狼 ⭕
+        "snm3u8" to DECRYPT_JX_DILIDILI, // 囧次元O ⭕
+        "1080zyk" to DECRYPT_PLAY_DILIDILI, // 囧次元Y ✅
+        "ACG" to DECRYPT_JX_1313, // 囧次元D ✅
+        "cycp" to DECRYPT_DEFAULT, // 次元城 ❌
+        "dplayer" to DECRYPT_NOT_SUPPORT, // 手机app蓝光专线 ❌
+        "languang" to DECRYPT_DEFAULT, // APP线路 ❌
+        "videojs" to DECRYPT_NOT_SUPPORT, // 不支持 videojs ❌
+        "iframe" to DECRYPT_NOT_SUPPORT, // 不支持 iframe ❌
+        "iva" to DECRYPT_NOT_SUPPORT, // 不支持 iva H5 ❌
+        "link" to DECRYPT_NOT_SUPPORT, // 不支持外部链接 ❌
+        "swf" to DECRYPT_NOT_SUPPORT, // 不支持swf ❌
+        "flv" to DECRYPT_DEFAULT // flv直链 ✅
     )
 
     fun getAbsoluteUrl(path: String): String {

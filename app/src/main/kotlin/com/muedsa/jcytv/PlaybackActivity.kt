@@ -14,6 +14,7 @@ import com.muedsa.compose.tv.widget.AppBackHandler
 import com.muedsa.compose.tv.widget.FillTextScreen
 import com.muedsa.compose.tv.widget.Scaffold
 import com.muedsa.jcytv.screens.playback.PlaybackScreen
+import com.muedsa.uitl.LogUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,6 +27,7 @@ class PlaybackActivity : ComponentActivity() {
         val episodeTitle = intent.getStringExtra(EPISODE_TITLE_KEY)
         val mediaUrl = intent.getStringExtra(MEDIA_URL_KEY)
         val episodeId = intent.getLongExtra(DAN_EPISODE_ID_KEY, 0)
+        LogUtil.fb("exoplayer play url: $mediaUrl")
         setContent {
             TvTheme {
                 Scaffold(
