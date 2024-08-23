@@ -41,6 +41,8 @@ import androidx.tv.material3.Icon
 import androidx.tv.material3.OutlinedButton
 import androidx.tv.material3.OutlinedIconButton
 import androidx.tv.material3.Text
+import com.muedsa.compose.tv.conditional
+import com.muedsa.compose.tv.focusOnInitial
 import com.muedsa.compose.tv.model.ContentModel
 import com.muedsa.compose.tv.theme.ImageCardRowCardPadding
 import com.muedsa.compose.tv.theme.ScreenPaddingLeft
@@ -218,13 +220,12 @@ fun CatalogScreen(
                     items = searchAnimeLP.list,
                     key = { _, item -> item.detailPagePath }
                 ) { index, item ->
-                    val itemFocusRequester = remember {
-                        FocusRequester()
-                    }
                     ImageContentCard(
                         modifier = Modifier
                             .padding(end = ImageCardRowCardPadding)
-                            .focusRequester(itemFocusRequester)
+                            .conditional(searchAnimeLP.offset == index) {
+                                focusOnInitial()
+                            }
                             .testTag("catalogScreen_card_$index"),
                         url = item.imageUrl,
                         imageSize = VideoPosterSize,
@@ -245,12 +246,6 @@ fun CatalogScreen(
                             )
                         }
                     )
-
-                    LaunchedEffect(key1 = Unit) {
-                        if (searchAnimeLP.offset == index) {
-                            itemFocusRequester.requestFocus()
-                        }
-                    }
                 }
 
                 if (searchAnimeLP.type != LazyType.LOADING && searchAnimeLP.hasNext) {
