@@ -1,5 +1,5 @@
 [versions]
-agp = "8.7.0-alpha07"
+agp = "8.5.2"
 kotlin = "2.0.10"
 ksp = "2.0.10-1.0.24"
 core-ktx = "1.13.1"
@@ -8,13 +8,13 @@ lifecycle = "2.8.4"
 hilt = "2.52"
 activity-compose = "1.9.1"
 compose-bom = "2024.08.00-alpha02"
-androidx-tv-foundation = "1.0.0-alpha11"
+# androidx-tv-foundation = "1.0.0-alpha11"
 androidx-tv-material = "1.0.0-rc01"
 navigation-compose = "2.7.7"
 hilt-navigation-compose = "1.2.0"
 coil = "2.7.0"
 coil-transformers = "1.0.6"
-qrcode = "1.6.2"
+# qrcode = "1.6.2"
 timber = "5.0.1"
 media3 = "1.4.0"
 akdanmaku = "1.0.3"
@@ -56,16 +56,16 @@ ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview
 ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 material3 = { group = "androidx.compose.material3", name = "material3" }
-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
-tv-foundation = { group = "androidx.tv", name = "tv-foundation", version.ref = "androidx-tv-foundation" }
+# material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
+# tv-foundation = { group = "androidx.tv", name = "tv-foundation", version.ref = "androidx-tv-foundation" }
 tv-material = { group = "androidx.tv", name = "tv-material", version.ref = "androidx-tv-material" }
 navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation-compose" }
 hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-navigation-compose" }
 coil = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 coil-transformers = { group = "jp.wasabeef.transformers", name = "coil", version.ref = "coil-transformers" }
-coil-transformers-gpu = { group = "jp.wasabeef.transformers", name = "coil-gpu", version.ref = "coil-transformers" }
-qrcode = { group = "com.github.alexzhirkevich", name = "custom-qr-generator", version.ref = "qrcode" }
+# coil-transformers-gpu = { group = "jp.wasabeef.transformers", name = "coil-gpu", version.ref = "coil-transformers" }
+# qrcode = { group = "com.github.alexzhirkevich", name = "custom-qr-generator", version.ref = "qrcode" }
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
 media3 = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "media3" }
 media3-ui = { group = "androidx.media3", name = "media3-ui", version.ref = "media3" }
