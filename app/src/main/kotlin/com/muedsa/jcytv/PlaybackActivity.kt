@@ -32,6 +32,7 @@ class PlaybackActivity : ComponentActivity() {
             TvTheme {
                 Scaffold(
                     holdBack = false,
+                    enableDrawer = false,
                     colors = SurfaceDefaults.colors(
                         containerColor = Color.Black,
                         contentColor = MaterialTheme.colorScheme.onBackground

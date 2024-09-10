@@ -20,6 +20,7 @@ import com.muedsa.compose.tv.LocalToastMsgBoxControllerProvider
 @Composable
 fun Scaffold(
     holdBack: Boolean = true,
+    enableDrawer: Boolean = true,
     colors: SurfaceColors = SurfaceDefaults.colors(
         containerColor = MaterialTheme.colorScheme.background,
         contentColor = MaterialTheme.colorScheme.onBackground
@@ -27,31 +28,31 @@ fun Scaffold(
     content: @Composable () -> Unit
 ) {
     val toastMessageBoxController = remember { ToastMessageBoxController() }
-    val drawerController = remember { RightSideDrawerController() }
 
     LocalToastMsgBoxControllerProvider(toastMessageBoxController) {
-        LocalRightSideDrawerControllerProvider(drawerController) {
-            if (holdBack) {
-                AppBackHandler {
-                    toastMessageBoxController.warning("再次点击返回键退出")
-                }
+        if (holdBack) {
+            AppBackHandler {
+                toastMessageBoxController.warning("再次点击返回键退出")
             }
-            Surface(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .semantics {
-                        testTagsAsResourceId = true
-                    },
-                shape = RectangleShape,
-                colors = colors
-            ) {
-                ToastMessageBox(controller = toastMessageBoxController) {
+        }
+        Surface(
+            modifier = Modifier
+                .fillMaxSize()
+                .semantics {
+                    testTagsAsResourceId = true
+                },
+            shape = RectangleShape,
+            colors = colors
+        ) {
+            ToastMessageBox(controller = toastMessageBoxController) {
+                if (enableDrawer) {
+                    val drawerController = remember { RightSideDrawerController() }
                     RightSideDrawer(
-                        controller = drawerController,
+                        controller = drawerController
                     ) {
-                        content()
+                        LocalRightSideDrawerControllerProvider(drawerController, content)
                     }
-                }
+                } else content()
             }
         }
     }

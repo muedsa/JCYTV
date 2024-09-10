@@ -5,15 +5,11 @@ import android.view.Gravity
 import android.widget.FrameLayout
 import androidx.activity.compose.BackHandler
 import androidx.annotation.OptIn
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.media3.common.Player
@@ -78,43 +74,42 @@ fun DanmakuVideoPlayer(
         playerControlTicker.intValue = 0
     }
 
-    DisposableEffect(
-        Box(modifier = Modifier
-            .background(Color.Black)
-            .fillMaxSize()
-        ) {
-            AndroidView(factory = {
-                PlayerView(context).apply {
-                    hideController()
-                    useController = false
-                    resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
-                    player = exoPlayer
-                    layoutParams = FrameLayout.LayoutParams(
-                        FrameLayout.LayoutParams.MATCH_PARENT,
-                        FrameLayout.LayoutParams.MATCH_PARENT,
-                        Gravity.CENTER
-                    )
-                }
-            })
-            AndroidView(factory = {
-                DanmakuView(context).apply {
-                    layoutParams = FrameLayout.LayoutParams(
-                        FrameLayout.LayoutParams.MATCH_PARENT,
-                        FrameLayout.LayoutParams.MATCH_PARENT
-                    )
-                }.also {
-                    danmakuPlayer.bindView(it)
-                    danmakuPlayer.danmakuPlayerInit()
-                }
-            })
-        }
-
-    ) {
-        onDispose {
+    AndroidView(
+        modifier = Modifier.fillMaxSize(),
+        factory = {
+            PlayerView(context).apply {
+                hideController()
+                useController = false
+                resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
+                player = exoPlayer
+                layoutParams = FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.MATCH_PARENT,
+                    FrameLayout.LayoutParams.MATCH_PARENT,
+                    Gravity.CENTER
+                )
+            }
+        },
+        onRelease = {
             exoPlayer.release()
+        }
+    )
+    AndroidView(
+        modifier = Modifier.fillMaxSize(),
+        factory = {
+            DanmakuView(context).apply {
+                layoutParams = FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.MATCH_PARENT,
+                    FrameLayout.LayoutParams.MATCH_PARENT
+                )
+            }.also {
+                danmakuPlayer.bindView(it)
+                danmakuPlayer.danmakuPlayerInit()
+            }
+        },
+        onRelease = {
             danmakuPlayer.release()
         }
-    }
+    )
 
     PlayerControl(debug = debug, player = exoPlayer, state = playerControlTicker)
 }
