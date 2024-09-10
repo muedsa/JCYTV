@@ -43,7 +43,7 @@ fun PlaybackScreen(
     backListeners: SnapshotStateList<() -> Unit>
 ) {
     val activity = LocalContext.current as? Activity
-    val errorMsgBoxState = useLocalToastMsgBoxController()
+    val toastController = useLocalToastMsgBoxController()
 
     val danmakuSettingLD by playbackViewModel.danmakuSettingLDSF.collectAsState()
     val danmakuListLD by playbackViewModel.danmakuListLDSF.collectAsState()
@@ -55,13 +55,13 @@ fun PlaybackScreen(
 
     LaunchedEffect(key1 = danmakuSettingLD) {
         if (danmakuListLD.type == LazyType.FAILURE) {
-            errorMsgBoxState.error(danmakuListLD.error)
+            toastController.error(danmakuListLD.error)
         }
     }
 
     LaunchedEffect(key1 = danmakuListLD) {
         if (danmakuListLD.type == LazyType.FAILURE) {
-            errorMsgBoxState.error(danmakuListLD.error)
+            toastController.error(danmakuListLD.error)
         }
     }
 
@@ -74,7 +74,7 @@ fun PlaybackScreen(
                 episodeProgress.updateAt = System.currentTimeMillis()
                 playbackViewModel.saveEpisodeProgress(episodeProgress)
             }
-            errorMsgBoxState.info("播放结束,即将返回")
+            toastController.info("播放结束,即将返回")
             delay(3_000)
             activity?.finish()
         }
@@ -144,7 +144,7 @@ fun PlaybackScreen(
             addListener(object : Player.Listener {
 
                 override fun onPlayerErrorChanged(error: PlaybackException?) {
-                    errorMsgBoxState.error(error, SnackbarDuration.Long)
+                    toastController.error(error, SnackbarDuration.Long)
                     error?.let {
                         LogUtil.fb(it, "exoplayer mediaUrl: $mediaUrl")
                     }
@@ -177,7 +177,7 @@ fun PlaybackScreen(
                                             seconds,
                                         )
                                     }
-                                errorMsgBoxState.info("跳转到上次播放位置: $positionStr")
+                                toastController.info("跳转到上次播放位置: $positionStr")
                             }
                         }
                     }

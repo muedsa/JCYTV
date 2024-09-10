@@ -22,12 +22,12 @@ if (keystorePropertiesFile.exists() && keystorePropertiesFile.canRead()) {
 
 android {
     namespace = "com.muedsa.jcytv"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.muedsa.jcytv"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 14
         versionName = "1.0.0-rc03"
         vectorDrawables {
