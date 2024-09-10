@@ -19,7 +19,7 @@ import com.muedsa.compose.tv.theme.ScreenPaddingLeft
 import com.muedsa.compose.tv.useLocalNavHostController
 import com.muedsa.jcytv.model.JcyRankList
 import com.muedsa.jcytv.screens.NavigationItems
-import com.muedsa.jcytv.screens.navigate
+import com.muedsa.jcytv.screens.nav
 import com.muedsa.uitl.LogUtil
 import kotlin.math.min
 
@@ -52,7 +52,7 @@ fun RankWidget(
                                 model = it,
                                 onClick = {
                                     LogUtil.d("Click $it")
-                                    navController.navigate(
+                                    navController.nav(
                                         NavigationItems.Detail,
                                         listOf(it.id.toString())
                                     )

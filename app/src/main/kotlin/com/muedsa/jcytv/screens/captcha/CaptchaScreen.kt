@@ -43,7 +43,7 @@ import com.muedsa.compose.tv.useLocalNavHostController
 import com.muedsa.compose.tv.useLocalToastMsgBoxController
 import com.muedsa.compose.tv.widget.onDpadKeyEvents
 import com.muedsa.jcytv.screens.NavigationItems
-import com.muedsa.jcytv.screens.navigate
+import com.muedsa.jcytv.screens.nav
 import com.muedsa.jcytv.util.JcyRotateCaptchaTool
 import com.muedsa.uitl.LogUtil
 import kotlinx.coroutines.Dispatchers
@@ -186,7 +186,7 @@ fun CaptchaScreen(
 suspend fun navigateAfterValid(navHostController: NavHostController) {
     withContext(Dispatchers.Main) {
         if(!navHostController.popBackStack()) {
-            navHostController.navigate(NavigationItems.Home, listOf("0"))
+            navHostController.nav(NavigationItems.Home, listOf("0"))
         }
     }
 }

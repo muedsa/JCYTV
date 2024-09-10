@@ -42,7 +42,7 @@ import com.muedsa.jcytv.exception.NeedValidateCaptchaException
 import com.muedsa.jcytv.model.JcyVideoRow
 import com.muedsa.jcytv.screens.NavigationItems
 import com.muedsa.jcytv.screens.home.useLocalHomeScreenBackgroundState
-import com.muedsa.jcytv.screens.navigate
+import com.muedsa.jcytv.screens.nav
 import com.muedsa.jcytv.theme.VideoPosterSize
 import com.muedsa.uitl.LogUtil
 
@@ -62,7 +62,7 @@ fun MainScreen(
         is MainScreenUiState.Error -> ErrorScreen(
             onError = {
                 if (s.exception is NeedValidateCaptchaException) {
-                    navController.navigate(NavigationItems.Captcha)
+                    navController.nav(NavigationItems.Captcha)
                 } else {
                     toastMsgBoxController.error(s.error)
                 }
@@ -152,7 +152,7 @@ fun MainScreenVideoRows(
                         },
                         onItemClick = { _, anime ->
                             LogUtil.d("Click $anime")
-                            navController.navigate(
+                            navController.nav(
                                 NavigationItems.Detail,
                                 listOf(anime.id.toString())
                             )
@@ -184,7 +184,7 @@ fun MainScreenVideoRows(
                     },
                     onItemClick = { _, anime ->
                         LogUtil.d("Click $anime")
-                        navController.navigate(
+                        navController.nav(
                             NavigationItems.Detail,
                             listOf(anime.id.toString())
                         )

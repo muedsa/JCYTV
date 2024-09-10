@@ -92,7 +92,7 @@ fun buildJumpRoute(
     return route
 }
 
-fun NavHostController.navigate(
+fun NavHostController.nav(
     navItem: NavigationItems,
     pathParams: List<String>? = null
 ) {

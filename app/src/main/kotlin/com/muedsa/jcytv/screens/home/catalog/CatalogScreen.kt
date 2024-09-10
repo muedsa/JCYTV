@@ -53,7 +53,7 @@ import com.muedsa.compose.tv.widget.ImageContentCard
 import com.muedsa.compose.tv.widget.ScreenBackgroundType
 import com.muedsa.jcytv.screens.NavigationItems
 import com.muedsa.jcytv.screens.home.useLocalHomeScreenBackgroundState
-import com.muedsa.jcytv.screens.navigate
+import com.muedsa.jcytv.screens.nav
 import com.muedsa.jcytv.theme.GirdLastItemHeight
 import com.muedsa.jcytv.theme.VideoPosterSize
 import com.muedsa.model.LazyType
@@ -240,7 +240,7 @@ fun CatalogScreen(
                         },
                         onItemClick = {
                             LogUtil.d("Click $item")
-                            navController.navigate(
+                            navController.nav(
                                 NavigationItems.Detail,
                                 listOf(item.id.toString())
                             )

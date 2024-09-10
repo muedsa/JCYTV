@@ -14,7 +14,7 @@ import com.muedsa.compose.tv.widget.ErrorScreen
 import com.muedsa.compose.tv.widget.LoadingScreen
 import com.muedsa.jcytv.exception.NeedValidateCaptchaException
 import com.muedsa.jcytv.screens.NavigationItems
-import com.muedsa.jcytv.screens.navigate
+import com.muedsa.jcytv.screens.nav
 
 
 @Composable
@@ -36,7 +36,7 @@ fun SearchScreen(
             is SearchScreenUiState.Error -> ErrorScreen(
                 onError = {
                     if (s.exception is NeedValidateCaptchaException) {
-                        navController.navigate(NavigationItems.Captcha)
+                        navController.nav(NavigationItems.Captcha)
                     } else {
                         toastMsgBoxController.error(s.error)
                     }

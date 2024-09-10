@@ -65,7 +65,7 @@ import com.muedsa.compose.tv.widget.rememberScreenBackgroundState
 import com.muedsa.jcytv.PlaybackActivity
 import com.muedsa.jcytv.room.model.FavoriteAnimeModel
 import com.muedsa.jcytv.screens.NavigationItems
-import com.muedsa.jcytv.screens.navigate
+import com.muedsa.jcytv.screens.nav
 import com.muedsa.jcytv.theme.FavoriteIconColor
 import com.muedsa.jcytv.theme.RankFontColor
 import com.muedsa.jcytv.theme.RankIconColor
@@ -301,7 +301,7 @@ fun AnimeDetailScreen(
                         Spacer(modifier = Modifier.width(25.dp))
                         OutlinedButton(
                             onClick = {
-                                navController.navigate(NavigationItems.Setting)
+                                navController.nav(NavigationItems.Setting)
                             }
                         ) {
                             Text(text = "设置")

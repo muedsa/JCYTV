@@ -18,7 +18,7 @@ import com.muedsa.compose.tv.widget.ScreenBackgroundType
 import com.muedsa.jcytv.model.JcySimpleVideoInfo
 import com.muedsa.jcytv.screens.NavigationItems
 import com.muedsa.jcytv.screens.home.useLocalHomeScreenBackgroundState
-import com.muedsa.jcytv.screens.navigate
+import com.muedsa.jcytv.screens.nav
 import com.muedsa.jcytv.theme.GirdLastItemHeight
 import com.muedsa.jcytv.theme.VideoPosterSize
 import com.muedsa.uitl.LogUtil
@@ -56,7 +56,7 @@ fun SearchResult(
                 },
                 onItemClick = {
                     LogUtil.fb("Click $item")
-                    navController.navigate(
+                    navController.nav(
                         NavigationItems.Detail,
                         listOf(item.id.toString())
                     )
