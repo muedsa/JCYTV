@@ -75,7 +75,7 @@ object JcyHtmlParserTool {
                     subTitle = infoDiv.selectFirst("p")!!.text(),
                     detailPagePath = li.selectFirst("a")!!.attr("href"),
                     imageUrl = li.selectFirst(".img-wrapper")!!.absUrl("img-wrapper"),
-                    hotNum = li.selectFirst(".ranking-item-hits")!!.text().toInt(),
+                    hotNum = li.selectFirst(".ranking-item-hits")?.text()?.toInt() ?: 0,
                     index = li.selectFirst(".ranking-item-num")!!.text().toInt()
                 )
             }

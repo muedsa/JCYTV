@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.muedsa.jcytv.model.JcyRankList
 import com.muedsa.jcytv.repository.JcyRepo
+import com.muedsa.uitl.LogUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -32,6 +33,7 @@ class RankViewModel @Inject constructor(
                 val list = jcyRepo.fetchRankList()
                 RankScreenUiState.Ready(list)
             } catch (throwable: Throwable) {
+                LogUtil.fb(throwable)
                 RankScreenUiState.Error(throwable.message ?: "error", throwable)
             }
             internalUiState.emit(state)
