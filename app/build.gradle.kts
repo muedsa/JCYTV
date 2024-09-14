@@ -75,6 +75,19 @@ android {
             signingConfig = signingConfigs.getByName("release")
         }
     }
+
+    flavorDimensions += "issue"
+    productFlavors {
+        create("normal") {
+            dimension = "issue"
+        }
+
+        create("atvm") {
+            dimension = "issue"
+            versionNameSuffix = "-atvm"
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -98,6 +111,10 @@ android {
     room {
         schemaDirectory("$projectDir/schemas")
     }
+}
+
+baselineProfile {
+    mergeIntoMain = true
 }
 
 dependencies {
@@ -124,7 +141,9 @@ dependencies {
     debugImplementation(libs.ui.test.manifest)
 
     // implementation(libs.tv.foundation)
-    implementation(libs.tv.material)
+    // implementation(libs.tv.material)
+    "normalImplementation"(libs.tv.material)
+    "atvmImplementation"(libs.tv.material.v1rc01)
 
     implementation(libs.navigation.compose)
     implementation(libs.hilt.navigation.compose)
