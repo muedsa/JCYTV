@@ -75,21 +75,15 @@ class JcyPlaySourceValidator {
     }
 
     @Test
-    fun play_dilidili_iframe_valid() {
+    fun jx_cilicili_iframe_valid() {
         val text = getHttpContent("https://jx.cilicili.one/player/?url=233")
         check(text.indexOf("<iframe src=\"analysis.php?") >= -1)
     }
 
     @Test
-    fun dilidili_js_keyword_valid() {
+    fun jx_cilicili_keyword_valid() {
         val text = getHttpContent("https://jx.cilicili.one/mizhiplayerapi/js/setting.js")
         check(text.indexOf("YKQ.play(rc4(config.url,'202205051426239465',1));") >= -1)
-    }
-
-    // @Test
-    fun libilibi_js_keyword_valid() {
-        val text = getHttpContent("https://play.libilibi.top/js/setting.js")
-        check(text.indexOf("\$.post(\"\", {") >= -1)
     }
 
     private fun getHttpContent(url: String): String = URL(url).openConnection()
