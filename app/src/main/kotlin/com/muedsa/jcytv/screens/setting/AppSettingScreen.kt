@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -30,15 +31,15 @@ import androidx.tv.material3.SurfaceDefaults
 import androidx.tv.material3.Text
 import com.muedsa.compose.tv.theme.surfaceContainer
 import com.muedsa.compose.tv.widget.FocusScaleSwitch
-import com.muedsa.jcytv.BuildConfig
 import com.muedsa.jcytv.model.AppSettingModel
+import com.muedsa.uitl.AppUtil
 
 @Composable
 fun AppSettingScreen(
     viewModel: AppSettingViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
     val model by viewModel.settingStateFlow.collectAsStateWithLifecycle()
-
     if (model != null) {
         val settingModel: AppSettingModel = model!!
         Column(
@@ -232,12 +233,32 @@ fun AppSettingScreen(
                             style = MaterialTheme.typography.titleMedium
                         )
                         Text(
-                            text = "${BuildConfig.VERSION_NAME}(${BuildConfig.VERSION_CODE})",
+                            text = AppUtil.getVersionInfo(context),
                             color = MaterialTheme.colorScheme.onBackground,
                             style = MaterialTheme.typography.titleMedium
                         )
                     }
 
+                    if (AppUtil.debuggable(context)) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 20.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "调试模式",
+                                color = MaterialTheme.colorScheme.onBackground,
+                                style = MaterialTheme.typography.titleMedium
+                            )
+                            Text(
+                                text = "启用",
+                                color = MaterialTheme.colorScheme.onBackground,
+                                style = MaterialTheme.typography.titleMedium
+                            )
+                        }
+                    }
                 }
             }
         }

@@ -7,6 +7,7 @@ import com.muedsa.jcytv.repository.DataStoreRepo
 import com.muedsa.jcytv.repository.JcyRepo
 import com.muedsa.jcytv.room.AppDatabase
 import com.muedsa.jcytv.service.DanDanPlayApiService
+import com.muedsa.uitl.AppUtil
 import com.muedsa.uitl.LenientJson
 import dagger.Module
 import dagger.Provides
@@ -51,10 +52,10 @@ internal object AppModule {
 
     @Provides
     @Singleton
-    fun provideDanDanPlayApiService(): DanDanPlayApiService {
+    fun provideDanDanPlayApiService(@ApplicationContext context: Context): DanDanPlayApiService {
         val client = OkHttpClient.Builder()
             .also {
-                if (BuildConfig.DEBUG) {
+                if (AppUtil.debuggable(context)) {
                     val loggingInterceptor = HttpLoggingInterceptor()
                     loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
                     it.addInterceptor(loggingInterceptor)
