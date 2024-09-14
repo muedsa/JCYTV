@@ -6,8 +6,8 @@ import java.net.URL
 class JcyPlayUrlDecryptValidator {
 
     @Test
-    fun dilidili_js_keyword_valid() {
-        val text = getHttpContent("https://play.dilidili.ink/mizhiplayerapi/js/setting.js")
+    fun jx_cilicili_js_keyword_valid() {
+        val text = getHttpContent("https://jx.cilicili.one/mizhiplayerapi/js/setting.js")
         check(text.indexOf("YKQ.play(rc4(config.url,'202205051426239465',1));") >= -1)
     }
 

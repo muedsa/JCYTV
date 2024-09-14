@@ -24,9 +24,9 @@ object JcyPlaySourceTool {
         DECRYPT_DILIDILI("https://jx.dilidili.ink/player/analysis.php?v=$it")
     }
 
-    val DECRYPT_PLAY_DILIDILI: (String) -> String = {
-        // https://play.dilidili.ink/player/?url=$it iframe to
-        DECRYPT_DILIDILI("https://play.dilidili.ink/player/analysis.php?v=$it")
+    val DECRYPT_JX_CILICILI: (String) -> String = {
+        // https://jx.cilicili.one/player/?url=$it iframe to
+        DECRYPT_DILIDILI("https://jx.cilicili.one/player/analysis.php?v=$it")
     }
 
     private val DILIDILI_ENCRYPTED_URL_REGEX = Regex("\"url\": \"([A-Za-z0-9+/=\\\\]*?)\"")
@@ -52,15 +52,15 @@ object JcyPlaySourceTool {
     }
 
     val PLAYER_SITE_MAP: Map<String, (String) -> String> = mapOf(
-        "SLNB" to DECRYPT_PLAY_DILIDILI, // 囧简体 ✅
+        "SLNB" to DECRYPT_JX_CILICILI, // 囧简体 ✅
         "dm295" to DECRYPT_JX_DILIDILI, // 囧囧囧 ✅
-        "ffm3u8" to DECRYPT_PLAY_DILIDILI, // 囧次元A ✅
+        "ffm3u8" to DECRYPT_JX_CILICILI, // 囧次元A ✅
         "bfzym3u8" to DECRYPT_JX_DILIDILI, // 囧次元B ⭕
-        "lzm3u8" to DECRYPT_PLAY_DILIDILI, // 囧次元Z ✅
-        "NBY" to DECRYPT_PLAY_DILIDILI, // 囧次元N ✅
-        "ttnb" to DECRYPT_PLAY_DILIDILI, // 囧次狼 ⭕
+        "lzm3u8" to DECRYPT_JX_CILICILI, // 囧次元Z ✅
+        "NBY" to DECRYPT_JX_CILICILI, // 囧次元N ✅
+        "ttnb" to DECRYPT_JX_CILICILI, // 囧次狼 ⭕
         "snm3u8" to DECRYPT_JX_DILIDILI, // 囧次元O ⭕
-        "1080zyk" to DECRYPT_PLAY_DILIDILI, // 囧次元Y ✅
+        "1080zyk" to DECRYPT_JX_CILICILI, // 囧次元Y ✅
         "ACG" to DECRYPT_JX_1313, // 囧次元D ✅
         "cycp" to DECRYPT_NOT_SUPPORT, // 次元城 ❌
         "dplayer" to DECRYPT_NOT_SUPPORT, // 手机app蓝光专线 ❌

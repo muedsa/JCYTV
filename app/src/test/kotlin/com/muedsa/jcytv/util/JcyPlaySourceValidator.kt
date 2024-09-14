@@ -9,7 +9,7 @@ class JcyPlaySourceValidator {
     fun valid_SLNB() {
         // 囧简体
         val text = getHttpContent("https://www.9ciyuan.com/static/player/SLNB.js")
-        check(text.indexOf("https://play.dilidili.ink/player/?url=") >= -1)
+        check(text.indexOf("https://jx.cilicili.one/player/?url=") >= -1)
     }
 
     @Test
@@ -23,7 +23,7 @@ class JcyPlaySourceValidator {
     fun valid_ffm3u8() {
         // 囧次元A
         val text = getHttpContent("https://www.9ciyuan.com/static/player/ffm3u8.js")
-        check(text.indexOf("https://play.dilidili.ink/player/?url=") >= -1)
+        check(text.indexOf("https://jx.cilicili.one/player/?url=") >= -1)
     }
 
     @Test
@@ -37,21 +37,21 @@ class JcyPlaySourceValidator {
     fun valid_lzm3u8() {
         // 囧次元Z
         val text = getHttpContent("https://www.9ciyuan.com/static/player/lzm3u8.js")
-        check(text.indexOf("https://play.dilidili.ink/player/?url=") >= -1)
+        check(text.indexOf("https://jx.cilicili.one/player/?url=") >= -1)
     }
 
     @Test
     fun valid_NBY() {
         // 囧次元N
         val text = getHttpContent("https://www.9ciyuan.com/static/player/NBY.js")
-        check(text.indexOf("https://play.dilidili.ink/player/?url=") >= -1)
+        check(text.indexOf("https://jx.cilicili.one/player/?url=") >= -1)
     }
 
     @Test
     fun valid_ttnb() {
         // 囧次狼
         val text = getHttpContent("https://www.9ciyuan.com/static/player/ttnb.js")
-        check(text.indexOf("https://play.dilidili.ink/player/?url=") >= -1)
+        check(text.indexOf("https://jx.cilicili.one/player/?url=") >= -1)
     }
 
     @Test
@@ -65,7 +65,7 @@ class JcyPlaySourceValidator {
     fun valid_1080zyk() {
         // 囧次元Y
         val text = getHttpContent("https://www.9ciyuan.com/static/player/1080zyk.js")
-        check(text.indexOf("https://play.dilidili.ink/player/?url=") >= -1)
+        check(text.indexOf("https://jx.cilicili.one/player/?url=") >= -1)
     }
 
     @Test
@@ -76,13 +76,13 @@ class JcyPlaySourceValidator {
 
     @Test
     fun play_dilidili_iframe_valid() {
-        val text = getHttpContent("https://play.dilidili.ink/player/?url=233")
+        val text = getHttpContent("https://jx.cilicili.one/player/?url=233")
         check(text.indexOf("<iframe src=\"analysis.php?") >= -1)
     }
 
     @Test
     fun dilidili_js_keyword_valid() {
-        val text = getHttpContent("https://play.dilidili.ink/mizhiplayerapi/js/setting.js")
+        val text = getHttpContent("https://jx.cilicili.one/mizhiplayerapi/js/setting.js")
         check(text.indexOf("YKQ.play(rc4(config.url,'202205051426239465',1));") >= -1)
     }
 
