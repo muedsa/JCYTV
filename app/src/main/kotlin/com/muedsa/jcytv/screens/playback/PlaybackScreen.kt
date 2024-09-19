@@ -25,7 +25,6 @@ import com.muedsa.compose.tv.useLocalToastMsgBoxController
 import com.muedsa.compose.tv.widget.player.DanmakuVideoPlayer
 import com.muedsa.compose.tv.widget.player.mergeDanmaku
 import com.muedsa.model.LazyType
-import com.muedsa.uitl.AppUtil
 import com.muedsa.uitl.LogUtil
 import kotlinx.coroutines.delay
 import kotlin.math.max
@@ -124,7 +123,6 @@ fun PlaybackScreen(
         val danmakuSetting = danmakuSettingLD.data!!
 
         DanmakuVideoPlayer(
-            debug = if(activity != null) AppUtil.debuggable(activity.applicationContext) else false,
             danmakuConfigSetting = {
                 textSizeScale = danmakuSetting.danmakuSizeScale / 100f
                 alpha = danmakuSetting.danmakuAlpha / 100f

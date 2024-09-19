@@ -23,19 +23,19 @@ import com.kuaishou.akdanmaku.data.DanmakuItemData
 import com.kuaishou.akdanmaku.render.SimpleRenderer
 import com.kuaishou.akdanmaku.ui.DanmakuPlayer
 import com.kuaishou.akdanmaku.ui.DanmakuView
+import com.muedsa.uitl.AppUtil
 import kotlin.random.Random
 
 @SuppressLint("OpaqueUnitKey")
 @OptIn(UnstableApi::class)
 @Composable
 fun DanmakuVideoPlayer(
-    debug: Boolean = false,
+    debug: Boolean = AppUtil.debuggable(LocalContext.current),
     danmakuConfigSetting: DanmakuConfig.() -> Unit = {},
     danmakuPlayerInit: DanmakuPlayer.() -> Unit = {},
     videoPlayerBuilderSetting: ExoPlayer.Builder.() -> Unit = {},
     videoPlayerInit: ExoPlayer.() -> Unit,
 ) {
-
     val context = LocalContext.current
 
     val playerControlTicker = remember { mutableIntStateOf(0) }
