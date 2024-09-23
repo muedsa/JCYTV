@@ -5,6 +5,7 @@ import android.content.pm.ApplicationInfo
 
 object AppUtil {
 
+    @Suppress("deprecation")
     fun getVersionInfo(context: Context): String {
         return try {
             val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
