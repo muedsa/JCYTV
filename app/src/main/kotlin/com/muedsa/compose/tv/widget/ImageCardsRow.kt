@@ -1,5 +1,6 @@
 package com.muedsa.compose.tv.widget
 
+import androidx.compose.foundation.focusGroup
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -15,6 +16,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.FocusRequester.Companion.FocusRequesterFactory.component1
+import androidx.compose.ui.focus.FocusRequester.Companion.FocusRequesterFactory.component2
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.focusRestorer
 import androidx.compose.ui.graphics.Color
@@ -50,7 +53,7 @@ fun <T> ImageCardsRow(
 
     val (rowFR, firstItemFR) = remember { FocusRequester.createRefs() }
 
-    Column(modifier) {
+    Column(modifier.focusGroup()) {
         Text(
             modifier = Modifier.padding(start = ImageCardRowCardPadding),
             text = title,
@@ -86,7 +89,10 @@ fun <T> ImageCardsRow(
                         type = CardType.COMPACT,
                         model = contentFn(index, it),
                         onItemFocus = { onItemFocus(index, it) },
-                        onItemClick = { onItemClick(index, it) }
+                        onItemClick = {
+                            rowFR.saveFocusedChild()
+                            onItemClick(index, it)
+                        }
                     )
                 }
             }
@@ -120,7 +126,7 @@ fun <T> StandardImageCardsRow(
             }) ImageCardRowCardPadding - CardContentPadding
         else ImageCardRowCardPadding
 
-    Column(modifier) {
+    Column(modifier.focusGroup()) {
         Text(
             modifier = Modifier.padding(start = ImageCardRowCardPadding),
             text = title,
@@ -156,7 +162,10 @@ fun <T> StandardImageCardsRow(
                         type = CardType.STANDARD,
                         model = contentFn(index, it),
                         onItemFocus = { onItemFocus(index, it) },
-                        onItemClick = { onItemClick(index, it) }
+                        onItemClick = {
+                            rowFR.saveFocusedChild()
+                            onItemClick(index, it)
+                        }
                     )
                 }
             }
