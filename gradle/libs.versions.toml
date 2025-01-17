@@ -10,7 +10,6 @@ activity-compose = "1.10.0"
 compose-bom = "2024.09.00-alpha01"
 # androidx-tv-foundation = "1.0.0-alpha11"
 androidx-tv-material = "1.1.0-alpha01"
-androidx-tv-material-v1rc01 = "1.1.0-alpha01"
 navigation-compose = "2.8.5"
 hilt-navigation-compose = "1.2.0"
 coil = "2.7.0"
@@ -60,7 +59,6 @@ material3 = { group = "androidx.compose.material3", name = "material3" }
 # material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
 # tv-foundation = { group = "androidx.tv", name = "tv-foundation", version.ref = "androidx-tv-foundation" }
 tv-material = { group = "androidx.tv", name = "tv-material", version.ref = "androidx-tv-material" }
-tv-material-v1rc01 = { group = "androidx.tv", name = "tv-material", version.ref = "androidx-tv-material-v1rc01" }
 navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation-compose" }
 hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-navigation-compose" }
 coil = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
