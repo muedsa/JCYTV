@@ -28,8 +28,8 @@ android {
         applicationId = "com.muedsa.jcytv"
         minSdk = 24
         targetSdk = 35
-        versionCode = 15
-        versionName = "1.0.0-rc04"
+        versionCode = 16
+        versionName = "1.0.0"
         vectorDrawables {
             useSupportLibrary = true
         }
