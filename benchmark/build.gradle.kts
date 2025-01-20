@@ -8,17 +8,6 @@ android {
     namespace = "com.muedsa.jcytv.benchmark"
     compileSdk = 35
 
-    flavorDimensions += "issue"
-    productFlavors {
-        create("normal") {
-            dimension = "issue"
-        }
-
-        create("atvm") {
-            dimension = "issue"
-        }
-    }
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
