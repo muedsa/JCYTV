@@ -13,7 +13,6 @@ import com.muedsa.compose.tv.LocalRightSideDrawerControllerProvider
 import com.muedsa.compose.tv.widget.FullWidthDialogProperties
 import com.muedsa.compose.tv.widget.RightSideDrawerWithNavController
 import com.muedsa.compose.tv.widget.RightSideDrawerWithNavDrawerContent
-import com.muedsa.jcytv.screens.captcha.CaptchaScreen
 import com.muedsa.jcytv.screens.detail.AnimeDetailScreen
 import com.muedsa.jcytv.screens.home.HomeNavScreen
 import com.muedsa.jcytv.screens.setting.AppSettingScreen
@@ -64,13 +63,6 @@ fun AppNavigation() {
                     RightSideDrawerWithNavDrawerContent(
                         controller = drawerController
                     )
-                }
-
-                dialog(
-                    route = NavigationItems.Captcha.route,
-                    dialogProperties = FullWidthDialogProperties()
-                ) {
-                    CaptchaScreen()
                 }
             }
         }

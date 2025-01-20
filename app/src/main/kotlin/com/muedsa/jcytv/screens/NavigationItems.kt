@@ -25,6 +25,4 @@ sealed class NavigationItems(
     data object Setting : NavigationItems("setting")
 
     data object RightSideDrawer : NavigationItems("right_side_drawer")
-
-    data object Captcha : NavigationItems("captcha")
 }

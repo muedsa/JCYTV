@@ -166,7 +166,7 @@ fun AnimeDetailScreen(
                             .width(screenWidth * 0.60f),
                         model = ContentModel(
                             title = animeDetail.title,
-                            subtitle = animeDetail.status,
+                            subtitle = animeDetail.tags,
                             description = animeDetail.description,
                         ),
                         type = ContentBlockType.CAROUSEL,

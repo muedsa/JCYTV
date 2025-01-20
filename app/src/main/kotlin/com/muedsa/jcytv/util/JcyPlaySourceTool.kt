@@ -1,76 +1,35 @@
 package com.muedsa.jcytv.util
 
-import com.google.common.net.HttpHeaders
-import com.muedsa.jcytv.model.JcyRawPlaySource
-import com.muedsa.uitl.decodeBase64
-import com.muedsa.uitl.encryptRC4
+import com.muedsa.jcytv.model.PlayerAAAA
+import com.muedsa.uitl.LenientJson
+import com.muedsa.uitl.decodeBase64ToStr
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import timber.log.Timber
 import java.net.URI
 import java.net.URLDecoder
-import java.nio.charset.StandardCharsets
 
 object JcyPlaySourceTool {
 
-    const val CHROME_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+    private val JS_URL_REGEX = Regex("\"url\":\\s*\"(.*?)\"")
+    val PLAYER_INFO_REGEX =
+        "<script type=\"text/javascript\">var player_aaaa=(\\{.*?\\})</script>".toRegex()
 
-    val DECRYPT_DIRECT: (String) -> String = { key: String -> key }
-
-    val DECRYPT_NOT_SUPPORT: (String) -> String =
-        { _: String -> throw IllegalStateException("不支持的播放源") }
-
-    val DECRYPT_JX_DILIDILI: (String) -> String = {
-        // https://jx.dilidili.ink/player/?url=$it iframe to
-        DECRYPT_DILIDILI("https://jx.dilidili.ink/player/analysis.php?v=$it")
-    }
-
-    val DECRYPT_JX_CILICILI: (String) -> String = {
-        // https://jx.cilicili.one/player/?url=$it iframe to
-        DECRYPT_DILIDILI("https://jx.cilicili.one/player/analysis.php?v=$it")
-    }
-
-    private val DILIDILI_ENCRYPTED_URL_REGEX = Regex("\"url\": \"([A-Za-z0-9+/=\\\\]*?)\"")
-
-    val DECRYPT_DILIDILI: (String) -> String = { url: String ->
-        val doc: Document = Jsoup.connect(url)
-            .header(HttpHeaders.REFERER, JcyConst.HOME_URL)
-            .header(HttpHeaders.USER_AGENT, CHROME_USER_AGENT)
+    val DECRYPT_JCY_PLAYER: (PlayerAAAA) -> String = {
+        val body = Jsoup.connect("${JcyConst.BASE_PATH}/player/?code=print&url=${it.url}")
+            .feignChrome(referrer = JcyConst.HOME_URL)
             .get()
-        val bodyHtml = doc.body().html()
-        val urlMatchResult = DILIDILI_ENCRYPTED_URL_REGEX.find(bodyHtml)
-        val encryptedUrl = urlMatchResult!!.groupValues[1].replace("\\/", "/")
-        URLDecoder.decode(
-            encryptedUrl.decodeBase64()
-                .encryptRC4("202205051426239465".toByteArray())
-                .decodeToString(),
-            StandardCharsets.UTF_8.name()
-        )
+            .body()
+        val result = JS_URL_REGEX.find(body.html())
+        result?.groups[1]?.value?.decodeBase64ToStr() ?: throw RuntimeException("解析地址失败")
     }
 
-    val DECRYPT_JX_1313: (String) -> String = {
-        DECRYPT_DILIDILI("https://jx.1313.top/player/analysis.php?v=$it")
-    }
-
-    val PLAYER_SITE_MAP: Map<String, (String) -> String> = mapOf(
-        "SLNB" to DECRYPT_JX_CILICILI, // 囧简体 ✅
-        "dm295" to DECRYPT_JX_DILIDILI, // 囧囧囧 ✅
-        "ffm3u8" to DECRYPT_JX_CILICILI, // 囧次元A ✅
-        "bfzym3u8" to DECRYPT_JX_DILIDILI, // 囧次元B ⭕
-        "lzm3u8" to DECRYPT_JX_CILICILI, // 囧次元Z ✅
-        "NBY" to DECRYPT_JX_CILICILI, // 囧次元N ✅
-        "ttnb" to DECRYPT_JX_CILICILI, // 囧次狼 ⭕
-        "snm3u8" to DECRYPT_JX_DILIDILI, // 囧次元O ⭕
-        "1080zyk" to DECRYPT_JX_CILICILI, // 囧次元Y ✅
-        "ACG" to DECRYPT_JX_1313, // 囧次元D ✅
-        "cycp" to DECRYPT_NOT_SUPPORT, // 次元城 ❌
-        "dplayer" to DECRYPT_NOT_SUPPORT, // 手机app蓝光专线 ❌
-        "languang" to DECRYPT_NOT_SUPPORT, // APP线路 ❌
-        "videojs" to DECRYPT_NOT_SUPPORT, // 不支持 videojs ❌
-        "iframe" to DECRYPT_NOT_SUPPORT, // 不支持 iframe ❌
-        "iva" to DECRYPT_NOT_SUPPORT, // 不支持 iva H5 ❌
-        "link" to DECRYPT_NOT_SUPPORT, // 不支持外部链接 ❌
-        "swf" to DECRYPT_NOT_SUPPORT, // 不支持swf ❌
-        "flv" to DECRYPT_DIRECT // flv直链 ✅
+    val PLAYER_SITE_MAP: Map<String, (PlayerAAAA) -> String> = mapOf(
+        "aiciyuan" to DECRYPT_JCY_PLAYER, // 囧次元自建
+        "bfzym3u8" to DECRYPT_JCY_PLAYER, // 囧次元1
+        "lzm3u8" to DECRYPT_JCY_PLAYER, // 囧次元2
+        "ffm3u8" to DECRYPT_JCY_PLAYER, // 囧次元3
+        "1080zyk" to DECRYPT_JCY_PLAYER, // 囧次元4
     )
 
     fun getAbsoluteUrl(path: String): String {
@@ -81,27 +40,56 @@ object JcyPlaySourceTool {
         }
     }
 
-    private val RAW_PLAY_SOURCE_URL_REGEX = Regex("\"url\":\"([A-Za-z0-9%]*?)\"")
-    private val RAW_PLAY_SOURCE_URL_NEXT_REGEX = Regex("\"url_next\":\"([A-Za-z0-9%]*?)\"")
-    private val RAW_PLAY_SOURCE_FROM_REGEX = Regex("\"from\":\"([A-Za-z0-9]*?)\"")
-
-    fun getRawPlaySource(url: String): JcyRawPlaySource {
+    fun getPlayerAAAA(url: String): PlayerAAAA {
         val doc: Document = Jsoup.connect(url)
-            .header(HttpHeaders.REFERER, JcyConst.HOME_URL)
-            .header(HttpHeaders.USER_AGENT, CHROME_USER_AGENT)
+            .feignChrome(referrer = JcyConst.HOME_URL)
             .get()
         val bodyHtml = doc.body().html()
-
-        return JcyRawPlaySource(
-            url = RAW_PLAY_SOURCE_URL_REGEX.find(bodyHtml)!!.groupValues[1],
-            urlNext = RAW_PLAY_SOURCE_URL_NEXT_REGEX.find(bodyHtml)!!.groupValues[1],
-            from = RAW_PLAY_SOURCE_FROM_REGEX.find(bodyHtml)!!.groupValues[1]
-        )
+        val result = PLAYER_INFO_REGEX.find(bodyHtml)
+        val playerAAAAJson = result?.groups?.get(1)?.value
+        if (result == null || playerAAAAJson == null) {
+            Timber.e("get player_aaaa error: $url")
+            throw RuntimeException("解析地址失败")
+        }
+        Timber.i("player_aaaa = $playerAAAAJson")
+        var playerAAAA = LenientJson.decodeFromString<PlayerAAAA>(playerAAAAJson)
+        if (playerAAAA.encrypt == 1) {
+            playerAAAA = playerAAAA.copy(
+                url = decodeURIComponent(playerAAAA.url),
+                urlNext = decodeURIComponent(playerAAAA.urlNext),
+            )
+        }
+        return playerAAAA
     }
 
-    fun getRealPlayUrl(rawPlaySource: JcyRawPlaySource): String {
-        val decodedUrl = URLDecoder.decode(rawPlaySource.url, StandardCharsets.UTF_8.name())
-        val decrypt = PLAYER_SITE_MAP[rawPlaySource.from] ?: DECRYPT_NOT_SUPPORT
-        return decrypt.invoke(decodedUrl)
+    fun getRealPlayUrl(playerAAAA: PlayerAAAA): String {
+        return if (playerAAAA.url.endsWith(".m3u8") || playerAAAA.url.endsWith(".mp4")) {
+            playerAAAA.url
+        } else {
+            val decrypt = PLAYER_SITE_MAP[playerAAAA.from] ?: DECRYPT_JCY_PLAYER
+            decrypt.invoke(playerAAAA)
+        }
+    }
+
+    val UNICODE_HEX_REGEX = "%u[A-Z0-9]+".toRegex()
+
+    fun decodeURIComponent(text: String): String {
+        var fixedText = text
+        val results = UNICODE_HEX_REGEX.findAll(text)
+        results.forEach {
+            val chunkText = it.groups[0]!!.value
+            fixedText = fixedText.replace(chunkText, parseUnicodeString(chunkText))
+        }
+        return URLDecoder.decode(fixedText, Charsets.UTF_8.name())
+    }
+
+    fun parseUnicodeString(hexString: String): String {
+        val stringBuilder = StringBuilder()
+        for (i in 0..< hexString.length step 6) {
+            val hexCode = hexString.substring(i + 2, i + 6)
+            val codePoint = Integer.parseInt(hexCode, 16)
+            stringBuilder.append(Character.toChars(codePoint))
+        }
+        return stringBuilder.toString()
     }
 }

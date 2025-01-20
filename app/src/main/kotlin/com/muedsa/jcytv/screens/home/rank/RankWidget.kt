@@ -30,7 +30,7 @@ fun RankWidget(
     val navController = useLocalNavHostController()
 
     Column(modifier = Modifier.padding(start = ScreenPaddingLeft)) {
-        val ranks = list.subList(0, min(3, list.size))
+        val ranks = list.subList(0, min(4, list.size))
         Row {
             ranks.forEachIndexed { index, rank ->
                 Column(

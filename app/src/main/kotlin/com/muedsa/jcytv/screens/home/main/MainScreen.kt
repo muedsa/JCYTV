@@ -38,7 +38,6 @@ import com.muedsa.compose.tv.widget.ImmersiveList
 import com.muedsa.compose.tv.widget.LoadingScreen
 import com.muedsa.compose.tv.widget.ScreenBackgroundType
 import com.muedsa.compose.tv.widget.StandardImageCardsRow
-import com.muedsa.jcytv.exception.NeedValidateCaptchaException
 import com.muedsa.jcytv.model.JcyVideoRow
 import com.muedsa.jcytv.screens.NavigationItems
 import com.muedsa.jcytv.screens.home.useLocalHomeScreenBackgroundState
@@ -53,7 +52,6 @@ fun MainScreen(
     viewModel: MainScreenViewModel = hiltViewModel(),
 ) {
     val toastMsgBoxController = useLocalToastMsgBoxController()
-    val navController = useLocalNavHostController()
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -61,13 +59,7 @@ fun MainScreen(
         is MainScreenUiState.Loading -> LoadingScreen()
 
         is MainScreenUiState.Error -> ErrorScreen(
-            onError = {
-                if (s.exception is NeedValidateCaptchaException) {
-                    navController.nav(NavigationItems.Captcha)
-                } else {
-                    toastMsgBoxController.error(s.error)
-                }
-            },
+            onError = { toastMsgBoxController.error(s.error) },
             onRefresh = { viewModel.refreshData() }
         )
 

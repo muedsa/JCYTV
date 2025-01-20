@@ -48,7 +48,7 @@ internal object AppModule {
 
     @Provides
     @Singleton
-    fun provideJcyRepository(dataStoreRepo: DataStoreRepo): JcyRepo = JcyRepo(dataStoreRepo)
+    fun provideJcyRepository(): JcyRepo = JcyRepo()
 
     @Provides
     @Singleton

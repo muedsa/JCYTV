@@ -68,9 +68,6 @@ fun CatalogScreen(
     val toastMsgBoxController = useLocalToastMsgBoxController()
 
     var optionId by viewModel.optionIdState
-    var optionArea by viewModel.optionAreaState
-    var optionClass by viewModel.optionClassState
-    var optionLang by viewModel.optionLangState
     var optionYear by viewModel.optionYearState
     var optionLetter by viewModel.optionLetterState
     var optionBy by viewModel.optionByState
@@ -133,39 +130,6 @@ fun CatalogScreen(
                         options = CatalogViewModel.ID_OPTIONS,
                         onClick = { key, _ ->
                             optionId = key
-                            viewModel.catalogNew()
-                        }
-                    )
-                }
-                item {
-                    CatalogOptionsWidget(
-                        title = "地区",
-                        selectedKey = optionArea,
-                        options = CatalogViewModel.AREA_OPTIONS,
-                        onClick = { key, _ ->
-                            optionArea = if (optionArea == key) null else key
-                            viewModel.catalogNew()
-                        }
-                    )
-                }
-                item {
-                    CatalogOptionsWidget(
-                        title = "剧情",
-                        selectedKey = optionClass,
-                        options = CatalogViewModel.CLASS_OPTIONS,
-                        onClick = { key, _ ->
-                            optionClass = if (optionClass == key) null else key
-                            viewModel.catalogNew()
-                        }
-                    )
-                }
-                item {
-                    CatalogOptionsWidget(
-                        title = "语言",
-                        selectedKey = optionLang,
-                        options = CatalogViewModel.LANG_OPTIONS,
-                        onClick = { key, _ ->
-                            optionLang = if (optionLang == key) null else key
                             viewModel.catalogNew()
                         }
                     )

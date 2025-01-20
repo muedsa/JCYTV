@@ -1,24 +1,18 @@
 package com.muedsa.jcytv.util
 
-import com.google.common.net.HttpHeaders
 import com.muedsa.jcytv.model.JcyVideoRow
-import com.muedsa.jcytv.util.JcyPlaySourceTool.CHROME_USER_AGENT
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.junit.Test
 
 class JcyHtmlParserToolTest {
 
-    private fun getGuardOk(): String = ""
-
     @Test
     fun getHomeVideoRows_test() {
         val doc: Document = Jsoup.connect(JcyConst.HOME_URL)
-            .header(HttpHeaders.REFERER, JcyConst.HOME_URL)
-            .header(HttpHeaders.USER_AGENT, JcyConst.CHROME_USER_AGENT)
-            .cookie(JcyRotateCaptchaTool.COOKIE_GUARD_OK, getGuardOk())
+            .feignChrome()
             .get()
-        val rows: List<JcyVideoRow> = JcyHtmlParserTool.parseHomVideoRows(doc.body())
+        val rows: List<JcyVideoRow> = JcyHtmlParserTool.parseHomeVideoRows(doc.body())
         check(rows.isNotEmpty())
         rows.forEach {
             println("# ${it.title}")
@@ -30,29 +24,27 @@ class JcyHtmlParserToolTest {
 
     @Test
     fun parseRankList_test() {
-        val doc: Document = Jsoup.connect(JcyConst.RANK_URL)
-            .header(HttpHeaders.REFERER, JcyConst.RANK_URL)
-            .header(HttpHeaders.USER_AGENT, JcyConst.CHROME_USER_AGENT)
+        val doc: Document = Jsoup.connect(JcyConst.HOME_URL)
+            .feignChrome()
             .get()
         val ranks = JcyHtmlParserTool.parseRankList(doc.body())
         check(ranks.isNotEmpty())
         ranks.forEach {
             println("# ${it.title}")
             it.list.forEach { anime ->
-                println("${anime.id} ${anime.hotNum} ${anime.title} ${anime.subTitle} ${anime.detailPagePath} ${anime.imageUrl} ${anime.index}")
+                println("${anime.id} ${anime.title} ${anime.subTitle} ${anime.detailPagePath} ${anime.index}")
             }
         }
     }
 
     @Test
     fun parseVideoRow_searchVideos_test() {
-        val doc: Document = Jsoup.connect("${JcyConst.SEARCH_URL}1")
-            .header(HttpHeaders.REFERER, JcyConst.RANK_URL)
-            .header(HttpHeaders.USER_AGENT, JcyConst.CHROME_USER_AGENT)
-            .cookie(JcyRotateCaptchaTool.COOKIE_GUARD_OK, getGuardOk())
+        val doc: Document = Jsoup.connect(JcyConst.SEARCH_URL.replace("{query}", "葬送的芙莉莲"))
+            .feignChrome()
             .get()
-        val vodListEl = doc.body().selectFirst(".vod-list")!!
-        val list = JcyHtmlParserTool.parseVideoRow(vodListEl).list
+        val moduleEl = doc.body().selectFirst(".main .content .module")!!
+        val rows = JcyHtmlParserTool.parseModuleEl(moduleEl)
+        val list = if (rows.isNotEmpty()) rows[0].list else emptyList()
         check(list.isNotEmpty())
         list.forEach {
             println("${it.title} ${it.subTitle} ${it.detailPagePath} ${it.imageUrl}")
@@ -64,17 +56,15 @@ class JcyHtmlParserToolTest {
         val query = mapOf(
             "id" to "20",
             "page" to "2",
-            "area" to "日本",
         ).toSortedMap().map {
             "/${it.key}/${it.value}"
         }.joinToString("")
         val doc: Document = Jsoup.connect(JcyConst.CATALOG_URL.replace("{query}", query))
-            .header(HttpHeaders.REFERER, JcyConst.RANK_URL)
-            .header(HttpHeaders.USER_AGENT, JcyConst.CHROME_USER_AGENT)
-            .cookie(JcyRotateCaptchaTool.COOKIE_GUARD_OK, getGuardOk())
+            .feignChrome()
             .get()
-        val vodListEl = doc.body().selectFirst(".vod-list")!!
-        val list = JcyHtmlParserTool.parseVideoRow(vodListEl).list
+        val moduleMainEl = doc.body().selectFirst(".main .module .module-main.module-page")!!
+        val rows = JcyHtmlParserTool.parseNoHeadModuleEl("", null, moduleMainEl)
+        val list = if (rows.isNotEmpty()) rows[0].list else emptyList()
         check(list.isNotEmpty())
         list.forEach {
             println("${it.title} ${it.subTitle} ${it.detailPagePath} ${it.imageUrl}")
@@ -83,18 +73,16 @@ class JcyHtmlParserToolTest {
 
     @Test
     fun parseVideoDetail_test() {
-        val url = JcyConst.DETAIL_URL.replace("{id}", "3010")
+        val url = JcyConst.DETAIL_URL.replace("{id}", "43358")
         val doc: Document = Jsoup.connect(url)
-            .header(HttpHeaders.REFERER, url)
-            .header(HttpHeaders.USER_AGENT, CHROME_USER_AGENT)
-            .cookie(JcyRotateCaptchaTool.COOKIE_GUARD_OK, getGuardOk())
+            .feignChrome()
             .get()
 
         val detail = JcyHtmlParserTool.parseVideoDetail(doc.body())
         checkNotNull(detail.id)
         checkNotNull(detail.detailPagePath)
         checkNotNull(detail.title)
-        checkNotNull(detail.status)
+        checkNotNull(detail.tags)
         checkNotNull(detail.description)
         checkNotNull(detail.imageUrl)
         checkNotNull(detail.playList)

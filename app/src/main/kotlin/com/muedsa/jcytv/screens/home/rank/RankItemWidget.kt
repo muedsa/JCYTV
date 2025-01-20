@@ -58,17 +58,6 @@ fun RankItemWidget(
                 color = MaterialTheme.colorScheme.onBackground,
                 style = MaterialTheme.typography.titleMedium,
             )
-            if (model.hotNum > 0) {
-                Text(
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .wrapContentWidth(Alignment.End),
-                    text = "\uD83D\uDD25${model.hotNum}",
-                    maxLines = 1,
-                    color = MaterialTheme.colorScheme.onBackground,
-                    style = MaterialTheme.typography.titleMedium,
-                )
-            }
         }
 
     }

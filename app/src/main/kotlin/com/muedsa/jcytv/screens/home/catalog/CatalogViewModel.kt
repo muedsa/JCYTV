@@ -22,11 +22,7 @@ class CatalogViewModel @Inject constructor(
     private val jcyRepo: JcyRepo
 ) : ViewModel() {
 
-    // TODO all ui state
     val optionIdState = mutableStateOf(ID_OPTIONS.keys.first())
-    val optionAreaState = mutableStateOf<String?>(null)
-    val optionClassState = mutableStateOf<String?>(null)
-    val optionLangState = mutableStateOf<String?>(null)
     val optionYearState = mutableStateOf<String?>(null)
     val optionLetterState = mutableStateOf<String?>(null)
     val optionByState = mutableStateOf<String?>(null)
@@ -50,7 +46,7 @@ class CatalogViewModel @Inject constructor(
         catalog(LazyPagedList.new(buildQueryParams()))
     }
 
-    private suspend fun fetchCatalog(
+    private fun fetchCatalog(
         lp: LazyPagedList<Map<String, String>, JcySimpleVideoInfo>
     ): LazyPagedList<Map<String, String>, JcySimpleVideoInfo> {
         return try {
@@ -83,9 +79,6 @@ class CatalogViewModel @Inject constructor(
 
     fun resetCatalogOptions() {
         optionIdState.value = ID_OPTIONS.keys.first()
-        optionAreaState.value = null
-        optionClassState.value = null
-        optionLangState.value = null
         optionYearState.value = null
         optionLetterState.value = null
         optionByState.value = null
@@ -95,9 +88,6 @@ class CatalogViewModel @Inject constructor(
     private fun buildQueryParams(): Map<String, String> {
         return buildMap {
             put("id", optionIdState.value)
-            optionAreaState.value?.let { put("area", it) }
-            optionClassState.value?.let { put("class", it) }
-            optionLangState.value?.let { put("lang", it) }
             optionYearState.value?.let { put("year", it) }
             optionLetterState.value?.let { put("letter", it) }
             optionByState.value?.let { put("by", it) }
@@ -112,44 +102,10 @@ class CatalogViewModel @Inject constructor(
         val ID_OPTIONS: Map<String, String> = linkedMapOf(
             "20" to "新番放送",
             "4" to "追番计划",
+            "21" to "欧美动漫",
             "3" to "动漫剧场",
+            "22" to "国产动漫",
         )
-
-        val AREA_OPTIONS: Map<String, String> =
-            listOf("大陆", "日本", "欧美", "其他").associateBy { it }
-
-        val CLASS_OPTIONS: Map<String, String> = listOf(
-            "日韩动漫",
-            "国产动漫",
-            "青春",
-            "战斗",
-            "奇幻",
-            "热血",
-            "搞笑",
-            "萝莉",
-            "校园",
-            "冒险",
-            "动作",
-            "励志",
-            "动画",
-            "情感",
-            "玄幻",
-            "推理",
-            "机战",
-            "运动",
-            "战争",
-            "少年",
-            "少女",
-            "社会",
-            "原创",
-            "亲子",
-            "益智",
-            "小说改"
-        ).associateBy { it }
-
-        val LANG_OPTIONS: Map<String, String> =
-            listOf("国语", "英语", "粤语", "闽南语", "韩语", "日语", "法语", "德语", "其他")
-                .associateBy { it }
 
         val YEAR_OPTIONS: Map<String, String> =
             (2000..max(Calendar.getInstance().get(Calendar.YEAR), 2024))
@@ -162,9 +118,9 @@ class CatalogViewModel @Inject constructor(
         ).associateBy { it }
 
         val ORDER_BY_OPTIONS: Map<String, String> = mapOf(
-            "time" to "最近更新",
-            "hits" to "最多播放",
-            "score" to "最好评"
+            "time" to "时间排序",
+            "hits" to "人气排序",
+            "score" to "评分排序"
         )
     }
 }
