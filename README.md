@@ -1,3 +1,5 @@
+## 项目基本不再更新, 请使用 [TvBox](https://github.com/muedsa/TvBox)
+
 <div align="center">
   <img src="app/src/main/ic_launcher-playstore.png" width="128px" height="128px"/>
   <h1>JCYTV</h1>
